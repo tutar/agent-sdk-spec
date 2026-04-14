@@ -67,10 +67,21 @@ Harness
 
 ## 目录内文档
 
+### 0. Deployment Boundaries
+
+- [deployment-boundaries.md](deployment-boundaries.md)
+
+这一页回答：
+
+- 同进程优化和分布式语义应如何区分
+- 哪些接口必须保持 transport-neutral
+- 为什么 `Cloud` 不应被实现成 “本地 runtime + 远程工具”
+
 ### 1. Runtime Core
 
 - [runtime-overview.md](runtime-core/runtime-overview.md)
 - [agent-runtime.md](runtime-core/agent-runtime.md)
+- [failure-and-terminal-states.md](runtime-core/failure-and-terminal-states.md)
 - [state-layering.md](runtime-core/state-layering.md)
 - [message-and-event-pipeline.md](runtime-core/message-and-event-pipeline.md)
 
@@ -78,6 +89,7 @@ Harness
 
 - harness 主循环是什么
 - turn 如何推进
+- 失败、取消、阻塞和终止态如何统一
 - 内部状态怎么分层
 - 内部消息与外部事件如何分开
 
@@ -145,5 +157,6 @@ Harness
 - harness 是“脑”，但不是整个系统
 - harness 应尽量无状态，或仅保留可从 session 重建的短状态
 - harness 应优先依赖稳定接口，而不是假设自己与 hands 共机
+- harness 的稳定接口应先满足跨进程/跨部署边界语义，再允许提供同进程优化 binding
 - harness 相关状态应至少区分 `ProcessState`、`InteractionState` 与各领域状态投影
 - harness 规范必须同时适配 TUI、Desktop、Cloud 三种 host

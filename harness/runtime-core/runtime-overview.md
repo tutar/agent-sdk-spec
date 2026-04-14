@@ -82,6 +82,7 @@ SDK 应统一对外暴露事件流，而不是只返回最终文本。
 - runtime 必须优先复用模型原生能力。
 - runtime 必须在模型能力不足时提供 harness fallback。
 - session、harness、sandbox 必须允许独立替换与独立故障恢复。
+- session、tool executor、sandbox 的稳定接口不应默认建立在同进程调用语义上。
 - runtime 必须支持多轮 tool loop。
 - runtime 必须支持流式工具执行。
 - runtime 必须支持中断和恢复。
@@ -102,3 +103,4 @@ SDK 应统一对外暴露事件流，而不是只返回最终文本。
 - runtime 是跨语言 harness 的中心
 - runtime 负责统一上层语义，而不是暴露底层模型差异
 - 模型适配与 runtime 编排必须解耦
+- deployment boundary 只应体现在 binding 层，不应污染核心运行时语义

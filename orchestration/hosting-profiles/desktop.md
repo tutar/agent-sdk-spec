@@ -34,6 +34,9 @@
 - bundle install / update / load 是重要的本地生命周期问题
 - 本地资源访问比云端更丰富，但安全边界也更复杂
 
+因此 Desktop profile 不应沿用“单进程默认语义”。
+相关约束见 [../../harness/deployment-boundaries.md](../../harness/deployment-boundaries.md)。
+
 ## 对 orchestration 的要求
 
 - 支持 UI host 与 runtime host 的分工

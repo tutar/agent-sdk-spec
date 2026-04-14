@@ -143,6 +143,7 @@ AgentHandle
   - session_ref?
   - task_ref?
   - output_ref?
+  - terminal_state?
 ```
 
 其中：
@@ -240,3 +241,4 @@ Orchestrator
 - 不同模式必须有不同的生命周期语义
 - `spawn_agent()` 不能只抽象出一个模糊入口，而不定义模式差异
 - 默认实现可以 task-first，但规范层必须支持同步、后台、持续协作和远端执行四类模式
+- `AgentHandle`、`task_ref`、`terminal_state` 应与 [../object-model.md](../object-model.md) 中的 canonical objects 对齐

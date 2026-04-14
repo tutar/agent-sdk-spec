@@ -46,6 +46,18 @@ EventSelector
   - branch?
 ```
 
+## SessionCheckpoint
+
+用于表达一次 durable append 的提交位置。
+
+```text
+SessionCheckpoint
+  - session_id
+  - last_event_id
+  - cursor
+  - committed_at
+```
+
 ## WakeRequest
 
 用于表达从 durable session 恢复 runtime 的请求。
@@ -75,4 +87,5 @@ ResumeSnapshot
 ## 规范结论
 
 - `SessionEvent`、`EventSelector`、`WakeRequest`、`ResumeSnapshot` 应作为 session event log 的标准对象
+- `SessionCheckpoint` 应作为 append/read/resume 之间的标准衔接对象
 - event log 接口应独立于 JSONL、数据库行或消息数组实现

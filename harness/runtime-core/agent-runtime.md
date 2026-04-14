@@ -21,6 +21,9 @@ AgentRuntime
   - run_turn(run_turn_params) -> event_stream, terminal_state
 ```
 
+如果宿主需要更简单的调用方式，可以额外提供 direct-call convenience API，
+但该 API 必须是 streaming contract 的包装，而不是另一套运行时语义。
+
 ## Runtime 必须负责的事情
 
 - 基于模型能力视图选择 native path 或 harness path
@@ -57,6 +60,8 @@ AgentRuntime
 - `failed`
 - `aborted`
 
+更完整的统一语义见 [failure-and-terminal-states.md](failure-and-terminal-states.md)。
+
 ## 默认恢复能力
 
 - `prompt_too_long` 后触发 compact/recovery
@@ -80,6 +85,8 @@ AgentRuntime
 
 - `run_turn()` 必须是状态机
 - 返回值必须是事件流
+- direct-call convenience API 如存在，也必须严格由事件流语义推导
 - runtime 必须拥有恢复和继续的责任
 - runtime 必须把模型能力差异屏蔽在 adapter 层之后
 - runtime 是 harness 的一部分，不应吞并 session 或 sandbox 的职责
+- runtime 的 terminal state、error class、retryability 应与其它层共享同一套术语

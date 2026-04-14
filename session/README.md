@@ -36,12 +36,29 @@
 ```text
 SessionStore
   - create_session(session_metadata) -> session_id
-  - emit_event(session_id, event)
+  - append_events(session_id, events) -> session_checkpoint
   - get_session(session_id) -> session_metadata
   - get_events(session_id, selector) -> event_slice
   - get_runtime_state(session_id) -> runtime_state
   - get_working_state(session_id) -> working_state
   - wake(session_id) -> resumed_session_handle
+```
+
+推荐标准对象：
+
+```text
+SessionCheckpoint
+  - session_id
+  - last_event_id
+  - cursor
+  - committed_at
+```
+
+```text
+ResumedSessionHandle
+  - session_id
+  - wake_id
+  - resume_snapshot
 ```
 
 若实现了 session 内记忆层，还应补：
@@ -59,8 +76,13 @@ SessionMemoryStore
 SessionLifecycleController
   - get_state(session_id) -> lifecycle_state
   - set_state(session_id, lifecycle_state, details?)
-  - subscribe(session_id, listener)
+  - subscribe(session_id, listener) -> lifecycle_event_stream
 ```
+
+如果本地宿主希望提供更简单的 API，
+例如 `emit_event()` 或直接读取完整 transcript，
+也应把它们视为 `append_events()` / `get_events()` 的 convenience wrapper，
+而不是新的 session 语义。
 
 ## 默认实现
 
@@ -141,3 +163,5 @@ session 体系必须兼容：
 - `Session` 模块主要负责 transcript、restore、working state 和 session memory linkage
 - 长短期记忆的详细规范应下沉到独立文档，而不是挤在总览页里
 - session 语义不应因为 TUI、Desktop、Cloud 的落盘位置不同而漂移
+- `append_events()` 与 `session_checkpoint` 应优先于进程内 transcript 变异
+- direct-call session API 如存在，也必须严格由 event log 语义推导

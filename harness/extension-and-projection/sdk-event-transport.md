@@ -51,3 +51,4 @@ SdkRuntimeEvent
 
 - SDK client 应有独立系统事件通道
 - runtime state projection 不应强塞进主消息流
+- 本地 direct-call API 可以聚合这些事件，但不应创造事件通道之外的独有语义

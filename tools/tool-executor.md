@@ -12,9 +12,41 @@
 
 ```text
 ToolExecutor
-  - run_tools(tool_uses, assistant_messages, tool_use_context)
-    -> tool_execution_events, tool_execution_summary
+  - execute_stream(tool_uses, assistant_messages, tool_use_context)
+    -> tool_execution_event_stream
+  - get_summary(execution_handle) -> tool_execution_summary
 ```
+
+推荐标准对象：
+
+```text
+ToolExecutionHandle
+  - execution_id
+  - session_id?
+  - task_id?
+  - tool_use_ids[]
+  - started_at
+```
+
+```text
+ToolExecutionEvent
+  - execution_id
+  - tool_use_id
+  - type: started | progress | result | failed | cancelled
+  - timestamp
+  - payload
+```
+
+如果本地宿主需要更简单的调用方式，可以额外提供：
+
+```text
+ToolExecutor
+  - execute(tool_uses, assistant_messages, tool_use_context)
+    -> tool_execution_summary
+```
+
+但 `execute()` 只能是 `execute_stream()` 的 convenience wrapper，
+不应拥有独立于事件流之外的新语义。
 
 ## 必须支持的能力
 
@@ -49,6 +81,13 @@ ToolExecutor
 8. 回收 `tool_result`
 9. 应用 context modifier
 
+其中：
+
+- `tool_started / tool_progress / tool_result / tool_failed / tool_cancelled`
+  应优先作为事件流发射
+- `tool_execution_summary`
+  应视为消费完整个事件流后的聚合结果
+
 ## 为什么 context mutation 要延后
 
 并发工具可以同时产出结果，但不能同时修改共享上下文，否则会出现：
@@ -80,3 +119,6 @@ SDK 应至少区分：
 - 工具执行必须可取消、可观察、可恢复
 - 工具执行语义必须不依赖某个模型厂商的原生协议
 - tool executor 负责编排，不负责定义或承载 hands 本身
+- `execute_stream()` 应是第一性接口
+- direct-call `execute()` 如存在，也必须严格由事件流语义推导
+- tool terminal state 与 error class 应与 [../harness/runtime-core/failure-and-terminal-states.md](../harness/runtime-core/failure-and-terminal-states.md) 对齐

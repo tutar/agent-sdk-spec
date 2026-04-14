@@ -140,3 +140,4 @@ SessionExternalMetadata
 - `SessionLifecycleState` 应成为 `Session` 模块的稳定接口之一
 - 它不应被埋进 UI state、process state 或 transcript parsing 逻辑里
 - `requires_action` 必须是结构化对象，而不是字符串消息
+- `requires_action` 与 `failed/cancelled/aborted` 的边界应与 [../harness/runtime-core/failure-and-terminal-states.md](../harness/runtime-core/failure-and-terminal-states.md) 保持一致

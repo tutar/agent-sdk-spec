@@ -42,6 +42,9 @@
 - background task 与 subagent 常由本机进程承载
 - verifier 常作为本地独立 agent/task 执行
 
+这里的“本地”只描述常见部署优化，不代表接口可以假设所有组件与 harness 共进程。
+相关约束见 [../../harness/deployment-boundaries.md](../../harness/deployment-boundaries.md)。
+
 ## 对 orchestration 的要求
 
 - 支持本地 task-first orchestration

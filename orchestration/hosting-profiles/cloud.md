@@ -50,6 +50,10 @@
 - deployment boundary
 - remote session / remote sandbox / proxy boundary
 
+Cloud profile 也应被视为 SDK 设计的约束来源，而不只是一个额外适配层。
+换句话说，稳定接口必须先满足 cloud/distributed semantics，再允许 TUI/Desktop 提供同进程优化。
+相关约束见 [../../harness/deployment-boundaries.md](../../harness/deployment-boundaries.md)。
+
 ## 默认实现映射
 
 当前代码库对这一 profile 的直接实现并不完整，但已有相关映射：

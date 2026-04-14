@@ -114,23 +114,24 @@ agent 可以运行在 task 之上，但 agent 不等于 task。
 
 ```text
 TaskManager
-  - register(runtime_task)
-  - update(task_id, patch)
-  - attach_output(task_id, output_handle)
-  - complete(task_id, result?)
-  - fail(task_id, error)
-  - kill(task_id)
+  - spawn(task_spec) -> task_handle
+  - append_event(task_handle, task_event)
+  - attach_output(task_handle, output_handle)
+  - kill(task_handle)
   - list(selector?) -> runtime_tasks
-  - get(task_id) -> runtime_task
+  - get(task_handle) -> runtime_task
+  - read_events(task_handle, cursor?) -> task_event_slice
+  - await(task_handle) -> task_terminal_state
 ```
 
 推荐补充接口：
 
 ```text
-TaskNotifier
-  - emit_started(task_id)
-  - emit_progress(task_id, delta)
-  - emit_terminal(task_id, status, summary)
+TaskEvent
+  - task_id
+  - type: started | progress | notification | completed | failed | killed
+  - timestamp
+  - payload
 ```
 
 ```text
@@ -139,6 +140,11 @@ TaskOutputStore
   - read_delta(output_ref, cursor) -> delta
   - evict(output_ref)
 ```
+
+如果本地宿主希望暴露更直接的过程式操作，
+例如 `complete()`、`fail()`、`update()`，
+也应把它们理解为 `append_event()` 的 convenience facade，
+而不是另一套独立状态机。
 
 ## 默认实现映射
 
@@ -185,3 +191,6 @@ TaskOutputStore
 - 后台任务必须支持状态同步、输出句柄、通知和 kill
 - task 语义必须独立于具体语言线程模型或协程模型
 - task manager 应足以支撑 shell、agent、remote、teammate 等多类执行对象
+- `task_handle + task_event + output_handle` 应优先于进程内 task 对象引用
+- direct-call task API 如存在，也必须严格由 task event 语义推导
+- task terminal state 与 retryability 语义应与 [../harness/runtime-core/failure-and-terminal-states.md](../harness/runtime-core/failure-and-terminal-states.md) 对齐

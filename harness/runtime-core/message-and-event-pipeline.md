@@ -99,6 +99,9 @@ StreamEvent
 
 推荐直接复用 [object-model.md](../../object-model.md) 中的 `RuntimeEvent`。
 
+其中与失败、取消、阻塞相关的事件字段应与
+[failure-and-terminal-states.md](failure-and-terminal-states.md) 保持一致。
+
 ## 五、推荐分层关系
 
 ```text
@@ -196,3 +199,4 @@ UserInput
 - 对外协议不应等于内部消息对象
 - `tool_use / tool_result` 一致性应成为消息管线的核心约束
 - boundary 和 control message 应被允许存在，但不要求全部外露
+- 外部事件字段应优先复用 [../../object-model.md](../../object-model.md) 中的 canonical objects

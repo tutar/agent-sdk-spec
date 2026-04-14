@@ -131,3 +131,4 @@ ToolExecutionUpdate
 - 工具增量执行应成为独立规范概念
 - progress、result、abort reason 必须显式建模
 - batch execution 与 streaming execution 应共享语义，但不应强行合并为同一种执行器
+- `streaming_fallback`、`user_interrupted`、`sibling_error` 等 abort reason 应能映射到统一 terminal/error 语义，见 [../harness/runtime-core/failure-and-terminal-states.md](../harness/runtime-core/failure-and-terminal-states.md)

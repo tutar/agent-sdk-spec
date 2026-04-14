@@ -36,6 +36,17 @@ SchemaEnvelope
   - payload
 ```
 
+推荐优先为这些 canonical objects 提供稳定 envelope：
+
+- `RuntimeEvent`
+- `TerminalState`
+- `SdkError`
+- `RequiresAction`
+- `TaskEvent`
+- `SessionCheckpoint`
+
+对应 canonical 字段表见 [object-model.md](object-model.md)。
+
 ## 兼容策略
 
 - reader 应尽量向前兼容新增可选字段
@@ -47,3 +58,4 @@ SchemaEnvelope
 
 - 标准对象必须有清晰的版本演进规则
 - 跨语言兼容首先依赖稳定序列化语义，而不是同名类型定义
+- 对象版本演进应优先围绕 canonical object model 展开，而不是围绕某个单一实现仓库的本地类型

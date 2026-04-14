@@ -37,12 +37,17 @@ PolicyDecision
 
 ```text
 RequiresAction
+  - action_type
   - tool_name
   - action_description
   - tool_use_id
   - request_id
   - input
+  - resumable
+  - details?
 ```
+
+canonical 字段表见 [../object-model.md](../object-model.md)。
 
 ## 设计要求
 
@@ -122,3 +127,4 @@ DenialFallbackPolicy
 - denial tracking 应被视为策略退化机制
 - 所有策略判定都必须可追踪、可解释
 - 权限责任不能下放给底层模型
+- policy 产生的 `requires_action` 和 `permission_denied` 应分别映射到 canonical `RequiresAction` 与 `SdkError`
