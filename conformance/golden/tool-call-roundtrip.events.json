@@ -1,0 +1,26 @@
+{
+  "artifact_id": "tool-call-roundtrip.events.v1",
+  "schema_version": "1.0",
+  "scenario": "tool-call-roundtrip",
+  "events": [
+    {
+      "type": "turn_started"
+    },
+    {
+      "type": "tool_started",
+      "tool_use_id": "toolu_1"
+    },
+    {
+      "type": "tool_result",
+      "tool_use_id": "toolu_1"
+    },
+    {
+      "type": "turn_completed",
+      "terminal_state": "completed"
+    }
+  ],
+  "constraints": [
+    "every tool_started must have one final tool_result with the same tool_use_id",
+    "tool_result must occur before turn_completed"
+  ]
+}

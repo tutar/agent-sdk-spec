@@ -1,0 +1,15 @@
+{
+  "artifact_id": "session-resume.event-log.v1",
+  "schema_version": "1.0",
+  "scenario": "session-resume",
+  "requirements": [
+    "session id remains stable across restore",
+    "new events append after restore instead of overwriting prior log",
+    "restored session can accept a new ingress and complete a new turn"
+  ],
+  "event_log_shape": [
+    "existing durable events",
+    "restore marker or equivalent internal recovery state",
+    "new turn events appended after restore"
+  ]
+}

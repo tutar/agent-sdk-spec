@@ -1,0 +1,9 @@
+{
+  "artifact_id": "prompt-cache-stable-prefix.v1",
+  "schema_version": "1.0",
+  "scenario": "prompt-cache-stable-prefix",
+  "constraints": [
+    "stable prefix remains unchanged across turns that only modify dynamic suffix",
+    "cache policy remains stable across equivalent turns"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "artifact_id": "prompt-cache-strategy-equivalence.v1",
+  "schema_version": "1.0",
+  "scenario": "prompt-cache-strategy-equivalence",
+  "constraints": [
+    "anthropic-native and openclaw-mediated strategies expose equivalent upper-layer semantics",
+    "strategy changes do not force upper-layer behavior drift"
+  ]
+}

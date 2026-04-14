@@ -1,0 +1,9 @@
+{
+  "artifact_id": "prompt-cache-dynamic-suffix.v1",
+  "schema_version": "1.0",
+  "scenario": "prompt-cache-dynamic-suffix",
+  "constraints": [
+    "dynamic suffix may change without mutating the stable prefix",
+    "dynamic context must not be modeled as transcript rewrite"
+  ]
+}

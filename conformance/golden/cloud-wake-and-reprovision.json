@@ -1,0 +1,10 @@
+{
+  "artifact_id": "cloud-wake-and-reprovision.v1",
+  "schema_version": "1.0",
+  "scenario": "cloud-wake-and-reprovision",
+  "constraints": [
+    "session identity remains stable across wake and reprovision",
+    "execution environment lifecycle is independent from durable session state",
+    "wake and reprovision are externally auditable through runtime events or durable logs"
+  ]
+}

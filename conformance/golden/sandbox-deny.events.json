@@ -1,0 +1,14 @@
+{
+  "artifact_id": "sandbox-deny.events.v1",
+  "schema_version": "1.0",
+  "scenario": "sandbox-deny",
+  "allowed_terminal_states": [
+    "sandbox_denied",
+    "requires_action",
+    "failed"
+  ],
+  "constraints": [
+    "sandbox denial must remain structurally identifiable",
+    "sandbox denial must not corrupt subsequent session continuity"
+  ]
+}

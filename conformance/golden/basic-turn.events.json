@@ -1,0 +1,23 @@
+{
+  "artifact_id": "basic-turn.events.v1",
+  "schema_version": "1.0",
+  "scenario": "basic-turn",
+  "events": [
+    {
+      "type": "turn_started"
+    },
+    {
+      "type": "assistant_output",
+      "streaming_allowed": true
+    },
+    {
+      "type": "turn_completed",
+      "terminal_state": "completed"
+    }
+  ],
+  "lifecycle": [
+    "idle",
+    "running",
+    "idle"
+  ]
+}

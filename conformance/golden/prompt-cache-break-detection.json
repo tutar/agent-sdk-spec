@@ -1,0 +1,16 @@
+{
+  "artifact_id": "prompt-cache-break-detection.v1",
+  "schema_version": "1.0",
+  "scenario": "prompt-cache-break-detection",
+  "valid_reasons": [
+    "ttl_changed",
+    "cache_scope_changed",
+    "prompt_bytes_changed",
+    "tool_surface_changed",
+    "model_identity_changed"
+  ],
+  "constraints": [
+    "cache break remains structurally identifiable",
+    "expected cache miss and unexpected cache break are distinguishable"
+  ]
+}

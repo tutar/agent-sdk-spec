@@ -1,0 +1,45 @@
+{
+  "artifact_id": "requires-action-approval.events.v1",
+  "schema_version": "1.0",
+  "scenario": "requires-action-approval",
+  "phase_1": {
+    "lifecycle": [
+      "idle",
+      "running",
+      "requires_action"
+    ],
+    "events": [
+      {
+        "type": "turn_started"
+      },
+      {
+        "type": "requires_action",
+        "payload_required": [
+          "tool_name",
+          "tool_use_id"
+        ]
+      }
+    ]
+  },
+  "phase_2": {
+    "lifecycle": [
+      "requires_action",
+      "running",
+      "idle"
+    ],
+    "events": [
+      {
+        "type": "tool_started",
+        "tool_use_id": "toolu_1"
+      },
+      {
+        "type": "tool_result",
+        "tool_use_id": "toolu_1"
+      },
+      {
+        "type": "turn_completed",
+        "terminal_state": "completed"
+      }
+    ]
+  }
+}

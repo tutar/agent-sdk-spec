@@ -1,0 +1,10 @@
+{
+  "artifact_id": "memory-recall-and-consolidation.v1",
+  "schema_version": "1.0",
+  "scenario": "memory-recall-and-consolidation",
+  "constraints": [
+    "recalled memory enters context assembly rather than transcript rewrite",
+    "consolidation updates durable memory without overwriting transcript history",
+    "restored sessions continue to observe consolidated durable memory"
+  ]
+}
