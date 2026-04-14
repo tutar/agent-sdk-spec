@@ -66,19 +66,19 @@ SessionLifecycleController
 
 当前代码库中的默认 session 实现由这些部分组成：
 
-- [bootstrap/state.ts](../../bootstrap/state.ts)
+- [bootstrap/state.ts](../../cc/bootstrap/state.ts)
   identity
-- [utils/sessionState.ts](../../utils/sessionState.ts)
+- [utils/sessionState.ts](../../cc/utils/sessionState.ts)
   runtime state
-- [utils/sessionStorage.ts](../../utils/sessionStorage.ts)
+- [utils/sessionStorage.ts](../../cc/utils/sessionStorage.ts)
   transcript + sidechain storage
-- [utils/sessionRestore.ts](../../utils/sessionRestore.ts)
+- [utils/sessionRestore.ts](../../cc/utils/sessionRestore.ts)
   restore
-- [services/SessionMemory/sessionMemory.ts](../../services/SessionMemory/sessionMemory.ts)
+- [services/SessionMemory/sessionMemory.ts](../../cc/services/SessionMemory/sessionMemory.ts)
   short-term session memory
-- [memdir/findRelevantMemories.ts](../../memdir/findRelevantMemories.ts)
+- [memdir/findRelevantMemories.ts](../../cc/memdir/findRelevantMemories.ts)
   durable memory recall linkage
-- [tools/AgentTool/agentMemory.ts](../../tools/AgentTool/agentMemory.ts)
+- [tools/AgentTool/agentMemory.ts](../../cc/tools/AgentTool/agentMemory.ts)
   agent-scoped durable memory
 
 默认落点上：

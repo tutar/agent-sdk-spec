@@ -34,11 +34,11 @@ Harness
 
 当前代码库中的默认 harness 由以下几层拼起来：
 
-- [QueryEngine.ts](../../QueryEngine.ts)
+- [QueryEngine.ts](../../cc/QueryEngine.ts)
   负责会话级输入处理、消息持有、transcript 落盘、query 驱动
-- [query.ts](../../query.ts)
+- [query.ts](../../cc/query.ts)
   负责核心 agent loop、tool use 回路、budget/compact/recovery
-- [context.ts](../../context.ts)
+- [context.ts](../../cc/context.ts)
   负责 system/user context 提供
 
 默认路径是：

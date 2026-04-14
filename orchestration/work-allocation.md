@@ -130,7 +130,7 @@ DependencyManager
 
 本仓库当前默认实现映射到：
 
-- [utils/tasks.ts](../../utils/tasks.ts)
+- [utils/tasks.ts](../../cc/utils/tasks.ts)
 
 默认实现特征：
 

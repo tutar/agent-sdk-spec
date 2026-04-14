@@ -67,8 +67,8 @@ ToolDefinition
 
 ## 当前仓库映射
 
-- 统一契约见 [Tool.ts](../../Tool.ts)
-- 工具注册表见 [tools.ts](../../tools.ts)
+- 统一契约见 [Tool.ts](../../cc/Tool.ts)
+- 工具注册表见 [tools.ts](../../cc/tools.ts)
 
 ## 规范结论
 

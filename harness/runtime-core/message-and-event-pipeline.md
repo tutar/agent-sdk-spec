@@ -168,7 +168,7 @@ UserInput
 
 ### 输入与会话投影边界
 
-- [QueryEngine.ts](../../../QueryEngine.ts)
+- [QueryEngine.ts](../../../cc/QueryEngine.ts)
 
 默认实现特征：
 
@@ -178,12 +178,12 @@ UserInput
 
 ### 内部消息工厂与变换
 
-- [utils/messages.ts](../../../utils/messages.ts)
-- [utils/messages/mappers.ts](../../../utils/messages/mappers.ts)
+- [utils/messages.ts](../../../cc/utils/messages.ts)
+- [utils/messages/mappers.ts](../../../cc/utils/messages/mappers.ts)
 
 ### Turn 级消息推进状态机
 
-- [query.ts](../../../query.ts)
+- [query.ts](../../../cc/query.ts)
 
 默认实现特征：
 

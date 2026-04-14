@@ -43,9 +43,9 @@ SdkRuntimeEvent
 
 ## 默认实现映射
 
-- 队列实现见 [utils/sdkEventQueue.ts](../../../utils/sdkEventQueue.ts)
-- session state 投影见 [utils/sessionState.ts](../../../utils/sessionState.ts)
-- task progress / lifecycle 投影见 [utils/task/framework.ts](../../../utils/task/framework.ts) 和 [utils/task/sdkProgress.ts](../../../utils/task/sdkProgress.ts)
+- 队列实现见 [utils/sdkEventQueue.ts](../../../cc/utils/sdkEventQueue.ts)
+- session state 投影见 [utils/sessionState.ts](../../../cc/utils/sessionState.ts)
+- task progress / lifecycle 投影见 [utils/task/framework.ts](../../../cc/utils/task/framework.ts) 和 [utils/task/sdkProgress.ts](../../../cc/utils/task/sdkProgress.ts)
 
 ## 规范结论
 

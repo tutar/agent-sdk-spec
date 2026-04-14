@@ -55,13 +55,13 @@ SkillInvocationBridge
 
 当前代码库中的默认实现是：
 
-- [skills/loadSkillsDir.ts](../../../skills/loadSkillsDir.ts)
+- [skills/loadSkillsDir.ts](../../../cc/skills/loadSkillsDir.ts)
   从 `skills/` 目录和相关来源加载 skill，并构造成 `Command(type='prompt')`
-- [types/command.ts](../../../types/command.ts)
+- [types/command.ts](../../../cc/types/command.ts)
   定义 `PromptCommand` / `Command`，这是 skill 的默认运行时对象
-- [commands.ts](../../../commands.ts)
+- [commands.ts](../../../cc/commands.ts)
   提供 `getSkillToolCommands()`、`getMcpSkillCommands()` 等筛选逻辑
-- [tools/SkillTool/SkillTool.ts](../../../tools/SkillTool/SkillTool.ts)
+- [tools/SkillTool/SkillTool.ts](../../../cc/tools/SkillTool/SkillTool.ts)
   作为默认 `SkillInvocationBridge`
 
 源码里的关键判断是：
@@ -80,10 +80,10 @@ SkillInvocationBridge
 
 ## 当前源码映射
 
-- `createSkillCommand()` 在 [skills/loadSkillsDir.ts](../../../skills/loadSkillsDir.ts) 中把 skill 转成 `Command(type='prompt')`
+- `createSkillCommand()` 在 [skills/loadSkillsDir.ts](../../../cc/skills/loadSkillsDir.ts) 中把 skill 转成 `Command(type='prompt')`
 - `loadedFrom` 用于区分 skill 来源，包含 `skills / plugin / managed / bundled / mcp`
-- `getSkillToolCommands()` 在 [commands.ts](../../../commands.ts) 中筛选模型可见 skill
-- `SkillTool` 在 [tools/SkillTool/SkillTool.ts](../../../tools/SkillTool/SkillTool.ts) 中调用 skill，并在必要时 fork sub-agent
+- `getSkillToolCommands()` 在 [commands.ts](../../../cc/commands.ts) 中筛选模型可见 skill
+- `SkillTool` 在 [tools/SkillTool/SkillTool.ts](../../../cc/tools/SkillTool/SkillTool.ts) 中调用 skill，并在必要时 fork sub-agent
 
 因此，当前源码里的关系应理解为：
 

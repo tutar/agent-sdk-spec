@@ -55,7 +55,7 @@ PostTurnEvent
 
 ## 默认实现
 
-当前代码库的默认实现入口在 [query/stopHooks.ts](../../../query/stopHooks.ts)。
+当前代码库的默认实现入口在 [query/stopHooks.ts](../../../cc/query/stopHooks.ts)。
 
 它会在 turn 结束时触发：
 
@@ -67,10 +67,10 @@ PostTurnEvent
 
 相关默认映射包括：
 
-- [utils/hooks.ts](../../../utils/hooks.ts)
-- [services/PromptSuggestion/promptSuggestion.ts](../../../services/PromptSuggestion/promptSuggestion.ts)
-- [services/extractMemories/extractMemories.ts](../../../services/extractMemories/extractMemories.ts)
-- [services/autoDream/autoDream.ts](../../../services/autoDream/autoDream.ts)
+- [utils/hooks.ts](../../../cc/utils/hooks.ts)
+- [services/PromptSuggestion/promptSuggestion.ts](../../../cc/services/PromptSuggestion/promptSuggestion.ts)
+- [services/extractMemories/extractMemories.ts](../../../cc/services/extractMemories/extractMemories.ts)
+- [services/autoDream/autoDream.ts](../../../cc/services/autoDream/autoDream.ts)
 
 ## 要解决的问题
 

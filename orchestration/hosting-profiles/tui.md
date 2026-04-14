@@ -54,11 +54,11 @@
 
 当前代码库中的默认 TUI hosting profile 主要映射到：
 
-- [screens/REPL.tsx](../../../screens/REPL.tsx)
-- [QueryEngine.ts](../../../QueryEngine.ts)
-- [utils/sessionStorage.ts](../../../utils/sessionStorage.ts)
-- [tasks/LocalAgentTask/LocalAgentTask.tsx](../../../tasks/LocalAgentTask/LocalAgentTask.tsx)
-- [tools/AgentTool/built-in/verificationAgent.ts](../../../tools/AgentTool/built-in/verificationAgent.ts)
+- [screens/REPL.tsx](../../../cc/screens/REPL.tsx)
+- [QueryEngine.ts](../../../cc/QueryEngine.ts)
+- [utils/sessionStorage.ts](../../../cc/utils/sessionStorage.ts)
+- [tasks/LocalAgentTask/LocalAgentTask.tsx](../../../cc/tasks/LocalAgentTask/LocalAgentTask.tsx)
+- [tools/AgentTool/built-in/verificationAgent.ts](../../../cc/tools/AgentTool/built-in/verificationAgent.ts)
 
 ## 规范结论
 

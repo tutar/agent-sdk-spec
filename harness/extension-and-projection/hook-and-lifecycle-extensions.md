@@ -143,13 +143,13 @@ PermissionHookEffect
 
 当前仓库中的默认实现映射为：
 
-- 核心执行器见 [utils/hooks.ts](../../../utils/hooks.ts)
-- stop hook 投影见 [query/stopHooks.ts](../../../query/stopHooks.ts)
-- session-scoped hooks 见 [utils/hooks/sessionHooks.ts](../../../utils/hooks/sessionHooks.ts)
-- hook 事件广播见 [utils/hooks/hookEvents.ts](../../../utils/hooks/hookEvents.ts)
-- frontmatter hook 注册见 [utils/hooks/registerFrontmatterHooks.ts](../../../utils/hooks/registerFrontmatterHooks.ts)
-- permission hook 投影见 [hooks/toolPermission/PermissionContext.ts](../../../hooks/toolPermission/PermissionContext.ts)
-- 内部 post-sampling hook registry 见 [utils/hooks/postSamplingHooks.ts](../../../utils/hooks/postSamplingHooks.ts)
+- 核心执行器见 [utils/hooks.ts](../../../cc/utils/hooks.ts)
+- stop hook 投影见 [query/stopHooks.ts](../../../cc/query/stopHooks.ts)
+- session-scoped hooks 见 [utils/hooks/sessionHooks.ts](../../../cc/utils/hooks/sessionHooks.ts)
+- hook 事件广播见 [utils/hooks/hookEvents.ts](../../../cc/utils/hooks/hookEvents.ts)
+- frontmatter hook 注册见 [utils/hooks/registerFrontmatterHooks.ts](../../../cc/utils/hooks/registerFrontmatterHooks.ts)
+- permission hook 投影见 [hooks/toolPermission/PermissionContext.ts](../../../cc/hooks/toolPermission/PermissionContext.ts)
+- 内部 post-sampling hook registry 见 [utils/hooks/postSamplingHooks.ts](../../../cc/utils/hooks/postSamplingHooks.ts)
 
 ## 规范结论
 

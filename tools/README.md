@@ -43,11 +43,11 @@
 
 当前源码已经体现了这层区分：
 
-- `Tool` 是 [Tool.ts](../../Tool.ts)
-- `Skill` 是独立能力语义接口，默认由 [types/command.ts](../../types/command.ts) 中的 `Command(type='prompt')` 承载
-- `Command` 的默认对象模型定义在 [types/command.ts](../../types/command.ts)
-- `MCP` 是 [services/mcp/client.ts](../../services/mcp/client.ts) 驱动的协议接入层
-- [tools/SkillTool/SkillTool.ts](../../tools/SkillTool/SkillTool.ts) 只是把 `Skill` 暴露给模型调用的桥接 tool，不是 skill 本身
+- `Tool` 是 [Tool.ts](../../cc/Tool.ts)
+- `Skill` 是独立能力语义接口，默认由 [types/command.ts](../../cc/types/command.ts) 中的 `Command(type='prompt')` 承载
+- `Command` 的默认对象模型定义在 [types/command.ts](../../cc/types/command.ts)
+- `MCP` 是 [services/mcp/client.ts](../../cc/services/mcp/client.ts) 驱动的协议接入层
+- [tools/SkillTool/SkillTool.ts](../../cc/tools/SkillTool/SkillTool.ts) 只是把 `Skill` 暴露给模型调用的桥接 tool，不是 skill 本身
 
 ## 生态兼容要求
 
@@ -131,34 +131,34 @@ McpBundleHost
 
 当前代码库中的默认实现是：
 
-- [Tool.ts](../../Tool.ts)
+- [Tool.ts](../../cc/Tool.ts)
   定义工具契约、权限接口、并发与中断语义
-- [tools.ts](../../tools.ts)
+- [tools.ts](../../cc/tools.ts)
   组装 builtin tools、feature-gated tools、MCP tools，并注册 `SkillTool`
-- [types/command.ts](../../types/command.ts)
+- [types/command.ts](../../cc/types/command.ts)
   定义默认 `Command` 共享对象模型
-- [commands.ts](../../commands.ts)
+- [commands.ts](../../cc/commands.ts)
   组装本地命令、skills、MCP commands，并做可见性筛选
-- [services/tools/toolOrchestration.ts](../../services/tools/toolOrchestration.ts)
+- [services/tools/toolOrchestration.ts](../../cc/services/tools/toolOrchestration.ts)
   按并发安全性分批执行
-- [services/tools/StreamingToolExecutor.ts](../../services/tools/StreamingToolExecutor.ts)
+- [services/tools/StreamingToolExecutor.ts](../../cc/services/tools/StreamingToolExecutor.ts)
   处理流式 tool use、取消传播和结果有序发射
 
 默认执行平面上的代表工具包括：
 
-- [tools/BashTool/BashTool.tsx](../../tools/BashTool/BashTool.tsx)
+- [tools/BashTool/BashTool.tsx](../../cc/tools/BashTool/BashTool.tsx)
   默认 shell 执行能力
-- [tools/AgentTool/AgentTool.tsx](../../tools/AgentTool/AgentTool.tsx)
+- [tools/AgentTool/AgentTool.tsx](../../cc/tools/AgentTool/AgentTool.tsx)
   默认子 agent / orchestration 入口
-- [tools/SkillTool/SkillTool.ts](../../tools/SkillTool/SkillTool.ts)
+- [tools/SkillTool/SkillTool.ts](../../cc/tools/SkillTool/SkillTool.ts)
   skill invocation bridge，负责把 skill 暴露成模型可调用入口
 
 与外部生态的默认映射是：
 
 - Agent Skills
-  当前仓库已有 `skills/` 目录结构与 `SKILL.md` 驱动模式，默认实现落在 [skills/loadSkillsDir.ts](../../skills/loadSkillsDir.ts)
+  当前仓库已有 `skills/` 目录结构与 `SKILL.md` 驱动模式，默认实现落在 [skills/loadSkillsDir.ts](../../cc/skills/loadSkillsDir.ts)
 - MCP
-  当前仓库已有 MCP client、resource、prompt、tool 集成路径，默认实现落在 [services/mcp/client.ts](../../services/mcp/client.ts)
+  当前仓库已有 MCP client、resource、prompt、tool 集成路径，默认实现落在 [services/mcp/client.ts](../../cc/services/mcp/client.ts)
 - MCPB
   当前仓库暂无完整桌面 bundle host 规范实现，但规范上应为桌面端预留 bundle install/load/verify/update 能力
 

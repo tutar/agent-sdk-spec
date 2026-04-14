@@ -33,9 +33,9 @@ BridgeMessageProjection
 
 ## 默认实现映射
 
-- 主逻辑见 [bridge/bridgeMessaging.ts](../../../bridge/bridgeMessaging.ts)
-- inbound normalization 见 [bridge/inboundMessages.ts](../../../bridge/inboundMessages.ts)
-- inbound attachment normalization 见 [bridge/inboundAttachments.ts](../../../bridge/inboundAttachments.ts)
+- 主逻辑见 [bridge/bridgeMessaging.ts](../../../cc/bridge/bridgeMessaging.ts)
+- inbound normalization 见 [bridge/inboundMessages.ts](../../../cc/bridge/inboundMessages.ts)
+- inbound attachment normalization 见 [bridge/inboundAttachments.ts](../../../cc/bridge/inboundAttachments.ts)
 
 ## 规范结论
 

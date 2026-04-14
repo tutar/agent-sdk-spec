@@ -64,9 +64,9 @@ ConsolidationState
 
 当前代码库里，这一层默认由两条链路组成：
 
-- [services/extractMemories/extractMemories.ts](../../services/extractMemories/extractMemories.ts)
+- [services/extractMemories/extractMemories.ts](../../cc/services/extractMemories/extractMemories.ts)
   从当前 session transcript 提炼 durable memories
-- [services/autoDream/autoDream.ts](../../services/autoDream/autoDream.ts)
+- [services/autoDream/autoDream.ts](../../cc/services/autoDream/autoDream.ts)
   对多个 session 和记忆文件做 consolidation
 
 同时，规范上还应把手动 dream 一并纳入：
@@ -78,9 +78,9 @@ ConsolidationState
 
 相关默认映射还包括：
 
-- [services/autoDream/consolidationPrompt.ts](../../services/autoDream/consolidationPrompt.ts)
-- [services/autoDream/consolidationLock.ts](../../services/autoDream/consolidationLock.ts)
-- [memdir/paths.ts](../../memdir/paths.ts)
+- [services/autoDream/consolidationPrompt.ts](../../cc/services/autoDream/consolidationPrompt.ts)
+- [services/autoDream/consolidationLock.ts](../../cc/services/autoDream/consolidationLock.ts)
+- [memdir/paths.ts](../../cc/memdir/paths.ts)
 
 从默认实现可以看出：
 

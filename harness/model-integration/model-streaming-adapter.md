@@ -114,7 +114,7 @@ ModelStreamingAdapter
 
 本仓库当前默认实现映射到：
 
-- [services/api/claude.ts](../../../services/api/claude.ts)
+- [services/api/claude.ts](../../../cc/services/api/claude.ts)
 
 默认实现特征：
 

@@ -52,22 +52,22 @@ ContinuationController
 当前仓库中的 CLI 默认实现可映射为：
 
 - `Ingress`
-  [screens/REPL.tsx](../../../screens/REPL.tsx)
+  [screens/REPL.tsx](../../../cc/screens/REPL.tsx)
 - `Eval`
-  [QueryEngine.ts](../../../QueryEngine.ts) + [query.ts](../../../query.ts)
+  [QueryEngine.ts](../../../cc/QueryEngine.ts) + [query.ts](../../../cc/query.ts)
 - `Projection`
-  [components/Messages.tsx](../../../components/Messages.tsx) 及相关消息组件
+  [components/Messages.tsx](../../../cc/components/Messages.tsx) 及相关消息组件
 - `Continuation`
-  [screens/REPL.tsx](../../../screens/REPL.tsx) 中持续存在的 session-bound loop
+  [screens/REPL.tsx](../../../cc/screens/REPL.tsx) 中持续存在的 session-bound loop
 
 remote-control / bridge 变体则映射为：
 
 - `Ingress`
-  [bridge/inboundMessages.ts](../../../bridge/inboundMessages.ts)
+  [bridge/inboundMessages.ts](../../../cc/bridge/inboundMessages.ts)
 - `Projection`
-  [bridge/bridgeMessaging.ts](../../../bridge/bridgeMessaging.ts)
+  [bridge/bridgeMessaging.ts](../../../cc/bridge/bridgeMessaging.ts)
 - `Transport`
-  [bridge/replBridgeTransport.ts](../../../bridge/replBridgeTransport.ts)
+  [bridge/replBridgeTransport.ts](../../../cc/bridge/replBridgeTransport.ts)
 
 ## 规范结论
 

@@ -91,13 +91,13 @@ AgentObservability
 
 ## 默认实现映射
 
-- session signal 见 [utils/sessionState.ts](../../../utils/sessionState.ts)
-- task progress 投影见 [utils/task/sdkProgress.ts](../../../utils/task/sdkProgress.ts) 和 [tasks/LocalAgentTask/LocalAgentTask.tsx](../../../tasks/LocalAgentTask/LocalAgentTask.tsx)
-- task lifecycle / attachment 见 [utils/task/framework.ts](../../../utils/task/framework.ts)
-- turn usage / result 汇总见 [QueryEngine.ts](../../../QueryEngine.ts)
-- tracing span 见 [utils/telemetry/sessionTracing.ts](../../../utils/telemetry/sessionTracing.ts)
-- detailed context tracing 见 [utils/telemetry/betaSessionTracing.ts](../../../utils/telemetry/betaSessionTracing.ts)
-- headless latency profiling 见 [utils/headlessProfiler.ts](../../../utils/headlessProfiler.ts)
+- session signal 见 [utils/sessionState.ts](../../../cc/utils/sessionState.ts)
+- task progress 投影见 [utils/task/sdkProgress.ts](../../../cc/utils/task/sdkProgress.ts) 和 [tasks/LocalAgentTask/LocalAgentTask.tsx](../../../cc/tasks/LocalAgentTask/LocalAgentTask.tsx)
+- task lifecycle / attachment 见 [utils/task/framework.ts](../../../cc/utils/task/framework.ts)
+- turn usage / result 汇总见 [QueryEngine.ts](../../../cc/QueryEngine.ts)
+- tracing span 见 [utils/telemetry/sessionTracing.ts](../../../cc/utils/telemetry/sessionTracing.ts)
+- detailed context tracing 见 [utils/telemetry/betaSessionTracing.ts](../../../cc/utils/telemetry/betaSessionTracing.ts)
+- headless latency profiling 见 [utils/headlessProfiler.ts](../../../cc/utils/headlessProfiler.ts)
 
 ## 规范结论
 

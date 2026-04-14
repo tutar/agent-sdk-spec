@@ -113,12 +113,12 @@ DeltaContextPlan
 
 ## 当前仓库映射
 
-- [utils/systemPrompt.ts](../../../utils/systemPrompt.ts) 负责 system prompt composition
-- [context.ts](../../../context.ts) 负责结构化 system/user context
-- [utils/api.ts](../../../utils/api.ts) 负责把 system/user context 投影进模型输入
-- [utils/attachments.ts](../../../utils/attachments.ts) 负责 attachment context assembly
-- [utils/claudemd.ts](../../../utils/claudemd.ts) 负责 memory / instructions discovery
-- [utils/analyzeContext.ts](../../../utils/analyzeContext.ts) 提供上下文构成分析
+- [utils/systemPrompt.ts](../../../cc/utils/systemPrompt.ts) 负责 system prompt composition
+- [context.ts](../../../cc/context.ts) 负责结构化 system/user context
+- [utils/api.ts](../../../cc/utils/api.ts) 负责把 system/user context 投影进模型输入
+- [utils/attachments.ts](../../../cc/utils/attachments.ts) 负责 attachment context assembly
+- [utils/claudemd.ts](../../../cc/utils/claudemd.ts) 负责 memory / instructions discovery
+- [utils/analyzeContext.ts](../../../cc/utils/analyzeContext.ts) 提供上下文构成分析
 - [prompt-cache-strategy.md](prompt-cache-strategy.md) 负责把这些上下文进一步组织成 cache-friendly 输入
 
 ## 规范结论

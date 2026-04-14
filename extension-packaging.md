@@ -69,10 +69,10 @@ BuiltinExtensionPackage
 
 当前仓库中的默认实现映射为：
 
-- marketplace / intent 见 [../utils/plugins/marketplaceManager.ts](../utils/plugins/marketplaceManager.ts)
-- plugin materialization 见 [../utils/plugins/pluginLoader.ts](../utils/plugins/pluginLoader.ts)
-- active refresh 见 [../utils/plugins/refresh.ts](../utils/plugins/refresh.ts)
-- built-in plugin registry 见 [../plugins/builtinPlugins.ts](../plugins/builtinPlugins.ts)
+- marketplace / intent 见 [../utils/plugins/marketplaceManager.ts](../cc/utils/plugins/marketplaceManager.ts)
+- plugin materialization 见 [../utils/plugins/pluginLoader.ts](../cc/utils/plugins/pluginLoader.ts)
+- active refresh 见 [../utils/plugins/refresh.ts](../cc/utils/plugins/refresh.ts)
+- built-in plugin registry 见 [../plugins/builtinPlugins.ts](../cc/plugins/builtinPlugins.ts)
 
 ## 规范结论
 

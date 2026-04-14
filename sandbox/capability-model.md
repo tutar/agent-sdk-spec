@@ -91,7 +91,7 @@ SandboxIsolationLevel
 - network restrictions
 - process-level wrapping
 
-对应实现见 [utils/sandbox/sandbox-adapter.ts](../../utils/sandbox/sandbox-adapter.ts)。
+对应实现见 [utils/sandbox/sandbox-adapter.ts](../../cc/utils/sandbox/sandbox-adapter.ts)。
 
 ## 规范结论
 

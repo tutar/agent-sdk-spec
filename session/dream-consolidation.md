@@ -161,11 +161,11 @@ dream 的职责应聚焦于：
 
 当前仓库中的默认实现映射为：
 
-- 自动调度与执行见 [../../services/autoDream/autoDream.ts](../../services/autoDream/autoDream.ts)
-- dream prompt 见 [../../services/autoDream/consolidationPrompt.ts](../../services/autoDream/consolidationPrompt.ts)
-- 锁与时间戳语义见 [../../services/autoDream/consolidationLock.ts](../../services/autoDream/consolidationLock.ts)
-- 后台任务表面见 [../../tasks/DreamTask/DreamTask.ts](../../tasks/DreamTask/DreamTask.ts)
-- memory 路径与 daily log/index 语义见 [../../memdir/paths.ts](../../memdir/paths.ts)
+- 自动调度与执行见 [../../services/autoDream/autoDream.ts](../../cc/services/autoDream/autoDream.ts)
+- dream prompt 见 [../../services/autoDream/consolidationPrompt.ts](../../cc/services/autoDream/consolidationPrompt.ts)
+- 锁与时间戳语义见 [../../services/autoDream/consolidationLock.ts](../../cc/services/autoDream/consolidationLock.ts)
+- 后台任务表面见 [../../tasks/DreamTask/DreamTask.ts](../../cc/tasks/DreamTask/DreamTask.ts)
+- memory 路径与 daily log/index 语义见 [../../memdir/paths.ts](../../cc/memdir/paths.ts)
 
 当前代码库还明确保留了手动 `/dream` 概念：
 

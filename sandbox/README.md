@@ -70,9 +70,9 @@
 
 当前代码库中的默认实现主要落在 `Execution Sandbox`：
 
-- [tools/BashTool/BashTool.tsx](../../tools/BashTool/BashTool.tsx)
+- [tools/BashTool/BashTool.tsx](../../cc/tools/BashTool/BashTool.tsx)
   作为默认 shell execution entry
-- [utils/sandbox/sandbox-adapter.ts](../../utils/sandbox/sandbox-adapter.ts)
+- [utils/sandbox/sandbox-adapter.ts](../../cc/utils/sandbox/sandbox-adapter.ts)
   作为外部 sandbox runtime 的适配层
 
 它主要体现的是：

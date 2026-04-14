@@ -57,15 +57,15 @@ mcp skills  -> Skill (default carrier may be Command)
 
 当前代码库中的默认实现是：
 
-- [services/mcp/client.ts](../../../services/mcp/client.ts)
+- [services/mcp/client.ts](../../../cc/services/mcp/client.ts)
   MCP 主客户端，负责连接 server 并拉取 tools/prompts/resources/skills
-- [services/mcp/utils.ts](../../../services/mcp/utils.ts)
+- [services/mcp/utils.ts](../../../cc/services/mcp/utils.ts)
   处理 server 维度的筛选、命名和 prompt/skill 区分
-- [tools/MCPTool/MCPTool.ts](../../../tools/MCPTool/MCPTool.ts)
+- [tools/MCPTool/MCPTool.ts](../../../cc/tools/MCPTool/MCPTool.ts)
   作为默认 `McpToolAdapter` 的底座
-- [tools/ListMcpResourcesTool/ListMcpResourcesTool.ts](../../../tools/ListMcpResourcesTool/ListMcpResourcesTool.ts)
+- [tools/ListMcpResourcesTool/ListMcpResourcesTool.ts](../../../cc/tools/ListMcpResourcesTool/ListMcpResourcesTool.ts)
   暴露 resources 枚举能力
-- [tools/ReadMcpResourceTool/ReadMcpResourceTool.ts](../../../tools/ReadMcpResourceTool/ReadMcpResourceTool.ts)
+- [tools/ReadMcpResourceTool/ReadMcpResourceTool.ts](../../../cc/tools/ReadMcpResourceTool/ReadMcpResourceTool.ts)
   暴露 resource 读取能力
 
 ## 要解决的问题
@@ -80,10 +80,10 @@ mcp skills  -> Skill (default carrier may be Command)
 
 源码里的实现已经明确分了几条链路：
 
-- `fetchToolsForClient()` 在 [services/mcp/client.ts](../../../services/mcp/client.ts) 中通过 `tools/list` 拉取工具，并包装成 `Tool`
-- `fetchCommandsForClient()` 在 [services/mcp/client.ts](../../../services/mcp/client.ts) 中通过 `prompts/list` 拉取 MCP prompts，并包装成 `Command(type='prompt')`
-- `fetchResourcesForClient()` 在 [services/mcp/client.ts](../../../services/mcp/client.ts) 中通过 `resources/list` 拉取资源
-- `fetchMcpSkillsForClient()` 在 [services/mcp/client.ts](../../../services/mcp/client.ts) 中被单独调用，注释明确写的是从 `skill://` resources 发现 skills
+- `fetchToolsForClient()` 在 [services/mcp/client.ts](../../../cc/services/mcp/client.ts) 中通过 `tools/list` 拉取工具，并包装成 `Tool`
+- `fetchCommandsForClient()` 在 [services/mcp/client.ts](../../../cc/services/mcp/client.ts) 中通过 `prompts/list` 拉取 MCP prompts，并包装成 `Command(type='prompt')`
+- `fetchResourcesForClient()` 在 [services/mcp/client.ts](../../../cc/services/mcp/client.ts) 中通过 `resources/list` 拉取资源
+- `fetchMcpSkillsForClient()` 在 [services/mcp/client.ts](../../../cc/services/mcp/client.ts) 中被单独调用，注释明确写的是从 `skill://` resources 发现 skills
 
 源码中的关键洞察：
 
@@ -92,7 +92,7 @@ mcp skills  -> Skill (default carrier may be Command)
 - MCP prompt 的命名形态是 `mcp__<server>__<prompt>`
 - MCP skill 的命名形态是 `<server>:<skill>`
 
-这些规则集中体现在 [services/mcp/utils.ts](../../../services/mcp/utils.ts)。
+这些规则集中体现在 [services/mcp/utils.ts](../../../cc/services/mcp/utils.ts)。
 
 ## 规范结论
 

@@ -68,10 +68,10 @@ ContextGovernance
 
 ## 当前仓库映射
 
-- 自动 compact 见 [services/compact/autoCompact.ts](../../../services/compact/autoCompact.ts)
-- turn 预算见 [query/tokenBudget.ts](../../../query/tokenBudget.ts)
-- 工具结果外存化见 [utils/toolResultStorage.ts](../../../utils/toolResultStorage.ts)
-- 上下文构成分析见 [utils/analyzeContext.ts](../../../utils/analyzeContext.ts)
+- 自动 compact 见 [services/compact/autoCompact.ts](../../../cc/services/compact/autoCompact.ts)
+- turn 预算见 [query/tokenBudget.ts](../../../cc/query/tokenBudget.ts)
+- 工具结果外存化见 [utils/toolResultStorage.ts](../../../cc/utils/toolResultStorage.ts)
+- 上下文构成分析见 [utils/analyzeContext.ts](../../../cc/utils/analyzeContext.ts)
 
 ## 规范结论
 

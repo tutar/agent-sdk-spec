@@ -140,7 +140,7 @@ DomainStateRegistry
 
 ### ProcessState
 
-- [bootstrap/state.ts](../../../bootstrap/state.ts)
+- [bootstrap/state.ts](../../../cc/bootstrap/state.ts)
 
 默认实现特征：
 
@@ -149,9 +149,9 @@ DomainStateRegistry
 
 ### InteractionState
 
-- [state/AppStateStore.ts](../../../state/AppStateStore.ts)
-- [state/AppState.tsx](../../../state/AppState.tsx)
-- [state/store.ts](../../../state/store.ts)
+- [state/AppStateStore.ts](../../../cc/state/AppStateStore.ts)
+- [state/AppState.tsx](../../../cc/state/AppState.tsx)
+- [state/store.ts](../../../cc/state/store.ts)
 
 默认实现特征：
 
@@ -161,9 +161,9 @@ DomainStateRegistry
 ### DomainState
 
 - task state
-  [Task.ts](../../../Task.ts), [tasks/types.ts](../../../tasks/types.ts)
+  [Task.ts](../../../cc/Task.ts), [tasks/types.ts](../../../cc/tasks/types.ts)
 - plugin / mcp projections
-  [state/AppStateStore.ts](../../../state/AppStateStore.ts)
+  [state/AppStateStore.ts](../../../cc/state/AppStateStore.ts)
 
 ## 八、规范结论
 

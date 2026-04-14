@@ -126,7 +126,7 @@ SessionExternalMetadata
 
 本仓库当前默认实现映射到：
 
-- [utils/sessionState.ts](../../utils/sessionState.ts)
+- [utils/sessionState.ts](../../cc/utils/sessionState.ts)
 
 默认实现特征：
 

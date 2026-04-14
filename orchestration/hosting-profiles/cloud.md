@@ -54,9 +54,9 @@
 
 当前代码库对这一 profile 的直接实现并不完整，但已有相关映射：
 
-- [bridge/](../../../bridge)
-- [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../../tasks/RemoteAgentTask/RemoteAgentTask.tsx)
-- [utils/teleport.tsx](../../../utils/teleport.tsx)
+- [bridge/](../../../cc/bridge)
+- [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../../cc/tasks/RemoteAgentTask/RemoteAgentTask.tsx)
+- [utils/teleport.tsx](../../../cc/utils/teleport.tsx)
 - [managed-orchestration.md](../managed-orchestration.md)
 
 ## 规范结论

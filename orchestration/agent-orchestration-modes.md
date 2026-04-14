@@ -226,13 +226,13 @@ Orchestrator
 当前仓库里，这四种模式已有比较完整的默认实现映射：
 
 - `sync_worker`
-  [tools/AgentTool/AgentTool.tsx](../../tools/AgentTool/AgentTool.tsx) + [tools/AgentTool/runAgent.ts](../../tools/AgentTool/runAgent.ts)
+  [tools/AgentTool/AgentTool.tsx](../../cc/tools/AgentTool/AgentTool.tsx) + [tools/AgentTool/runAgent.ts](../../cc/tools/AgentTool/runAgent.ts)
 - `background_task`
-  [tasks/LocalAgentTask/LocalAgentTask.tsx](../../tasks/LocalAgentTask/LocalAgentTask.tsx)
+  [tasks/LocalAgentTask/LocalAgentTask.tsx](../../cc/tasks/LocalAgentTask/LocalAgentTask.tsx)
 - `persistent_teammate`
-  [tools/shared/spawnMultiAgent.ts](../../tools/shared/spawnMultiAgent.ts) + [tasks/InProcessTeammateTask/InProcessTeammateTask.tsx](../../tasks/InProcessTeammateTask/InProcessTeammateTask.tsx)
+  [tools/shared/spawnMultiAgent.ts](../../cc/tools/shared/spawnMultiAgent.ts) + [tasks/InProcessTeammateTask/InProcessTeammateTask.tsx](../../cc/tasks/InProcessTeammateTask/InProcessTeammateTask.tsx)
 - `remote_task`
-  [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../tasks/RemoteAgentTask/RemoteAgentTask.tsx)
+  [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../cc/tasks/RemoteAgentTask/RemoteAgentTask.tsx)
 
 ## 规范结论
 

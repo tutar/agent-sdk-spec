@@ -191,12 +191,12 @@ ForkCachePlan
 
 当前仓库中的默认实现映射为：
 
-- system prompt section cache 见 [../../../constants/systemPromptSections.ts](../../../constants/systemPromptSections.ts)
-- static / dynamic boundary 见 [../../../constants/prompts.ts](../../../constants/prompts.ts)
-- system prompt block 切分见 [../../../utils/api.ts](../../../utils/api.ts)
-- provider-native cache marker / cache reference 投影见 [../../../services/api/claude.ts](../../../services/api/claude.ts)
-- cache break detection 见 [../../../services/api/promptCacheBreakDetection.ts](../../../services/api/promptCacheBreakDetection.ts)
-- fork cache sharing 见 [../../../utils/forkedAgent.ts](../../../utils/forkedAgent.ts) 与 [../../../tools/AgentTool/forkSubagent.ts](../../../tools/AgentTool/forkSubagent.ts)
+- system prompt section cache 见 [../../../constants/systemPromptSections.ts](../../../cc/constants/systemPromptSections.ts)
+- static / dynamic boundary 见 [../../../constants/prompts.ts](../../../cc/constants/prompts.ts)
+- system prompt block 切分见 [../../../utils/api.ts](../../../cc/utils/api.ts)
+- provider-native cache marker / cache reference 投影见 [../../../services/api/claude.ts](../../../cc/services/api/claude.ts)
+- cache break detection 见 [../../../services/api/promptCacheBreakDetection.ts](../../../cc/services/api/promptCacheBreakDetection.ts)
+- fork cache sharing 见 [../../../utils/forkedAgent.ts](../../../cc/utils/forkedAgent.ts) 与 [../../../tools/AgentTool/forkSubagent.ts](../../../cc/tools/AgentTool/forkSubagent.ts)
 
 当前默认实现应视为：
 

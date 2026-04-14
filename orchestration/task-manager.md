@@ -142,23 +142,23 @@ TaskOutputStore
 
 ## 默认实现映射
 
-- 基础 runtime task 抽象见 [Task.ts](../../Task.ts)
-- task registry 见 [tasks.ts](../../tasks.ts)
-- 统一任务框架见 [utils/task/framework.ts](../../utils/task/framework.ts)
-- 任务状态联合类型见 [tasks/types.ts](../../tasks/types.ts)
+- 基础 runtime task 抽象见 [Task.ts](../../cc/Task.ts)
+- task registry 见 [tasks.ts](../../cc/tasks.ts)
+- 统一任务框架见 [utils/task/framework.ts](../../cc/utils/task/framework.ts)
+- 任务状态联合类型见 [tasks/types.ts](../../cc/tasks/types.ts)
 
 典型默认实现：
 
 - `local_bash`
-  [tasks/LocalShellTask/LocalShellTask.tsx](../../tasks/LocalShellTask/LocalShellTask.tsx)
+  [tasks/LocalShellTask/LocalShellTask.tsx](../../cc/tasks/LocalShellTask/LocalShellTask.tsx)
 - `local_agent`
-  [tasks/LocalAgentTask/LocalAgentTask.tsx](../../tasks/LocalAgentTask/LocalAgentTask.tsx)
+  [tasks/LocalAgentTask/LocalAgentTask.tsx](../../cc/tasks/LocalAgentTask/LocalAgentTask.tsx)
 - `remote_agent`
-  [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../tasks/RemoteAgentTask/RemoteAgentTask.tsx)
+  [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../cc/tasks/RemoteAgentTask/RemoteAgentTask.tsx)
 - `in_process_teammate`
-  [tasks/InProcessTeammateTask/types.ts](../../tasks/InProcessTeammateTask/types.ts)
+  [tasks/InProcessTeammateTask/types.ts](../../cc/tasks/InProcessTeammateTask/types.ts)
 - `dream`
-  [tasks/DreamTask/DreamTask.ts](../../tasks/DreamTask/DreamTask.ts)
+  [tasks/DreamTask/DreamTask.ts](../../cc/tasks/DreamTask/DreamTask.ts)
 
 默认实现特征：
 

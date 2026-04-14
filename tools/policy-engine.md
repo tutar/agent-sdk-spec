@@ -108,10 +108,10 @@ DenialFallbackPolicy
 
 ## 当前仓库映射
 
-- 权限主逻辑见 [utils/permissions/permissions.ts](../../utils/permissions/permissions.ts)
-- 拒绝追踪见 [utils/permissions/denialTracking.ts](../../utils/permissions/denialTracking.ts)
-- 会话阻塞态见 [utils/sessionState.ts](../../utils/sessionState.ts)
-- 工具中断语义见 [Tool.ts](../../Tool.ts) 和 [services/tools/StreamingToolExecutor.ts](../../services/tools/StreamingToolExecutor.ts)
+- 权限主逻辑见 [utils/permissions/permissions.ts](../../cc/utils/permissions/permissions.ts)
+- 拒绝追踪见 [utils/permissions/denialTracking.ts](../../cc/utils/permissions/denialTracking.ts)
+- 会话阻塞态见 [utils/sessionState.ts](../../cc/utils/sessionState.ts)
+- 工具中断语义见 [Tool.ts](../../cc/Tool.ts) 和 [services/tools/StreamingToolExecutor.ts](../../cc/services/tools/StreamingToolExecutor.ts)
 
 ## 规范结论
 

@@ -182,12 +182,12 @@ InvocableEntry
 
 当前仓库中的默认实现映射为：
 
-- built-in commands 注册表见 [../commands.ts](../commands.ts)
-- built-in tools 注册表见 [../tools.ts](../tools.ts)
-- bundled skills 注册表见 [../skills/bundledSkills.ts](../skills/bundledSkills.ts) 与 [../skills/bundled/index.ts](../skills/bundled/index.ts)
-- skills / deprecated commands / plugin skills 加载见 [../skills/loadSkillsDir.ts](../skills/loadSkillsDir.ts)
-- plugin command 加载见 [../utils/plugins/loadPluginCommands.ts](../utils/plugins/loadPluginCommands.ts)
-- built-in plugin registry 见 [../plugins/builtinPlugins.ts](../plugins/builtinPlugins.ts)
+- built-in commands 注册表见 [../commands.ts](../cc/commands.ts)
+- built-in tools 注册表见 [../tools.ts](../cc/tools.ts)
+- bundled skills 注册表见 [../skills/bundledSkills.ts](../cc/skills/bundledSkills.ts) 与 [../skills/bundled/index.ts](../cc/skills/bundled/index.ts)
+- skills / deprecated commands / plugin skills 加载见 [../skills/loadSkillsDir.ts](../cc/skills/loadSkillsDir.ts)
+- plugin command 加载见 [../utils/plugins/loadPluginCommands.ts](../cc/utils/plugins/loadPluginCommands.ts)
+- built-in plugin registry 见 [../plugins/builtinPlugins.ts](../cc/plugins/builtinPlugins.ts)
 
 从当前仓库可见：
 

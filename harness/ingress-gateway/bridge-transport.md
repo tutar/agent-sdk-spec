@@ -39,7 +39,7 @@ BridgeTransportStatus
 
 ## 默认实现映射
 
-- 抽象定义见 [bridge/replBridgeTransport.ts](../../../bridge/replBridgeTransport.ts)
+- 抽象定义见 [bridge/replBridgeTransport.ts](../../../cc/bridge/replBridgeTransport.ts)
 - 当前默认实现包括：
   - `HybridTransport`
   - `SSETransport + CCRClient`

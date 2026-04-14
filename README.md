@@ -68,11 +68,11 @@
 
 ## 与当前代码的默认映射
 
-- Harness: [QueryEngine.ts](../QueryEngine.ts), [query.ts](../query.ts), [context.ts](../context.ts)
-  Harness 侧还包含入口网关抽象，当前默认映射到 [bridge/initReplBridge.ts](../bridge/initReplBridge.ts), [bridge/replBridge.ts](../bridge/replBridge.ts), [bridge/bridgeMessaging.ts](../bridge/bridgeMessaging.ts), [bridge/replBridgeTransport.ts](../bridge/replBridgeTransport.ts)
-- Session: [bootstrap/state.ts](../bootstrap/state.ts), [utils/sessionStorage.ts](../utils/sessionStorage.ts), [utils/sessionRestore.ts](../utils/sessionRestore.ts), [utils/sessionState.ts](../utils/sessionState.ts)
-- Tools: [Tool.ts](../Tool.ts), [tools.ts](../tools.ts), [services/tools/toolOrchestration.ts](../services/tools/toolOrchestration.ts), [services/tools/StreamingToolExecutor.ts](../services/tools/StreamingToolExecutor.ts)
-  `tools` 域下还包含 `skills`、`mcp` 两个稳定子接口，以及 `command` 共享对象模型；默认映射分别位于 [skills/loadSkillsDir.ts](../skills/loadSkillsDir.ts)、[services/mcp/client.ts](../services/mcp/client.ts)、[types/command.ts](../types/command.ts)
-- Sandbox: [tools/BashTool/BashTool.tsx](../tools/BashTool/BashTool.tsx), [tasks/LocalShellTask/LocalShellTask.tsx](../tasks/LocalShellTask/LocalShellTask.tsx), [utils/sandbox/sandbox-adapter.ts](../utils/sandbox/sandbox-adapter.ts)
-- Orchestration: [tasks.ts](../tasks.ts), [tasks/LocalAgentTask/LocalAgentTask.tsx](../tasks/LocalAgentTask/LocalAgentTask.tsx), [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../tasks/RemoteAgentTask/RemoteAgentTask.tsx), [tools/AgentTool/runAgent.ts](../tools/AgentTool/runAgent.ts)
-  `orchestration` 域下默认还包含标准 agent 编排模式，映射到 [tools/AgentTool/AgentTool.tsx](../tools/AgentTool/AgentTool.tsx)、[tasks/InProcessTeammateTask/InProcessTeammateTask.tsx](../tasks/InProcessTeammateTask/InProcessTeammateTask.tsx)、[tools/shared/spawnMultiAgent.ts](../tools/shared/spawnMultiAgent.ts)
+- Harness: [QueryEngine.ts](../cc/QueryEngine.ts), [query.ts](../cc/query.ts), [context.ts](../cc/context.ts)
+  Harness 侧还包含入口网关抽象，当前默认映射到 [bridge/initReplBridge.ts](../cc/bridge/initReplBridge.ts), [bridge/replBridge.ts](../cc/bridge/replBridge.ts), [bridge/bridgeMessaging.ts](../cc/bridge/bridgeMessaging.ts), [bridge/replBridgeTransport.ts](../cc/bridge/replBridgeTransport.ts)
+- Session: [bootstrap/state.ts](../cc/bootstrap/state.ts), [utils/sessionStorage.ts](../cc/utils/sessionStorage.ts), [utils/sessionRestore.ts](../cc/utils/sessionRestore.ts), [utils/sessionState.ts](../cc/utils/sessionState.ts)
+- Tools: [Tool.ts](../cc/Tool.ts), [tools.ts](../cc/tools.ts), [services/tools/toolOrchestration.ts](../cc/services/tools/toolOrchestration.ts), [services/tools/StreamingToolExecutor.ts](../cc/services/tools/StreamingToolExecutor.ts)
+  `tools` 域下还包含 `skills`、`mcp` 两个稳定子接口，以及 `command` 共享对象模型；默认映射分别位于 [skills/loadSkillsDir.ts](../cc/skills/loadSkillsDir.ts)、[services/mcp/client.ts](../cc/services/mcp/client.ts)、[types/command.ts](../cc/types/command.ts)
+- Sandbox: [tools/BashTool/BashTool.tsx](../cc/tools/BashTool/BashTool.tsx), [tasks/LocalShellTask/LocalShellTask.tsx](../cc/tasks/LocalShellTask/LocalShellTask.tsx), [utils/sandbox/sandbox-adapter.ts](../cc/utils/sandbox/sandbox-adapter.ts)
+- Orchestration: [tasks.ts](../cc/tasks.ts), [tasks/LocalAgentTask/LocalAgentTask.tsx](../cc/tasks/LocalAgentTask/LocalAgentTask.tsx), [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../cc/tasks/RemoteAgentTask/RemoteAgentTask.tsx), [tools/AgentTool/runAgent.ts](../cc/tools/AgentTool/runAgent.ts)
+  `orchestration` 域下默认还包含标准 agent 编排模式，映射到 [tools/AgentTool/AgentTool.tsx](../cc/tools/AgentTool/AgentTool.tsx)、[tasks/InProcessTeammateTask/InProcessTeammateTask.tsx](../cc/tasks/InProcessTeammateTask/InProcessTeammateTask.tsx)、[tools/shared/spawnMultiAgent.ts](../cc/tools/shared/spawnMultiAgent.ts)

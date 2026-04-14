@@ -47,9 +47,9 @@ Command
 
 当前代码库中的默认对象模型在：
 
-- [types/command.ts](../../types/command.ts)
+- [types/command.ts](../../cc/types/command.ts)
   定义 `PromptCommand`、`LocalCommand`、`LocalJSXCommand` 及统一 `Command`
-- [commands.ts](../../commands.ts)
+- [commands.ts](../../cc/commands.ts)
   负责命令装配、筛选和对模型可见性的整理
 
 源码里的关键事实是：
@@ -85,11 +85,11 @@ local slash  -> Command
 
 ## 当前源码映射
 
-- [skills/loadSkillsDir.ts](../../skills/loadSkillsDir.ts)
+- [skills/loadSkillsDir.ts](../../cc/skills/loadSkillsDir.ts)
   通过 `createSkillCommand()` 构造 skill 对应的 command
-- [services/mcp/client.ts](../../services/mcp/client.ts)
+- [services/mcp/client.ts](../../cc/services/mcp/client.ts)
   通过 `fetchCommandsForClient()` 构造 mcp prompt 对应的 command
-- [tools/SkillTool/SkillTool.ts](../../tools/SkillTool/SkillTool.ts)
+- [tools/SkillTool/SkillTool.ts](../../cc/tools/SkillTool/SkillTool.ts)
   把 command 形态的 skill 暴露给模型调用
 
 ## 规范结论

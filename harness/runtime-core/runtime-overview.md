@@ -90,10 +90,10 @@ SDK 应统一对外暴露事件流，而不是只返回最终文本。
 
 ## 当前仓库映射
 
-- 主循环入口见 [query.ts](../../../query.ts)
-- 上下文入口见 [context.ts](../../../context.ts)
-- 工具装配入口见 [tools.ts](../../../tools.ts)
-- 任务抽象见 [Task.ts](../../../Task.ts)
+- 主循环入口见 [query.ts](../../../cc/query.ts)
+- 上下文入口见 [context.ts](../../../cc/context.ts)
+- 工具装配入口见 [tools.ts](../../../cc/tools.ts)
+- 任务抽象见 [Task.ts](../../../cc/Task.ts)
 
 ## 规范结论
 

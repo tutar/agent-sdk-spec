@@ -313,8 +313,8 @@ MemoryConsolidator
 
 ### Short-Term Session Memory
 
-- [services/SessionMemory/sessionMemory.ts](../../services/SessionMemory/sessionMemory.ts)
-- [services/SessionMemory/sessionMemoryUtils.ts](../../services/SessionMemory/sessionMemoryUtils.ts)
+- [services/SessionMemory/sessionMemory.ts](../../cc/services/SessionMemory/sessionMemory.ts)
+- [services/SessionMemory/sessionMemoryUtils.ts](../../cc/services/SessionMemory/sessionMemoryUtils.ts)
 
 默认实现特征：
 
@@ -327,9 +327,9 @@ MemoryConsolidator
 
 ### Durable Memory
 
-- [services/extractMemories/extractMemories.ts](../../services/extractMemories/extractMemories.ts)
-- [memdir/findRelevantMemories.ts](../../memdir/findRelevantMemories.ts)
-- [services/autoDream/autoDream.ts](../../services/autoDream/autoDream.ts)
+- [services/extractMemories/extractMemories.ts](../../cc/services/extractMemories/extractMemories.ts)
+- [memdir/findRelevantMemories.ts](../../cc/memdir/findRelevantMemories.ts)
+- [services/autoDream/autoDream.ts](../../cc/services/autoDream/autoDream.ts)
 
 默认实现特征：
 
@@ -340,8 +340,8 @@ MemoryConsolidator
 
 ### Durable Memory Injection
 
-- [context.ts](../../context.ts)
-- [utils/claudemd.js](../../utils/claudemd.js)
+- [context.ts](../../cc/context.ts)
+- [utils/claudemd.ts](../../cc/utils/claudemd.ts)
 
 默认实现特征：
 
@@ -350,7 +350,7 @@ MemoryConsolidator
 
 ### Scoped Durable Memory
 
-- [tools/AgentTool/agentMemory.ts](../../tools/AgentTool/agentMemory.ts)
+- [tools/AgentTool/agentMemory.ts](../../cc/tools/AgentTool/agentMemory.ts)
 
 默认实现特征：
 
