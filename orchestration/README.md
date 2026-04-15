@@ -4,6 +4,8 @@
 
 `Orchestration` 负责连接 harness、session、tools 和 sandbox，把它们组织成一个可运行、可恢复、可扩展的 managed-agent 系统。
 
+模块总览见 [../module-overview.md](../module-overview.md)，术语归属见 [../terminology-and-ownership.md](../terminology-and-ownership.md)。
+
 它负责：
 
 - 管理 task 生命周期
@@ -64,15 +66,10 @@ Orchestrator
 
 ## 目录内文档
 
-- [agent-orchestration-modes.md](agent-orchestration-modes.md)
-- [task-manager.md](task-manager.md)
-- [work-allocation.md](work-allocation.md)
-- [managed-orchestration.md](managed-orchestration.md)
-- [evaluation-and-verification.md](evaluation-and-verification.md)
-- [reflection-and-verification.md](reflection-and-verification.md)
-- [hosting-profiles/tui.md](hosting-profiles/tui.md)
-- [hosting-profiles/desktop.md](hosting-profiles/desktop.md)
-- [hosting-profiles/cloud.md](hosting-profiles/cloud.md)
+- [agent-orchestration/README.md](agent-orchestration/README.md)
+- [local/README.md](local/README.md)
+- [cloud/README.md](cloud/README.md)
+- [cloud/managed-orchestration.md](cloud/managed-orchestration.md)
 
 ## 规范结论
 

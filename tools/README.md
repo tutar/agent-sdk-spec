@@ -4,6 +4,8 @@
 
 `Tools` 模块负责把外部能力表达成模型可调用、系统可执行、策略可审查的能力单元。
 
+模块总览见 [../module-overview.md](../module-overview.md)，术语归属见 [../terminology-and-ownership.md](../terminology-and-ownership.md)。
+
 这个模块包含三层：
 
 - tool definition
@@ -23,10 +25,8 @@
 
 这套能力域需要跨宿主形态保持一致：
 
-- `TUI`
+- `Local`
   工具常以本地 tool registry + 本地执行为主
-- `Desktop`
-  工具常与本地 bundle、MCP host、GUI 能力集成
 - `Cloud`
   工具常与 remote tool proxy、remote execution、managed MCP 集成
 
@@ -40,6 +40,8 @@
 - plugin skills
 
 这些能力可以在同一个 command surface 中展示，但其内部来源语义仍需保留。共享规范见 [../capability-surface.md](../capability-surface.md)。
+
+另外，`reflection / verification` 这类 review capability 对 harness 来说也可呈现为 command-like capability，但它们不属于 Agent Skills 生态对象。它们的默认执行后端可以委托给 orchestration 中的 verifier task / subagent。
 
 当前源码已经体现了这层区分：
 
@@ -170,9 +172,10 @@ McpBundleHost
 - 如何在长会话中处理 tool progress、tool failure、tool result persistence
 - 如何避免把 `skill`、`mcp`、`tool` 三种不同来源混成一个抽象
 - 如何在不新增顶层模块的前提下，把 `command` 这种共享对象模型写清楚
+- 如何让 command-like review capability 通过 orchestration 执行而不混淆模块边界
 - 如何避免 SDK 自建一个与 Skills/MCP 生态割裂的封闭工具系统
 - 如何让桌面端把本地 MCP server 分发与安装纳入同一套规范
-- 如何让同一 tool/skill/mcp 语义同时适配 TUI、Desktop、Cloud
+- 如何让同一 tool/skill/mcp 语义同时适配 Local、Cloud
 
 ## 默认设计取向
 
@@ -182,6 +185,7 @@ McpBundleHost
 - tool result 应支持大结果外存化与恢复
 - `tool / skill / mcp` 应在能力域内并列建模，再在模型可见能力层汇合
 - `command` 是共享对象模型，不是新的顶层能力模块
+- command-like capability 可以把 orchestration 作为默认执行后端
 - `SkillTool` 是桥接 tool，不是 skill 抽象本身
 - 协议兼容优先于私有扩展
 
@@ -193,6 +197,7 @@ McpBundleHost
 - skill registry 不等于 tool registry
 - mcp client 不等于 mcp tool adapter
 - command model 不等于顶层模块
+- review capability 不等于 Agent Skills
 
 ## 目录内文档
 
@@ -202,6 +207,7 @@ McpBundleHost
 - [tool-streaming-execution.md](tool-streaming-execution.md)
 - [policy-engine.md](policy-engine.md)
 - [command-model.md](command-model.md)
+- [reflection-and-verification-commands.md](reflection-and-verification-commands.md)
 - [skills/README.md](skills/README.md)
 - [mcp/README.md](mcp/README.md)
 
@@ -220,6 +226,6 @@ McpBundleHost
 - 桌面端实现默认应进一步兼容 MCP Bundles 生态
 - `skill` 与 `mcp` 应作为 `tools` 域下的独立稳定子接口保留
 - `command` 应作为 `tools` 域内的共享对象模型进入 spec
-- tools 语义应跨 TUI、Desktop、Cloud 保持一致，只允许 registry/host 形态变化
+- tools 语义应跨 Local、Cloud 保持一致，只允许 registry/host 形态变化
 - 宿主侧统一 command surface 可以混合展示 built-in commands 与 bundled skills，但不能抹平其来源差异
 - built-in tools 不应只写成抽象概念，baseline 应单独定义

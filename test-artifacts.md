@@ -65,7 +65,6 @@ CompatibilityFixture
 - [conformance/golden/session-resume.event-log.json](conformance/golden/session-resume.event-log.json)
 - [conformance/golden/sandbox-deny.events.json](conformance/golden/sandbox-deny.events.json)
 - [conformance/golden/memory-recall-and-consolidation.json](conformance/golden/memory-recall-and-consolidation.json)
-- [conformance/golden/desktop-bundle-lifecycle.json](conformance/golden/desktop-bundle-lifecycle.json)
 - [conformance/golden/cloud-wake-and-reprovision.json](conformance/golden/cloud-wake-and-reprovision.json)
 - [conformance/golden/prompt-cache-stable-prefix.json](conformance/golden/prompt-cache-stable-prefix.json)
 - [conformance/golden/prompt-cache-dynamic-suffix.json](conformance/golden/prompt-cache-dynamic-suffix.json)

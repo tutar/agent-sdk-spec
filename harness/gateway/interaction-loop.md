@@ -8,7 +8,7 @@
 
 这条循环可概括为：
 
-1. `Ingress`
+1. `Input`
    gateway 接收输入
 2. `Eval`
    harness 推进 turn
@@ -23,17 +23,17 @@
 
 ```text
 GatewayInteractionLoop
-  - accept_ingress(inbound_envelope) -> interaction_ref
+  - accept_input(inbound_envelope) -> interaction_ref
   - bind_session(interaction_ref) -> session_ref
   - invoke_turn(session_ref, inbound_envelope) -> runtime_events
   - project_runtime_events(runtime_events) -> egress_events
-  - await_next_ingress(session_ref)
+  - await_next_input(session_ref)
 ```
 
 也可拆为四个角色：
 
 ```text
-IngressGateway
+Gateway
 HarnessTurnRunner
 EgressProjector
 ContinuationController
@@ -46,12 +46,14 @@ ContinuationController
 - `Eval` 必须由 harness 承担，而不是 gateway
 - `Projection` 必须由 gateway 协调，但不要求所有 egress 都同步完成
 - continuation 应绑定到 session，而不是某个 UI 组件
+- supplement input 必须归入当前 interaction，而不是新建 chat 或新 session
+- interrupt 必须保持显式 control 语义，与 supplement input 分离
 
 ## 默认实现映射
 
 当前仓库中的 CLI 默认实现可映射为：
 
-- `Ingress`
+- `Input`
   [screens/REPL.tsx](../../../cc/screens/REPL.tsx)
 - `Eval`
   [QueryEngine.ts](../../../cc/QueryEngine.ts) + [query.ts](../../../cc/query.ts)
@@ -62,7 +64,7 @@ ContinuationController
 
 remote-control / bridge 变体则映射为：
 
-- `Ingress`
+- `Input`
   [bridge/inboundMessages.ts](../../../cc/bridge/inboundMessages.ts)
 - `Projection`
   [bridge/bridgeMessaging.ts](../../../cc/bridge/bridgeMessaging.ts)

@@ -11,12 +11,12 @@
 - Slack
 - WebSocket
 - Webhook
-- Desktop UI
+- Local UI
 
 它的职责不是运行 agent，也不是做 session restore，而是：
 
 - 接收某个 channel 的原始输入
-- 把原始输入转成 gateway 可消费的标准 ingress
+- 把原始输入转成 gateway 可消费的标准 input
 - 把 gateway/harness 产出的标准 egress 投影回该 channel
 - 处理该 channel 自己的协议、鉴权、消息 ID、回调和重试
 
@@ -47,7 +47,7 @@ ChannelIdentity
 
 InboundEnvelope
   - channel_identity
-  - ingress_kind: user_message | attachment | control | resume | wake
+  - input_kind: user_message | attachment | supplement_input | control | resume | wake
   - payload
   - delivery_metadata
 ```
@@ -57,6 +57,7 @@ InboundEnvelope
 - `ChannelAdapter` 必须位于 gateway 外缘，而不是 harness 内部
 - 不同 channel 的协议差异应止步于 adapter，不应渗透到 harness
 - adapter 应支持 ingress 和 egress 双向投影
+- adapter 应支持 progress-like runtime event 的 channel-native 呈现
 - adapter 可以内嵌在 gateway 进程中，也可以是远端服务
 - adapter 不应直接承担 agent turn 推进职责
 
@@ -73,4 +74,4 @@ InboundEnvelope
 
 - `ChannelAdapter` 属于 gateway 侧，不属于 harness
 - `ChannelAdapter` 是协议边缘，不是运行时控制面
-- CLI REPL、Telegram、Slack、Desktop 都应被视为不同的 channel adapter 落地
+- terminal、GUI、Telegram、Slack、API client 都应被视为不同的 channel adapter 落地

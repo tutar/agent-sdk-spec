@@ -2,7 +2,7 @@
 
 ## 职责
 
-`BridgeMessageProjection` 负责把内部 runtime 消息与 gateway egress / ingress 协议互相投影。
+`BridgeMessageProjection` 负责把内部 runtime 消息与 gateway egress / input 协议互相投影。
 
 它解决：
 
@@ -26,6 +26,7 @@ BridgeMessageProjection
 ## 设计要求
 
 - control flow 与 normal message flow 必须分层
+- tool progress 应作为标准 runtime egress event 被可投影地保留
 - outbound filtering 必须允许屏蔽内部 chatter
 - inbound dedup 必须支持 echo 与 replay 两类场景
 - message projection 必须与 transport 抽象分开

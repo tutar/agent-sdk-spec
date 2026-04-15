@@ -159,14 +159,12 @@ InvocableEntry
 
 ### 3. Host profile 可以决定投影形态，但不能改变语义
 
-- `TUI`
-  常投影为 slash command / picker
-- `Desktop`
-  常投影为 command palette / launcher / settings UI
+- `Local`
+  常投影为本地可调用入口
 - `Cloud`
   常投影为 API-discoverable invocable actions
 
-三者都可以提供统一入口，但不应改变 capability origin 语义。
+两者都可以提供统一入口，但不应改变 capability origin 语义。
 
 ### 4. Builtin Extension Package 是可选规范能力
 

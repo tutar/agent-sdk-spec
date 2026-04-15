@@ -1,29 +1,22 @@
-# TUI Hosting Profile
+# Local Hosting Profile
 
 ## 目标
 
-`TUI Hosting Profile` 描述交互式终端 agent host 的标准职责分布。
+`Local Hosting Profile` 描述单机部署 agent 系统的标准职责分布。
 
-典型形态包括：
+这里的重点不是交互方式，而是部署方式：
 
-- Claude Code
-- Codex CLI
-- 其他长期运行、可持续交互的终端 agent shell
-
-这里的重点不是“一次性 CLI 命令”，而是：
-
-- 持续会话
-- 本地 interaction loop
-- 本地权限交互
-- 本地 session 与本地任务编排
+- channel、gateway、harness、session、tools、sandbox、orchestration 可以部署在同一台机器上
+- 模块之间可以 direct-call
+- session、task、verifier、memory 默认以本地持久化和本地执行为主
 
 ## 角色分布
 
-在 TUI 场景下，推荐的职责分布是：
+在 Local 场景下，推荐的职责分布是：
 
 - `ChannelAdapter`
-  终端输入输出、键盘事件、TUI 组件
-- `IngressGateway`
+  本地接入壳，例如 terminal、GUI、embedded client
+- `Gateway`
   本地输入标准化、session binding、control routing
 - `Harness`
   本地 turn evaluation
@@ -34,13 +27,15 @@
 - `Sandbox`
   以 `Execution Sandbox` 为主
 
+若需要环境级边界，Local 侧应优先表现为给定目录范围内的访问权，而不是远端 execution substrate。详见 [../../sandbox/local/environment-sandbox.md](../../sandbox/local/environment-sandbox.md)。
+
 ## 典型特征
 
-- REPL-like interaction loop 是主路径
 - session 往往本地持久化
-- permission prompt 通常可直接本地交互
+- permission / requires_action 通常可由本机宿主直接完成
 - background task 与 subagent 常由本机进程承载
 - verifier 常作为本地独立 agent/task 执行
+- direct-call contract 是默认优化路径
 
 这里的“本地”只描述常见部署优化，不代表接口可以假设所有组件与 harness 共进程。
 相关约束见 [../../harness/deployment-boundaries.md](../../harness/deployment-boundaries.md)。
@@ -51,11 +46,11 @@
 - 支持 foreground / background agent 切换
 - 支持本地 verifier 作为标准后置步骤
 - 支持本地 permission / requires_action 流
-- 支持 TUI 关闭后 resume 本地 session
+- 支持本地 session resume
 
 ## 默认实现映射
 
-当前代码库中的默认 TUI hosting profile 主要映射到：
+当前代码库中的默认 Local hosting profile 主要映射到：
 
 - [screens/REPL.tsx](../../../cc/screens/REPL.tsx)
 - [QueryEngine.ts](../../../cc/QueryEngine.ts)
@@ -65,5 +60,5 @@
 
 ## 规范结论
 
-- TUI profile 应被视为本地 agent host，而不是简单 CLI 命令包装
+- Local profile 应被视为单机部署形态，而不是某种特定交互壳
 - 在该 profile 中，orchestration 通常以本地 task、subagent、permission 交互为中心

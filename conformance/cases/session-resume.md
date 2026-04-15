@@ -30,11 +30,10 @@
 
 ## Host Notes
 
-- `TUI` 可以使用本地 durable transcript
-- `Desktop` 可以使用本地数据库或 daemon store
+- `Local` 可以使用本地 durable transcript 或本地数据库
 - `Cloud` 可以使用远端 event log store
 
-三者都应满足相同的恢复语义。
+两者都应满足相同的恢复语义。
 
 ## Failure Conditions
 

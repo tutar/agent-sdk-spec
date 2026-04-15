@@ -124,7 +124,7 @@ ForkCachePlan
 
 ### 6. 必须允许 host-neutral 实现
 
-`TUI / Desktop / Cloud` 三种 host 都应共享同一套 prompt cache 语义。
+`Local / Cloud` 两种 host 都应共享同一套 prompt cache 语义。
 
 允许不同 host：
 

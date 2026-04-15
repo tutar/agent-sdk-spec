@@ -17,6 +17,7 @@
 - `Skill` 属于 `tools` 域
 - `Skill` 不是 `Tool`
 - `Skill` 的默认运行时载体可以是 `Command`
+- `Skill` 只服务 Agent Skills 生态
 
 ## 稳定接口
 

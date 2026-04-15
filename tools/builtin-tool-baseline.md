@@ -13,7 +13,7 @@
 ## 设计原则
 
 - 规范稳定的是工具语义，不是某个具体宿主里的实现方式
-- `TUI / Desktop / Cloud` 可以使用不同 backend，但应保留相同外部行为
+- `Local / Cloud` 可以使用不同 backend，但应保留相同外部行为
 - baseline 工具应尽量覆盖代码代理最常见的闭环能力
 - 不属于 baseline 的平台工具、实验工具、厂商特有工具不应混入这里
 
@@ -50,10 +50,8 @@
 
 等价实现要求：
 
-- `TUI`
-  通常是本地文件读取
-- `Desktop`
-  通常是本地工作区读取或 daemon 代理读取
+- `Local`
+  通常是本地工作区读取或本机代理读取
 - `Cloud`
   可是 remote workspace read，但必须保留路径、错误、权限语义
 
@@ -138,10 +136,8 @@
 
 等价实现要求：
 
-- `TUI`
-  通常是本地 shell / process execution
-- `Desktop`
-  通常是本地 daemon 代理 shell
+- `Local`
+  通常是本地 shell / process execution，或本机代理 shell
 - `Cloud`
   通常是 remote execution / environment sandbox shell
 
@@ -259,7 +255,7 @@
 ### LSP
 
 - 面向语言服务、符号、引用、诊断
-- 对 IDE/Desktop/TUI with language tooling 很有价值
+- 对具备语言工具链的本地宿主很有价值
 
 ### EnterWorktree / ExitWorktree
 
@@ -311,4 +307,4 @@
 - `Builtin Tool Baseline` 应单独成文，不应只是 README 中一句话
 - baseline 工具应明确枚举，并说明职责与等价实现要求
 - 规范稳定的是工具语义，而不是具体宿主 backend
-- `TUI / Desktop / Cloud` 可以实现不同，但应共享同一 baseline 行为
+- `Local / Cloud` 可以实现不同，但应共享同一 baseline 行为

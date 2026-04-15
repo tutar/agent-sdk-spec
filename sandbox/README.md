@@ -9,16 +9,14 @@
 - `Execution Sandbox`
   单次工具执行级别的 OS/进程级沙箱
 - `Environment Sandbox`
-  容器、workspace、VM、remote node 级别的长期隔离环境
+  按 `Local / Cloud` 分化的长期环境级隔离边界
 
 此外，还需要有统一的 capability model，把不同实现映射到同一语义平面。
 
 不同宿主形态下，这两层的重心通常不同：
 
-- `TUI`
-  以 `Execution Sandbox` 为主
-- `Desktop`
-  常同时需要 `Execution Sandbox` 与 `Environment Sandbox`
+- `Local`
+  以 `Execution Sandbox` 为主，必要时也可叠加 `Environment Sandbox`
 - `Cloud`
   常以 `Environment Sandbox` 为主，`Execution Sandbox` 为辅
 
@@ -28,7 +26,7 @@
 - 如何让 tool execution level sandbox 与 environment-level sandbox 共存
 - 如何在执行面失效时不丢失 session
 - 如何把不同执行后端统一映射到稳定 capability model
-- 如何让 TUI、Desktop、Cloud 在不同隔离实现上仍保持同一 sandbox 语义
+- 如何让 Local、Cloud 在不同隔离实现上仍保持同一 sandbox 语义
 
 ## 核心原则
 
@@ -59,12 +57,12 @@
 
 ### 3. Environment Sandbox
 
-定义容器、workspace、VM、remote environment 级的长期沙箱：
+定义按 profile 分化的环境级沙箱：
 
-- provision
-- inspect
-- recycle
-- destroy
+- `Local`
+  目录授权与 workspace root 边界
+- `Cloud`
+  remote workspace / container / VM / proxy / credential / provision 底座
 
 ## 默认实现
 
@@ -98,7 +96,9 @@
 
 - [capability-model.md](capability-model.md)
 - [execution-sandbox.md](execution-sandbox.md)
-- [environment-sandbox.md](environment-sandbox.md)
+- [local/README.md](local/README.md)
+- [local/environment-sandbox.md](local/environment-sandbox.md)
+- [cloud/environment-sandbox.md](cloud/environment-sandbox.md)
 - [security-boundary.md](security-boundary.md)
 - [security-boundary-schema.md](security-boundary-schema.md)
 - [execution-schema.md](execution-schema.md)
@@ -133,6 +133,7 @@
 
 - `sandbox` 模块必须显式区分 execution-level 与 environment-level 两层
 - 当前仓库默认实现主要是 `Execution Sandbox`
-- 容器级、workspace级、remote级隔离应落到 `Environment Sandbox`
+- `Local Environment Sandbox` 应收窄为目录授权边界
+- `Cloud Environment Sandbox` 应作为完整 cloud execution substrate 建模
 - tool executor 与 sandbox 必须分离
-- sandbox 规范必须允许三种宿主场景选择不同默认层级，而不改变接口语义
+- sandbox 规范必须允许 Local、Cloud 选择不同默认层级，而不改变接口语义

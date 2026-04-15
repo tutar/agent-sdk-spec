@@ -11,6 +11,7 @@
 - local-jsx command
 - skill 的默认运行时对象
 - mcp prompt 的默认运行时对象
+- reflection / verification 这类高阶 review capability 的入口对象
 
 换句话说：
 
@@ -40,8 +41,11 @@ Command
 - `prompt`
 - `local`
 - `local_ui`
+- `review`
 
 如果某个语言实现不公开 `Command` 类型，也应在内部保留等价区分，避免把 prompt/workflow 型对象直接压成 `Tool`。
+
+对于 `review` 一类 command，`invoke()` 的默认后端可以不是本地函数，而是 orchestration 中的 subagent / task。
 
 ## 默认实现
 
@@ -57,6 +61,7 @@ Command
 - `Skill` 默认由 `Command(type='prompt')` 承载
 - `mcp prompts` 默认也由 `Command(type='prompt')` 承载
 - `Command` 比 `Skill` 更宽，比 `Tool` 更偏 prompt/entrypoint 侧
+- 某些 command 的执行可以委托给 orchestration，而不是直接走 `ToolExecutor`
 
 ## 要解决的问题
 
@@ -64,6 +69,7 @@ Command
 - 如何在不新增顶层模块的前提下表达 prompt/workflow 型对象
 - 如何避免把所有外部能力都压进 `Tool`
 - 如何为 MCP prompts、skills、本地命令提供统一对象承载层
+- 如何表达“上层像 command、下层靠 verifier task 执行”的能力
 
 ## 与 Tool / Skill 的关系
 
@@ -81,6 +87,7 @@ tool         -> Tool
 skill        -> Skill (default carrier may be Command)
 mcp prompt   -> Command
 local slash  -> Command
+review flow  -> Command (may delegate to Orchestration)
 ```
 
 ## 当前源码映射
@@ -96,4 +103,5 @@ local slash  -> Command
 
 - `Command` 应进入 spec，但仅作为 `tools` 域内共享抽象
 - `Command` 不应升级为新的顶层模块
+- command-like capability 可以委托 orchestration 执行，但其入口语义仍属于 `Tools`
 - 各语言 SDK 可以不用复刻当前源码的命名，但必须保留等价语义分层

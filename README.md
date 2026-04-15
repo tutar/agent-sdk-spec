@@ -9,6 +9,14 @@
 
 目标不是沉淀某个具体语言或某一版 harness 的实现细节，而是形成一套可向下指导多语言 SDK、向上承接不同模型与基础设施能力的稳定接口规范。
 
+## 阅读入口
+
+建议先按以下顺序阅读：
+
+1. [module-overview.md](module-overview.md)
+2. [terminology-and-ownership.md](terminology-and-ownership.md)
+3. 五个核心模块的 `README.md`
+
 ## 五个核心模块
 
 - [harness/README.md](harness/README.md)
@@ -20,9 +28,9 @@
 其中 [harness/README.md](harness/README.md) 已进一步按 5 组子主题组织：
 
 - Runtime Core
-- Model Integration
+- Model Provider
 - Context Assembly
-- Ingress Gateway
+- Gateway
 - Extension And Projection
 
 在 `Context Assembly` 子主题下，现已单独补充 bootstrap prompt 规范，用于稳定 system prompt skeleton、section cache 与 static/dynamic boundary。
@@ -33,19 +41,19 @@
 - `harness` 下的 post-turn processing
 - `session` 下的 memory consolidation
 
-此外，规范现在显式面向三种宿主场景：
+此外，规范现在显式面向两种宿主场景：
 
-- `TUI`
-  交互式终端 agent host，例如 Claude Code、Codex CLI
-- `Desktop`
-  GUI + 本地 daemon / bundle host
+- `Local`
+  单机部署，模块可 direct-call，本地 session / task / verifier 为主
 - `Cloud`
   托管 control plane + remote execution
 
-这三种场景不改变五个核心模块的边界，但会改变它们的部署位置、职责分布和默认实现映射。相关差异主要通过 `orchestration/hosting-profiles/` 表达。
+这两种场景不改变五个核心模块的边界，但会改变它们的部署位置、职责分布和默认实现映射。相关差异主要通过 `orchestration/local/` 与 `orchestration/cloud/` 表达。
 
 ## 共享文档
 
+- [module-overview.md](module-overview.md)
+- [terminology-and-ownership.md](terminology-and-ownership.md)
 - [conformance.md](conformance.md)
 - [conformance/README.md](conformance/README.md)
 - [capability-surface.md](capability-surface.md)
@@ -62,7 +70,7 @@
 - 优先稳定 `Harness / Session / Tools / Sandbox / Orchestration` 五个对象。
 - 优先复用模型原生能力，能力不足时由 harness 补齐。
 - durable history、执行环境、工具编排、托管编排必须解耦。
-- 同一套模块边界必须同时适配 TUI、Desktop、Cloud 三种宿主形态。
+- 同一套模块边界必须同时适配 Local、Cloud 两种宿主形态。
 - 文档中的接口描述是跨语言语义，不是具体语言 API。
 - `command` 会作为 `tools` 域内共享抽象出现，但不升级为第六个顶层模块。
 

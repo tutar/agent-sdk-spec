@@ -4,6 +4,8 @@
 
 `Harness` 是直接围绕模型运行的一层控制逻辑。
 
+模块总览见 [../module-overview.md](../module-overview.md)，术语归属见 [../terminology-and-ownership.md](../terminology-and-ownership.md)。
+
 它负责：
 
 - 读取 session 中的可用上下文
@@ -14,8 +16,7 @@
 
 它必须对宿主形态保持中立：
 
-- 在 `TUI` 场景下，通常作为本地 turn runner
-- 在 `Desktop` 场景下，通常运行在本地 daemon 或嵌入式 runtime 中
+- 在 `Local` 场景下，通常作为本地 turn runner
 - 在 `Cloud` 场景下，通常作为可横向扩展的远端 turn runner
 
 ## 稳定接口
@@ -55,7 +56,7 @@ Harness
 - 如何在 tool use、context compact、fallback 之间保持语义连续
 - 如何让模型能力演进时，harness 可以改变而接口不必一起改变
 - 如何让 harness 崩溃时，session 仍然可被新 harness 接管
-- 如何在 TUI、Desktop、Cloud 三种宿主形态下保持同一 turn 语义
+- 如何在 Local、Cloud 两种宿主形态下保持同一 turn 语义
 
 ## 与其它模块的边界
 
@@ -121,14 +122,14 @@ Harness
 - 上下文预算、compact、治理如何实现
 - Anthropic-native 与 OpenClaw-mediated prompt cache 策略如何挂到 harness
 
-### 4. Ingress Gateway
+### 4. Gateway
 
-- [ingress-gateway.md](ingress-gateway/ingress-gateway.md)
-- [channel-adapter.md](ingress-gateway/channel-adapter.md)
-- [interaction-loop.md](ingress-gateway/interaction-loop.md)
-- [bridge-transport.md](ingress-gateway/bridge-transport.md)
-- [bridge-message-projection.md](ingress-gateway/bridge-message-projection.md)
-- [local-session-adapter.md](ingress-gateway/local-session-adapter.md)
+- [gateway.md](gateway/gateway.md)
+- [channel-adapter.md](gateway/channel-adapter.md)
+- [interaction-loop.md](gateway/interaction-loop.md)
+- [bridge-transport.md](gateway/bridge-transport.md)
+- [bridge-message-projection.md](gateway/bridge-message-projection.md)
+- [local-session-adapter.md](gateway/local-session-adapter.md)
 
 这一组回答：
 
@@ -160,4 +161,4 @@ Harness
 - harness 应优先依赖稳定接口，而不是假设自己与 hands 共机
 - harness 的稳定接口应先满足跨进程/跨部署边界语义，再允许提供同进程优化 binding
 - harness 相关状态应至少区分 `ProcessState`、`InteractionState` 与各领域状态投影
-- harness 规范必须同时适配 TUI、Desktop、Cloud 三种 host
+- harness 规范必须同时适配 Local、Cloud 两种 host

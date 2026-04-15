@@ -1,5 +1,7 @@
 # Managed Orchestration
 
+本文档位于 `cloud/` 目录下，因为它描述的是 Cloud deployment 下的核心控制面风格，而不是所有 hosting profile 的共同主路径。
+
 ## 目标
 
 `Managed Orchestration` 描述托管 agent 系统如何在 session、harness 和 hands 解耦后仍保持可靠、低延迟和可扩展。

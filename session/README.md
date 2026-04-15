@@ -4,6 +4,8 @@
 
 `Session` 是 agent runtime 的 durable state boundary。
 
+模块总览见 [../module-overview.md](../module-overview.md)，术语归属见 [../terminology-and-ownership.md](../terminology-and-ownership.md)。
+
 它负责：
 
 - 标识一条可持续运行的 agent 会话
@@ -13,12 +15,10 @@
 - 挂载 session 内的短期连续性记忆
 - 串联 durable memory、subagent branch、remote session 等外部引用
 
-它也必须跨宿主形态稳定：
+它也必须跨部署形态稳定：
 
-- `TUI`
+- `Local`
   通常是本地 durable transcript + restore
-- `Desktop`
-  通常是本地 durable store，可能与 GUI/runtime 分离
 - `Cloud`
   通常是远端 event log / restore store
 
@@ -162,6 +162,6 @@ session 体系必须兼容：
 - `Session` 是 durable state boundary，不是 message array
 - `Session` 模块主要负责 transcript、restore、working state 和 session memory linkage
 - 长短期记忆的详细规范应下沉到独立文档，而不是挤在总览页里
-- session 语义不应因为 TUI、Desktop、Cloud 的落盘位置不同而漂移
+- session 语义不应因为 Local、Cloud 的落盘位置不同而漂移
 - `append_events()` 与 `session_checkpoint` 应优先于进程内 transcript 变异
 - direct-call session API 如存在，也必须严格由 event log 语义推导

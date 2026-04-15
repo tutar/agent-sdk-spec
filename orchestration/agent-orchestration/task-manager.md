@@ -148,23 +148,23 @@ TaskOutputStore
 
 ## 默认实现映射
 
-- 基础 runtime task 抽象见 [Task.ts](../../cc/Task.ts)
-- task registry 见 [tasks.ts](../../cc/tasks.ts)
-- 统一任务框架见 [utils/task/framework.ts](../../cc/utils/task/framework.ts)
-- 任务状态联合类型见 [tasks/types.ts](../../cc/tasks/types.ts)
+- 基础 runtime task 抽象见 [Task.ts](../../../cc/Task.ts)
+- task registry 见 [tasks.ts](../../../cc/tasks.ts)
+- 统一任务框架见 [utils/task/framework.ts](../../../cc/utils/task/framework.ts)
+- 任务状态联合类型见 [tasks/types.ts](../../../cc/tasks/types.ts)
 
 典型默认实现：
 
 - `local_bash`
-  [tasks/LocalShellTask/LocalShellTask.tsx](../../cc/tasks/LocalShellTask/LocalShellTask.tsx)
+  [tasks/LocalShellTask/LocalShellTask.tsx](../../../cc/tasks/LocalShellTask/LocalShellTask.tsx)
 - `local_agent`
-  [tasks/LocalAgentTask/LocalAgentTask.tsx](../../cc/tasks/LocalAgentTask/LocalAgentTask.tsx)
+  [tasks/LocalAgentTask/LocalAgentTask.tsx](../../../cc/tasks/LocalAgentTask/LocalAgentTask.tsx)
 - `remote_agent`
-  [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../cc/tasks/RemoteAgentTask/RemoteAgentTask.tsx)
+  [tasks/RemoteAgentTask/RemoteAgentTask.tsx](../../../cc/tasks/RemoteAgentTask/RemoteAgentTask.tsx)
 - `in_process_teammate`
-  [tasks/InProcessTeammateTask/types.ts](../../cc/tasks/InProcessTeammateTask/types.ts)
+  [tasks/InProcessTeammateTask/types.ts](../../../cc/tasks/InProcessTeammateTask/types.ts)
 - `dream`
-  [tasks/DreamTask/DreamTask.ts](../../cc/tasks/DreamTask/DreamTask.ts)
+  [tasks/DreamTask/DreamTask.ts](../../../cc/tasks/DreamTask/DreamTask.ts)
 
 默认实现特征：
 
@@ -193,4 +193,4 @@ TaskOutputStore
 - task manager 应足以支撑 shell、agent、remote、teammate 等多类执行对象
 - `task_handle + task_event + output_handle` 应优先于进程内 task 对象引用
 - direct-call task API 如存在，也必须严格由 task event 语义推导
-- task terminal state 与 retryability 语义应与 [../harness/runtime-core/failure-and-terminal-states.md](../harness/runtime-core/failure-and-terminal-states.md) 对齐
+- task terminal state 与 retryability 语义应与 [../../harness/runtime-core/failure-and-terminal-states.md](../../harness/runtime-core/failure-and-terminal-states.md) 对齐

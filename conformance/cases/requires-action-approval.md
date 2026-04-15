@@ -49,7 +49,7 @@
 
 ## Allowed Variance
 
-- approval response 可以通过 TUI、Desktop、Cloud 任一 gateway 注入
+- approval response 可以通过 Local、Cloud 任一 gateway 注入
 - 实现可以把审批恢复放在新 turn 或 continuation 中完成，但外部语义必须等价
 
 ## Failure Conditions

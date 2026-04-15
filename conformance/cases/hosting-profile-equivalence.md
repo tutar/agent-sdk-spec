@@ -2,19 +2,18 @@
 
 ## 目标
 
-验证同一规范语义在 `TUI / Desktop / Cloud` 三种 host 下保持一致。
+验证同一规范语义在 `Local / Cloud` 两种 host 下保持一致。
 
 ## Preconditions
 
-- 三种 host profile 都实现了相同版本的 spec
-- 三种 host 都支持同一个最小 turn、tool roundtrip、requires_action 场景
+- 两种 host profile 都实现了相同版本的 spec
+- 两种 host 都支持同一个最小 turn、tool roundtrip、requires_action 场景
 
 ## Procedure
 
 分别在：
 
-- `TUI`
-- `Desktop`
+- `Local`
 - `Cloud`
 
 下运行以下子场景：
@@ -26,7 +25,7 @@
 
 ## Expected Equivalence
 
-三种 host 必须保持以下外部语义一致：
+两种 host 必须保持以下外部语义一致：
 
 - session lifecycle 转移
 - terminal state 分类

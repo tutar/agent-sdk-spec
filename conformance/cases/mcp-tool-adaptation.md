@@ -32,7 +32,7 @@
 ## Allowed Variance
 
 - 不同语言实现可使用不同 MCP client
-- Desktop host 可增加 bundle / install / trust 流程
+- Local host 可增加 bundle / install / trust 流程
 
 ## Failure Conditions
 

@@ -10,7 +10,7 @@
 - cancellation
 - requires_action
 
-如果这些语义不统一，TUI/Desktop 和 Cloud 很快就会演化出不同的完成条件与错误面。
+如果这些语义不统一，Local 和 Cloud 很快就会演化出不同的完成条件与错误面。
 
 ## 一、核心原则
 

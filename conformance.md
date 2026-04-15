@@ -181,7 +181,6 @@
 - [conformance/cases/mcp-tool-adaptation.md](conformance/cases/mcp-tool-adaptation.md)
 - [conformance/cases/sandbox-deny.md](conformance/cases/sandbox-deny.md)
 - [conformance/cases/memory-recall-and-consolidation.md](conformance/cases/memory-recall-and-consolidation.md)
-- [conformance/cases/desktop-bundle-lifecycle.md](conformance/cases/desktop-bundle-lifecycle.md)
 - [conformance/cases/cloud-wake-and-reprovision.md](conformance/cases/cloud-wake-and-reprovision.md)
 - [conformance/cases/prompt-cache-stable-prefix.md](conformance/cases/prompt-cache-stable-prefix.md)
 - [conformance/cases/prompt-cache-dynamic-suffix.md](conformance/cases/prompt-cache-dynamic-suffix.md)

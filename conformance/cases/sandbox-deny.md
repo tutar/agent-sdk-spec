@@ -38,11 +38,10 @@
 
 ## Host Notes
 
-- `TUI` 通常更偏本地 execution sandbox deny
-- `Desktop` 可能来自 execution sandbox 或 local environment sandbox
+- `Local` 通常更偏本地 execution sandbox deny，也可能来自 local environment sandbox
 - `Cloud` 可能来自 remote environment policy 或 execution sandbox
 
-三者都必须保留同一类外部拒绝语义。
+两者都必须保留同一类外部拒绝语义。
 
 ## Failure Conditions
 

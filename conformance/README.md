@@ -6,7 +6,7 @@
 
 这些资产不绑定具体语言实现，也不绑定单一宿主形态，而是用于验证：
 
-- `TUI / Desktop / Cloud` 三种 host 下的外部行为是否等价
+- `Local / Cloud` 两种 host 下的外部行为是否等价
 - 不同语言 SDK 是否保持相同的 runtime 语义
 - `Harness / Session / Tools / Sandbox / Orchestration` 五个模块的接口语义是否被正确实现
 
@@ -21,7 +21,6 @@
 - [cases/mcp-tool-adaptation.md](cases/mcp-tool-adaptation.md)
 - [cases/sandbox-deny.md](cases/sandbox-deny.md)
 - [cases/memory-recall-and-consolidation.md](cases/memory-recall-and-consolidation.md)
-- [cases/desktop-bundle-lifecycle.md](cases/desktop-bundle-lifecycle.md)
 - [cases/cloud-wake-and-reprovision.md](cases/cloud-wake-and-reprovision.md)
 - [cases/prompt-cache-stable-prefix.md](cases/prompt-cache-stable-prefix.md)
 - [cases/prompt-cache-dynamic-suffix.md](cases/prompt-cache-dynamic-suffix.md)
@@ -34,7 +33,6 @@
 - [golden/session-resume.event-log.json](golden/session-resume.event-log.json)
 - [golden/sandbox-deny.events.json](golden/sandbox-deny.events.json)
 - [golden/memory-recall-and-consolidation.json](golden/memory-recall-and-consolidation.json)
-- [golden/desktop-bundle-lifecycle.json](golden/desktop-bundle-lifecycle.json)
 - [golden/cloud-wake-and-reprovision.json](golden/cloud-wake-and-reprovision.json)
 - [golden/prompt-cache-stable-prefix.json](golden/prompt-cache-stable-prefix.json)
 - [golden/prompt-cache-dynamic-suffix.json](golden/prompt-cache-dynamic-suffix.json)
@@ -72,11 +70,10 @@
 
 同一 canonical case 可以在：
 
-- `TUI`
-- `Desktop`
+- `Local`
 - `Cloud`
 
-三种 host profile 下运行。
+两种 host profile 下运行。
 
 允许不同 host 的进程边界、部署形态、存储位置不同，但不允许外部可观察语义漂移。
 
@@ -101,11 +98,10 @@
 
 - `mcp-tool-adaptation`
 
-若要宣称支持 sandbox、memory consolidation、desktop bundle host、cloud managed-agent profile，还应通过：
+若要宣称支持 sandbox、memory consolidation、cloud managed-agent profile，还应通过：
 
 - `sandbox-deny`
 - `memory-recall-and-consolidation`
-- `desktop-bundle-lifecycle`
 - `cloud-wake-and-reprovision`
 
 若要宣称支持 prompt-cache-aware harness，还应通过：

@@ -1,12 +1,12 @@
-# Ingress Gateway
+# Gateway
 
 ## 职责
 
-`IngressGateway` 负责把外部消息来源与内部 agent runtime 连接起来。
+`Gateway` 负责把外部 channel 与内部 agent runtime 连接起来。
 
 它位于 `ChannelAdapter` 与 `Harness` 之间，负责：
 
-- channel-agnostic ingress
+- channel-agnostic input normalization
 - message normalization
 - control routing
 - session binding
@@ -19,9 +19,9 @@
 推荐最小接口：
 
 ```text
-IngressGateway
+Gateway
   - register_channel(adapter)
-  - receive_inbound(inbound_envelope) -> normalized_input
+  - receive_input(inbound_envelope) -> normalized_input
   - route_control(control_message) -> control_result
   - bind_session(channel_identity, session_identity) -> binding
   - project_egress(runtime_event) -> egress_event
@@ -30,7 +30,7 @@ IngressGateway
 推荐补充：
 
 ```text
-NormalizedInboundMessage
+NormalizedInputMessage
   - channel
   - conversation_id
   - sender_id
@@ -53,14 +53,18 @@ SessionBinding
 
 ## 设计要求
 
-- ingress gateway 不等于具体 transport
-- ingress gateway 不等于 channel adapter
-- ingress gateway 不等于 harness loop
-- ingress gateway 必须支持 ingress normalization
-- ingress gateway 必须支持 control flow 与 normal message flow 分层
-- ingress gateway 必须支持多渠道扩展
-- ingress gateway 必须允许把多个渠道映射到统一 session 语义
+- gateway 不等于具体 transport
+- gateway 不等于 channel adapter
+- gateway 不等于 harness loop
+- gateway 必须支持 input normalization
+- gateway 必须支持 control flow 与 normal message flow 分层
+- gateway 必须支持多渠道扩展
+- gateway 默认采用 `1 chat = 1 session` 的 session-per-chat 语义
+- `supplement_input` 属于 input，不属于 control
+- `interrupt` 属于显式 control，不与 supplement input 混用
+- `tool_progress` 应作为标准 runtime egress event 由 gateway 投影
 - egress projection 必须允许过滤内部 chatter，只暴露合适的外部事件
+- 周期性 due-job ticking 不属于 gateway 核心职责
 
 ## 默认实现策略
 
@@ -68,10 +72,10 @@ SessionBinding
 
 1. `ChannelAdapter`
    负责接具体外部渠道并做协议适配
-2. `IngressNormalization`
+2. `InputNormalization`
    负责把外部输入转成内部消息
 3. `ControlRouting`
-   负责处理 interrupt / permission / mode-change 等控制流
+   负责处理 interrupt / permission-response / mode-change 等控制流
 4. `SessionBindingAndProjection`
    负责 channel 与 session/runtime 的绑定及输出投影
 
@@ -100,7 +104,7 @@ SessionBinding
 
 ## 规范结论
 
-- bridge 在规范层应被提升为 ingress gateway
+- bridge 在规范层应被提升为 gateway
 - remote-control 只是当前默认实现，不应限制规范抽象
 - 所有外部 chat/channel 接入都应优先复用这层网关边界
 - harness 不应内建各 channel 的服务端逻辑
