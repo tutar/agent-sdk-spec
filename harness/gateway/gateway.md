@@ -14,6 +14,14 @@
 
 当前仓库里的默认实现主要是 remote-control bridge，但规范不应把它限制为单一渠道。
 
+在当前产品语义下，`Gateway` 还承担一个更高层约束：
+
+- `1 Agent = 1 Gateway`
+- `1 Gateway = N ChannelAdapterInstance`
+- `1 Gateway = N Chat`
+- `1 Gateway = N Session`
+- `1 Gateway = N HarnessInstance`
+
 ## 稳定接口
 
 推荐最小接口：
@@ -44,11 +52,30 @@ ControlEnvelope
   - request_id
   - payload
 
-SessionBinding
-  - channel_identity
-  - conversation_id
+ChatSessionBinding
+  - gateway_id
+  - channel_instance_id
+  - chat_id
   - session_id
-  - agent_id?
+  - agent_id
+```
+
+推荐补充身份对象：
+
+```text
+GatewayIdentity
+  - gateway_id
+  - agent_id
+
+ChannelAdapterInstance
+  - channel_instance_id
+  - channel_type
+  - gateway_id
+
+ChatIdentity
+  - chat_id
+  - channel_instance_id
+  - external_conversation_id
 ```
 
 ## 设计要求
@@ -60,6 +87,10 @@ SessionBinding
 - gateway 必须支持 control flow 与 normal message flow 分层
 - gateway 必须支持多渠道扩展
 - gateway 默认采用 `1 chat = 1 session` 的 session-per-chat 语义
+- 一个 chat 只能归属一个 channel instance
+- 一个 chat 只能绑定一个 session
+- 一个 gateway 可以同时挂多个同类型 channel instance，也可以同时挂多个异构 channel
+- gateway 是 agent 对外的唯一接入总线，不应再被降格成单一 bridge 变体
 - `supplement_input` 属于 input，不属于 control
 - `interrupt` 属于显式 control，不与 supplement input 混用
 - `tool_progress` 应作为标准 runtime egress event 由 gateway 投影
@@ -86,6 +117,7 @@ SessionBinding
 - 不等于 `Transport`
 - 不等于 `Orchestration`
 - 不等于 `ChannelAdapter`
+- `Gateway` 与 `Agent` 在产品语义上是 `1:1`
 
 它位于 `ChannelAdapter` 与 `Harness` 之间，承担统一入口边界。
 
@@ -108,3 +140,4 @@ SessionBinding
 - remote-control 只是当前默认实现，不应限制规范抽象
 - 所有外部 chat/channel 接入都应优先复用这层网关边界
 - harness 不应内建各 channel 的服务端逻辑
+- 一个 gateway 应能同时管理多个 channel、chat、session 与 harness

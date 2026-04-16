@@ -166,3 +166,5 @@
 - `session.memory` 属于 `Session`，不是顶层 `memory` 模块。
 - `command` 是 `Tools` 域内共享对象模型，不是第六个顶层模块。
 - host scheduler / periodic ticking 如需存在，通常应归在 host 或 orchestration 侧，而不是 `Gateway` 本体。
+- 当前产品关系模型默认是：`1 Agent = 1 Gateway = 1 Global Long-Term Memory`，而 `1 Chat = 1 Session = 1 Short-Term Memory`
+- `Harness` 与 `Session` 的 `1:1` 应理解为单活 lease，而不是永久 owner 关系

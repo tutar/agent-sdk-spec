@@ -28,6 +28,8 @@
 - 长期记忆服务于 recall，不服务于 session restore
 - 显式记忆文件属于独立的注入面，不属于 session transcript
 - scope 属于 durable memory 的作用域维度，不属于新的 memory plane
+- `1 Session = 1 Short-Term Memory`
+- `1 Agent = 1 Global Long-Term Memory`
 
 ## 二、分层模型
 
@@ -64,6 +66,12 @@
 - 承担跨 session recall
 - 作为 durable knowledge 的存储
 
+绑定约束：
+
+- 一个 short-term memory 只能服务一个 session
+- 一个 session 只能绑定一个 short-term memory
+- harness 重启不应导致该 short-term memory 丢失
+
 应进入短期记忆的信息包括：
 
 - 当前任务目标与阶段性进展
@@ -92,6 +100,12 @@
 - 替代 session restore
 - 保存每轮完整对话
 - 充当当前 turn 的 working state
+
+产品级绑定约束：
+
+- agent 只有一个全局长期记忆空间
+- 多个 session 可共享并沉淀到同一个 agent long-term memory
+- 当前产品语义下，long-term memory 不是 per-user、per-chat 拆分
 
 应进入长期记忆的信息包括：
 

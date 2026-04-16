@@ -215,3 +215,5 @@ Harness
 - harness 相关状态应至少区分 `ProcessState`、`InteractionState` 与各领域状态投影
 - harness 规范必须同时适配 Local、Cloud 两种 host
 - prompt cache、context governance、streaming 与 post-turn processing 应优先建模为标准扩展，而不是隐含在某个默认实现内部
+- 在产品级绑定关系上，`Harness` 与 `Session` 不是永久 1:1 owner，而是 `single active lease`
+- 同一 session 任一时刻只能被一个 active harness 推进；重启或迁移应通过 `wake / resume` 交接 lease

@@ -158,6 +158,8 @@
 - `SessionCheckpoint` 的 durable progress 含义
 - `RequiresAction` 可恢复语义
 - harness / sandbox 替换后仍可基于 session 继续
+- `1 Chat = 1 Session` 的绑定语义稳定
+- `1 Session = 1 Short-Term Memory` 的绑定语义稳定
 
 若实现声明支持 session memory 或 memory consolidation，还必须保持：
 
@@ -165,6 +167,8 @@
 - durable memory recall 不承担 restore 责任
 - consolidation 不得破坏 resume 语义
 - branch / sidechain transcript 与父 session 的追溯关系一致
+- 同一 agent 下多个 session 可共享同一个 global long-term memory
+- 同一 session 任一时刻只能有一个 active harness lease
 
 若实现声明支持 `AGENTS.md` file-backed memory injection，还必须保持：
 
@@ -209,6 +213,7 @@
 - requires_action 契约
 - runtime terminal state 契约
 - session checkpoint / resume snapshot 契约
+- agent / gateway / chat / session binding 契约
 - security boundary 契约
 - persisted tool result reference 契约
 - context modifier commit 契约
@@ -230,6 +235,7 @@
 - compact 触发与恢复
 - 子 agent 生命周期
 - wake / resume 后的 working state 延续
+- chat-session binding 与 single active harness lease 一致性
 - prompt cache 扩展的命中稳定性
 - short-term memory 更新与 recall linkage
 - persisted tool result 在 compact / resume 后的稳定性
@@ -250,6 +256,7 @@
 - 非交互环境拒绝审批
 - sandbox violation
 - compact / cache 恢复失败后的终态收敛
+- harness restart 后 short-term memory 不丢失
 - tool result persistence failure 的回退语义
 - consolidation failure / lock conflict 的安全退化语义
 - malformed skill import 的安全降级语义
@@ -273,6 +280,7 @@
 - 桌面端 `.mcpb` bundle 能被安装、校验与加载
 - 使用内部 command model 的实现，不会把 skill 或 mcp prompt 错误暴露成 tool
 - `AGENTS.md` 可作为 file-backed durable memory injection 被发现并按优先级注入
+- 一个 gateway 可管理多个 channel/chat/session，但只归属于一个 agent
 
 ## 推荐测试工件
 

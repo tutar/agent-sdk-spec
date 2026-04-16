@@ -293,6 +293,83 @@ LoadedMemoryInjection
 - `LoadedMemoryInjection` 应进入 context injection plane，而不是 transcript plane
 - `precedence` 必须足以表达 `~/.openagent/AGENTS.md -> workdir/AGENTS.md -> subtree/AGENTS.md` 的确定性顺序
 
+## Agent And Gateway Relationship Objects
+
+用于表达产品级实体关系与运行时绑定。
+
+```text
+AgentIdentity
+  - agent_id
+  - gateway_id
+  - long_memory_id
+```
+
+```text
+GatewayIdentity
+  - gateway_id
+  - agent_id
+```
+
+```text
+ChannelAdapterInstance
+  - channel_instance_id
+  - channel_type
+  - gateway_id
+```
+
+```text
+ChatIdentity
+  - chat_id
+  - channel_instance_id
+  - external_conversation_id
+```
+
+```text
+ChatSessionBinding
+  - chat_id
+  - session_id
+  - agent_id
+  - gateway_id
+  - channel_instance_id
+```
+
+约束：
+
+- `1 Agent = 1 Gateway`
+- `1 Chat = 1 Session`
+- 一个 chat 只能归属一个 channel instance
+
+## Session Ownership And Lease Objects
+
+```text
+SessionHarnessLease
+  - session_id
+  - harness_instance_id
+  - agent_id
+  - acquired_at
+  - lease_state: active | released | expired | recovering
+  - resume_token?
+```
+
+```text
+ShortTermMemoryRef
+  - session_id
+  - short_memory_id
+```
+
+```text
+AgentLongTermMemoryRef
+  - agent_id
+  - memory_space_id
+```
+
+约束：
+
+- `1 Session = 1 ShortTermMemoryRef`
+- `1 Agent = 1 AgentLongTermMemoryRef`
+- `SessionHarnessLease` 是单活 lease，不是并发 owner 集合
+- `resume` 应恢复或转移 lease，而不是复制出第二个 active session writer
+
 ## MCP Session And Capability Objects
 
 用于表达 MCP `2025-11-25` 协议接入的最小共享对象。

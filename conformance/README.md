@@ -17,6 +17,9 @@
 - [cases/policy-ask-deny-allow.md](cases/policy-ask-deny-allow.md)
 - [cases/requires-action-approval.md](cases/requires-action-approval.md)
 - [cases/session-resume.md](cases/session-resume.md)
+- [cases/chat-session-binding.md](cases/chat-session-binding.md)
+- [cases/single-active-harness-lease.md](cases/single-active-harness-lease.md)
+- [cases/agent-global-long-memory.md](cases/agent-global-long-memory.md)
 - [cases/persisted-tool-result-resume.md](cases/persisted-tool-result-resume.md)
 - [cases/skills-discovery-precedence.md](cases/skills-discovery-precedence.md)
 - [cases/skills-activation-wrapping.md](cases/skills-activation-wrapping.md)
@@ -120,6 +123,12 @@
 若要宣称支持跨宿主一致性，还应通过：
 
 - `hosting-profile-equivalence`
+
+若要宣称支持产品级 `agent / gateway / session / memory` 绑定关系，还应通过：
+
+- `chat-session-binding`
+- `single-active-harness-lease`
+- `agent-global-long-memory`
 
 若要宣称支持 MCP compatibility，还应通过：
 

@@ -37,6 +37,8 @@
 - `agent-scoped memory` 属于 durable memory scope，而不是单独的新 memory 类型
 - scope 会影响 sharing / visibility / recall candidate selection
 - scope 不应改变 durable memory 作为 recall object 的核心语义
+- scope 是组织维度，不是 ownership 单元
+- 当前产品绑定关系仍是 `1 Agent = 1 Global Long-Term Memory`
 
 ## 与 Recall / Injection 的关系
 
@@ -48,6 +50,7 @@
 
 - `AGENTS.md` 可以作为带 scope 的显式 injection source
 - `DurableMemoryRecord.scope` 仍然是 durable memory record 的组织字段
+- 即使存在 `user / project / agent / local` scope，也不意味着产品上存在多份 agent-owned long-term memory
 
 ## 与其它 memory 子规范的边界
 

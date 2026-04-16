@@ -15,6 +15,13 @@
 - 挂载 session 内的短期连续性记忆
 - 串联 durable memory、subagent branch、remote session 等外部引用
 
+在当前产品语义下，还应明确这些绑定关系：
+
+- `1 Chat = 1 Session`
+- `1 Session = 1 Short-Term Memory`
+- `1 Agent = 1 Global Long-Term Memory`
+- `1 Session @ any time = 1 Active Harness Lease`
+
 它也必须跨部署形态稳定：
 
 - `Local`
@@ -83,6 +90,15 @@ SessionMemoryStore
   - list_memory_links(session_id)
 ```
 
+推荐补充 lease 接口：
+
+```text
+SessionHarnessLeaseStore
+  - acquire(session_id, harness_instance_id) -> lease
+  - release(session_id, harness_instance_id) -> released
+  - get_active_lease(session_id) -> lease | null
+```
+
 推荐补充：
 
 ```text
@@ -112,6 +128,8 @@ SessionBranchStore
 - wake / resume
 - 结构化 lifecycle state
 - compact boundary 后可继续恢复
+- session 级 short-term memory 的稳定恢复
+- single active harness lease
 
 ### 标准扩展
 
@@ -136,6 +154,18 @@ SessionBranchStore
 
 这些扩展的重点是恢复语义与外部可观察行为，而不是某一种 summary 或 recall 算法。
 
+## 产品级绑定关系
+
+`Session` 在当前产品中不是 agent 本体，而是 agent 在某个 chat 上的一条 durable 工作线程。
+
+因此必须满足：
+
+- 同一个 chat 不应绑定多个 session
+- 同一个 session 不应服务多个 chat
+- 同一个 session 只拥有一个 short-term memory
+- short-term memory 不得在多个 session 间共享
+- 多个 session 可以共享同一个 agent long-term memory
+
 ## 状态分层
 
 `Session` 规范必须至少区分三层状态：
@@ -158,6 +188,7 @@ SessionBranchStore
 - `LifecycleState` 不能替代 `WorkingState`
 - `WorkingState` 不能通过扫描 transcript 文本临时推导来代替 durable restore
 - `RuntimeState` 与 `WorkingState` 可以落在同一存储里，但语义上必须可区分
+- harness process state 不是 session owner；session owner 始终是 durable session boundary 本身
 
 如果本地宿主希望提供更简单的 API，
 例如 `emit_event()` 或直接读取完整 transcript，
@@ -189,6 +220,7 @@ SessionBranchStore
 - subagent 使用 sidechain transcript
 - session memory 使用 session 级 continuity summary
 - durable memory 通过 recall/linkage 接入，而不承担 restore 责任
+- harness 可以重启，但 session 关联的 short-term memory 不得丢失
 
 这里的 JSONL、sidechain 文件与当前恢复流程只代表 `cc` 的本地默认实现，不构成跨语言 SDK 的介质要求。
 
@@ -216,6 +248,8 @@ SessionBranchStore
   决定 compact，不等于 session 自身
 - `SessionLifecycleState`
   对外暴露 `idle / running / requires_action` 语义，不等于 transcript 或 UI state
+- `Harness`
+  对 session 持有的是 active lease，不是 durable owner
 
 ### `compact boundary` 与恢复的关系
 
@@ -230,6 +264,17 @@ SessionBranchStore
 
 - compact 后允许不再重放全部历史消息
 - 但不允许失去对 compact 前 durable history 的可追溯性
+
+### `Harness Lease` 与恢复的关系
+
+`Session` 与 `Harness` 的 `1:1` 关系应理解为单活 lease，而不是永久绑定。
+
+要求：
+
+- 同一 session 任一时刻只能有一个 active harness 推进
+- harness 崩溃、重启或迁移后，可通过 `wake / resume` 恢复同一个 session
+- resume 是 lease 交接，而不是复制出第二个可写 session
+- short-term memory 必须跟随 session 恢复，而不是跟随 harness 进程丢失
 
 session 域内的 memory 详细模型见 [memory/memory-model.md](memory/memory-model.md)，scope 语义见 [memory/scoped-durable-memory.md](memory/scoped-durable-memory.md)，显式 durable injection 见 [memory/memory-injection.md](memory/memory-injection.md)。
 
@@ -289,3 +334,5 @@ BranchRef
 - `append_events()` 与 `session_checkpoint` 应优先于进程内 transcript 变异
 - direct-call session API 如存在，也必须严格由 event log 语义推导
 - short-term memory、durable memory linkage、memory consolidation 与 branch transcript 应优先作为标准扩展定义
+- session 是 chat 级 durable thread，不是 agent 本体
+- session short-term memory 是 session 独占状态，不得因为 harness 重启而丢失
