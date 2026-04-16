@@ -162,6 +162,8 @@ Automatic Dream 的失败不得影响：
   `Memory Consolidation` 是上层能力；`Dream Consolidation` 是其中面向 cross-session memory 整理的标准模式
 - 与 [memory-model.md](memory-model.md)
   `Dream Consolidation` 主要作用于 durable memory，而不是 short-term session memory
+- 与 [memory/scoped-durable-memory.md](memory/scoped-durable-memory.md)
+  dream 可以操作不同 scope 的 durable memory，但 scope 语义不由 dream 定义
 - 与 [../orchestration/agent-orchestration/task-manager.md](../orchestration/agent-orchestration/task-manager.md)
   `Auto Dream` 可作为后台 task 落地，但 task lifecycle 不等于 dream 语义本身
 - 与 [../tools/command-surface/reflection-and-verification-commands.md](../tools/command-surface/reflection-and-verification-commands.md)

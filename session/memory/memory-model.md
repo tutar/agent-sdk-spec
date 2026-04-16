@@ -4,7 +4,7 @@
 
 本规范定义 `Session` 域中的长短期记忆模型。
 
-这里的 `memory` 不是当前 prompt，也不是 transcript 的别名。规范上应至少区分四类对象：
+这里的 `memory` 不是当前 prompt，也不是 transcript 的别名。规范上应至少区分三类核心对象：
 
 - `session transcript`
   可恢复的事件历史
@@ -12,8 +12,6 @@
   当前 session 的连续性摘要
 - `durable memory`
   跨 session 的可召回知识
-- `scoped durable memory`
-  durable memory 在 `user / project / agent / local` 维度上的作用域化形态
 
 本规范的目标是稳定以下语义：
 
@@ -21,15 +19,15 @@
 - 哪些信息应进入长期记忆
 - 短期记忆、长期记忆与 transcript 的边界
 - 记忆的写入、召回、整合与恢复时机
-- 记忆如何与 compact、resume、subagent、agent-scoped memory 协同
+- 记忆如何与 compact、resume、subagent 协同
 
 ## 一、核心原则
 
 - transcript 是恢复依据，不是记忆层本身
 - 短期记忆服务于 continuity，不服务于跨 session recall
 - 长期记忆服务于 recall，不服务于 session restore
-- 显式记忆文件属于长期记忆注入面，不属于 session transcript
-- agent 私有记忆不是新的记忆类型，而是长期记忆的作用域变体
+- 显式记忆文件属于独立的注入面，不属于 session transcript
+- scope 属于 durable memory 的作用域维度，不属于新的 memory plane
 
 ## 二、分层模型
 
@@ -109,35 +107,9 @@
 - 纯粹可由 transcript 重新推导的细节
 - 已经过时且没有保留价值的操作痕迹
 
-### 4. Scoped Durable Memory
+durable memory 的 scope 维度见 [scoped-durable-memory.md](scoped-durable-memory.md)。
 
-`ScopedDurableMemory` 是 durable memory 的作用域化形态。
-
-推荐至少支持：
-
-- `user`
-  对所有项目通用
-- `project`
-  在当前项目内共享
-- `agent`
-  某类 agent 的专用长期知识
-- `local`
-  仅当前环境或当前机器有效
-
-规范上，`agent-scoped memory` 属于这一层，而不是单独的新 memory 类型。
-
-### 5. Durable Memory Injection
-
-`DurableMemoryInjection` 指将长期记忆显式注入当前 runtime 的机制。
-
-它包括但不限于：
-
-- 项目记忆文件
-- 用户记忆文件
-- agent 记忆入口文件
-- 其他可直接作为 context source 的 durable memory 表达
-
-这一层的职责是“注入”，不是“召回”或“恢复”。
+显式 durable injection 的详细语义见 [memory-injection.md](memory-injection.md)。
 
 ## 三、生命周期
 
@@ -217,7 +189,7 @@
 
 `ContextProvider` 负责：
 
-- 将 durable memory injection 变成当前 turn 的上下文输入
+- 将 durable context source 变成当前 turn 的上下文输入
 
 它不负责：
 
@@ -285,109 +257,3 @@ DurableMemoryRecord
 - `DurableMemoryRecord` 应作为 durable memory 的最小共享对象
 - memory consolidation 是标准扩展，不是 session restore 的前提
 - consolidation 可以失败或延迟，但不能让 session 丢失可恢复性
-
-```text
-MemoryRecallEngine
-  - prefetch(query, runtime_context) -> recall_handle
-  - collect(recall_handle) -> memory_attachments
-  - dedupe(memory_attachments, already_loaded) -> filtered_attachments
-```
-
-```text
-MemoryConsolidator
-  - schedule(selector) -> consolidation_job
-  - run(consolidation_job) -> consolidation_result
-```
-
-推荐的 `memory_record` 最小字段：
-
-- `memory_id`
-- `scope`
-- `type`
-- `title`
-- `summary`
-- `content`
-- `source`
-- `created_at`
-- `updated_at`
-- `freshness`
-
-## 六、推荐默认策略
-
-### 短期记忆
-
-- 以会话连续性为第一目标，而不是信息完备性
-- 在上下文增长达到阈值后再更新
-- 优先在自然停顿点或 tool 链闭合后更新
-- compact 发生时优先读取最新稳定版本
-
-### 长期记忆
-
-- 只提炼未来可复用的信息
-- 写入前做去重或合并判断
-- 召回时优先选择少量高确定性的条目
-- 周期性做 consolidate，避免 memory corpus 无界增长
-
-### 作用域策略
-
-- 用户偏好优先写入 `user`
-- 项目约束优先写入 `project`
-- agent 专用知识优先写入 `agent`
-- 机器/环境特定信息优先写入 `local`
-
-## 七、默认实现映射
-
-本仓库当前可映射出一套符合该规范的默认实现：
-
-### Short-Term Session Memory
-
-- [services/SessionMemory/sessionMemory.ts](../../cc/services/SessionMemory/sessionMemory.ts)
-- [services/SessionMemory/sessionMemoryUtils.ts](../../cc/services/SessionMemory/sessionMemoryUtils.ts)
-
-默认实现特征：
-
-- 只在主会话线程运行
-- 由 post-sampling hook 触发
-- 以 token 增长和 tool use 阈值决定是否更新
-- 在自然停顿点或 tool use 安全边界更新
-- 生成的是 continuity summary，而不是 transcript 副本
-- compact 前支持等待进行中的更新完成
-
-### Durable Memory
-
-- [services/extractMemories/extractMemories.ts](../../cc/services/extractMemories/extractMemories.ts)
-- [memdir/findRelevantMemories.ts](../../cc/memdir/findRelevantMemories.ts)
-- [services/autoDream/autoDream.ts](../../cc/services/autoDream/autoDream.ts)
-
-默认实现特征：
-
-- 在完整 query loop 结束后后台提炼 durable memory
-- recall 先基于 memory manifest/header 选候选，再做有界注入
-- 支持跨 session consolidation
-- durable memory 与 transcript restore 分离
-
-### Durable Memory Injection
-
-- [context.ts](../../cc/context.ts)
-- [utils/claudemd.ts](../../cc/utils/claudemd.ts)
-
-默认实现特征：
-
-- 项目规则、用户规则和显式记忆文件通过 context assembly 注入
-- 注入链路与 transcript restore 分离
-
-### Scoped Durable Memory
-
-- [tools/AgentTool/agentMemory.ts](../../cc/tools/AgentTool/agentMemory.ts)
-
-默认实现特征：
-
-- 为 agent 提供 `user / project / local` 作用域的专用 durable memory
-- 以 agent 类型作为记忆命名空间
-
-## 八、规范结论
-
-- `short-term session memory`、`durable memory`、`scoped durable memory` 必须明确分层
-- transcript、compact、recall、restore 不应共享同一个 memory 抽象
-- 短期记忆面向 continuity，长期记忆面向 recall
-- 当前仓库可作为一套默认实现映射，但不限定规范必须采用同样的存储介质或触发机制

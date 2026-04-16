@@ -47,6 +47,8 @@ SchemaEnvelope
 - `SessionCheckpoint`
 - `ResumeSnapshot`
 - `DurableMemoryRecord`
+- `DurableMemoryInjectionSource`
+- `LoadedMemoryInjection`
 - `ToolResult`
 - `PersistedToolResultRef`
 - `ImportedSkillManifest`
@@ -81,6 +83,12 @@ SchemaEnvelope
 - `DurableMemoryRecord`
   - `source_event_refs`、`scope`、`freshness` 应为稳定字段
   - 不应依赖实现私有路径语义才能理解
+- `DurableMemoryInjectionSource`
+  - `kind`、`scope`、`precedence` 使用稳定字符串或稳定有序字段
+  - `file_path` 与 `applies_to` 应保持宿主可解释但不依赖 transcript 的语义
+- `LoadedMemoryInjection`
+  - `source_ref` 必须能稳定追溯到原始 injection source
+  - 不应被序列化成 transcript message 或 assistant/user role message
 - `PersistedToolResultRef`
   - `storage_ref` 必须可序列化
   - compact / resume / branch restore 后，`tool_use_id -> storage_ref` 映射不得漂移
@@ -154,5 +162,6 @@ SchemaEnvelope
 - 跨语言兼容首先依赖稳定序列化语义，而不是同名类型定义
 - 对象版本演进应优先围绕 canonical object model 展开，而不是围绕某个单一实现仓库的本地类型
 - `PolicyDecision`、`ResumeSnapshot`、`DurableMemoryRecord`、`PersistedToolResultRef` 这类跨模块对象应优先纳入稳定 envelope
+- `DurableMemoryInjectionSource`、`LoadedMemoryInjection` 这类 file-backed memory injection 对象也应优先纳入稳定 envelope
 - `ImportedSkillManifest`、`SkillCatalogEntry`、`SkillActivationResult` 这类 skills 生命周期对象也应优先纳入稳定 envelope
 - MCP lifecycle / capability / descriptor 对象也应纳入稳定 envelope，避免 transport-specific 本地类型泄漏到跨语言接口

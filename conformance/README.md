@@ -36,6 +36,7 @@
 - [cases/mcp-host-extension-skill-discovery.md](cases/mcp-host-extension-skill-discovery.md)
 - [cases/sandbox-deny.md](cases/sandbox-deny.md)
 - [cases/memory-recall-and-consolidation.md](cases/memory-recall-and-consolidation.md)
+- [cases/agents-memory-loading-precedence.md](cases/agents-memory-loading-precedence.md)
 - [cases/memory-consolidation-background-safety.md](cases/memory-consolidation-background-safety.md)
 - [cases/cloud-wake-and-reprovision.md](cases/cloud-wake-and-reprovision.md)
 - [cases/prompt-cache-stable-prefix.md](cases/prompt-cache-stable-prefix.md)
@@ -49,6 +50,7 @@
 - [golden/session-resume.event-log.json](golden/session-resume.event-log.json)
 - [golden/sandbox-deny.events.json](golden/sandbox-deny.events.json)
 - [golden/memory-recall-and-consolidation.json](golden/memory-recall-and-consolidation.json)
+- [golden/agents-memory-loading-precedence.json](golden/agents-memory-loading-precedence.json)
 - [golden/policy-ask-deny-allow.json](golden/policy-ask-deny-allow.json)
 - [golden/persisted-tool-result-resume.json](golden/persisted-tool-result-resume.json)
 - [golden/memory-consolidation-background-safety.json](golden/memory-consolidation-background-safety.json)
@@ -152,6 +154,7 @@
 
 - `sandbox-deny`
 - `memory-recall-and-consolidation`
+- `agents-memory-loading-precedence`
 - `memory-consolidation-background-safety`
 - `cloud-wake-and-reprovision`
 

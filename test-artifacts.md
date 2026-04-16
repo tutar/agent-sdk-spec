@@ -67,6 +67,7 @@ ObjectFixture
 - compact boundary
 - session wake / resume
 - memory recall injection
+- `AGENTS.md` memory injection precedence
 - background task completion
 - remote task status sync
 - policy decision serialization
@@ -84,6 +85,7 @@ ObjectFixture
 - [conformance/golden/session-resume.event-log.json](conformance/golden/session-resume.event-log.json)
 - [conformance/golden/sandbox-deny.events.json](conformance/golden/sandbox-deny.events.json)
 - [conformance/golden/memory-recall-and-consolidation.json](conformance/golden/memory-recall-and-consolidation.json)
+- [conformance/golden/agents-memory-loading-precedence.json](conformance/golden/agents-memory-loading-precedence.json)
 - [conformance/golden/policy-ask-deny-allow.json](conformance/golden/policy-ask-deny-allow.json)
 - [conformance/golden/persisted-tool-result-resume.json](conformance/golden/persisted-tool-result-resume.json)
 - [conformance/golden/memory-consolidation-background-safety.json](conformance/golden/memory-consolidation-background-safety.json)
@@ -102,4 +104,5 @@ ObjectFixture
 - 测试工件应脱离具体语言实现
 - 所有语言 SDK 应共享同一套录制样本和重放样本语义
 - canonical object fixture 应优先覆盖 `PolicyDecision`、`ResumeSnapshot`、`DurableMemoryRecord`、`PersistedToolResultRef`
+- memory injection object fixture 应优先覆盖 `DurableMemoryInjectionSource`、`LoadedMemoryInjection`
 - skills 相关 object fixture 应优先覆盖 `ImportedSkillManifest`、`SkillCatalogEntry`、`SkillActivationResult`

@@ -166,6 +166,13 @@
 - consolidation 不得破坏 resume 语义
 - branch / sidechain transcript 与父 session 的追溯关系一致
 
+若实现声明支持 `AGENTS.md` file-backed memory injection，还必须保持：
+
+- `~/.openagent/AGENTS.md -> workdir/AGENTS.md -> subtree/AGENTS.md` 的优先级顺序 deterministic
+- 注入结果进入 context plane，而不是 transcript / event log
+- 子目录 `AGENTS.md` 只影响对应子树
+- compact / resume 后不通过 transcript 反推 `AGENTS.md`
+
 ### 8. Tool Execution And Persistence Semantics
 
 各语言实现必须保持：
@@ -207,6 +214,7 @@
 - context modifier commit 契约
 - policy decision 契约
 - durable memory record 契约
+- durable memory injection source 契约
 - imported skill manifest 契约
 - skill catalog entry 契约
 - skill activation result 契约
@@ -229,6 +237,7 @@
 - allow / deny / ask 到 requires_action / deny error 的映射一致性
 - skills discovery precedence 与 activation disclosure 一致性
 - MCP lifecycle / pagination / subscription / client-feature 行为一致性
+- `AGENTS.md` loading precedence 与 subtree applicability 一致性
 
 ### Failure Tests
 
@@ -245,6 +254,7 @@
 - consolidation failure / lock conflict 的安全退化语义
 - malformed skill import 的安全降级语义
 - MCP auth discovery / scope upgrade / transport failure 的统一退化语义
+- 缺失或冲突的 `AGENTS.md` source 不得破坏 session restore
 
 ### Compatibility Tests
 
@@ -262,6 +272,7 @@
 - MCP server/client capabilities 在声明支持时可被正确协商与投影
 - 桌面端 `.mcpb` bundle 能被安装、校验与加载
 - 使用内部 command model 的实现，不会把 skill 或 mcp prompt 错误暴露成 tool
+- `AGENTS.md` 可作为 file-backed durable memory injection 被发现并按优先级注入
 
 ## 推荐测试工件
 

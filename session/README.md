@@ -31,7 +31,7 @@
 
 - transcript 不是 memory
 - compact summary 不是 transcript
-- `CLAUDE.md` / memory files 不是 session 本身
+- `CLAUDE.md`、`AGENTS.md` / memory files 不是 session 本身
 - agent memory 不是主 session transcript
 
 本规范中的 `Session` 同样采用 `Local-first` 抽取方式：
@@ -124,7 +124,6 @@ SessionBranchStore
 - `DurableMemoryLinkage`
   - recall
   - scoped memory linkage
-  - project / user / agent / local scope
 - `MemoryConsolidation`
   - post-turn consolidation
   - background consolidation
@@ -212,6 +211,7 @@ SessionBranchStore
   读取 session 切片并构造当前 model input
 - `ContextProvider`
   把 durable memory / project memory 注入当前 turn
+- file-backed durable memory injection（例如 `AGENTS.md`）属于 `Session.memory` 的注入面，不属于 transcript，详细规则见 [memory/memory-injection.md](memory/memory-injection.md)
 - `ContextGovernance`
   决定 compact，不等于 session 自身
 - `SessionLifecycleState`
@@ -231,7 +231,7 @@ SessionBranchStore
 - compact 后允许不再重放全部历史消息
 - 但不允许失去对 compact 前 durable history 的可追溯性
 
-session 域内的 memory 详细模型见 [memory-model.md](memory-model.md)。
+session 域内的 memory 详细模型见 [memory/memory-model.md](memory/memory-model.md)，scope 语义见 [memory/scoped-durable-memory.md](memory/scoped-durable-memory.md)，显式 durable injection 见 [memory/memory-injection.md](memory/memory-injection.md)。
 
 ## 子代理与 remote session
 
@@ -273,9 +273,11 @@ BranchRef
 
 - [event-log-schema.md](event-log-schema.md)
 - [lifecycle-state.md](lifecycle-state.md)
-- [memory-model.md](memory-model.md)
+- [memory-model.md](memory/memory-model.md)
+- [scoped-durable-memory.md](memory/scoped-durable-memory.md)
+- [memory-injection.md](memory/memory-injection.md)
 - [memory-consolidation.md](memory/memory-consolidation.md)
-- [dream-consolidation.md](memory/dream-consolidation.md)
+- [dream-consolidation.md](dream-consolidation.md)
 
 ## 规范结论
 

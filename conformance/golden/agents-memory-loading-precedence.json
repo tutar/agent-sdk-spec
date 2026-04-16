@@ -1,0 +1,26 @@
+{
+  "case": "agents-memory-loading-precedence",
+  "sources": [
+    {
+      "path": "~/.openagent/AGENTS.md",
+      "scope": "user",
+      "precedence": 1
+    },
+    {
+      "path": "<workdir>/AGENTS.md",
+      "scope": "project",
+      "precedence": 2
+    },
+    {
+      "path": "<workdir>/subdir/AGENTS.md",
+      "scope": "subtree",
+      "precedence": 3
+    }
+  ],
+  "expected": {
+    "ordered_merge": true,
+    "later_overrides_earlier": true,
+    "sibling_isolation": true,
+    "transcript_unchanged": true
+  }
+}

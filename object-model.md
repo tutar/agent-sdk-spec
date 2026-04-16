@@ -265,6 +265,34 @@ DurableMemoryRecord
 - durable memory 服务 recall，不服务 restore
 - source refs 应足以支持来源追溯或语义等价能力
 
+## Durable Memory Injection Objects
+
+用于表达 file-backed durable memory injection 的最小共享对象。
+
+```text
+DurableMemoryInjectionSource
+  - source_id
+  - kind: agents_file
+  - scope: user | project | subtree
+  - file_path
+  - applies_to
+  - precedence
+```
+
+```text
+LoadedMemoryInjection
+  - source_ref
+  - content
+  - priority
+  - applicable_target
+```
+
+约束：
+
+- `DurableMemoryInjectionSource` 描述的是显式注入源，不等于 `DurableMemoryRecord`
+- `LoadedMemoryInjection` 应进入 context injection plane，而不是 transcript plane
+- `precedence` 必须足以表达 `~/.openagent/AGENTS.md -> workdir/AGENTS.md -> subtree/AGENTS.md` 的确定性顺序
+
 ## MCP Session And Capability Objects
 
 用于表达 MCP `2025-11-25` 协议接入的最小共享对象。
