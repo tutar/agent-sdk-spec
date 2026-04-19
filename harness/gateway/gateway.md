@@ -14,6 +14,9 @@
 
 当前仓库里的默认实现主要是 remote-control bridge，但规范不应把它限制为单一渠道。
 
+在 agent-spec 的默认产品语义下，agent 不自带 UI。
+Feishu、WeChat、Telegram、TUI、CLI bridge、API client 都只是不同的 `ChannelAdapter` 落地。
+
 在当前产品语义下，`Gateway` 还承担一个更高层约束：
 
 - `1 Agent = 1 Gateway`
@@ -127,6 +130,7 @@ HarnessInstance
 - 不等于 `ChannelAdapter`
 - `Gateway` 与 `Agent` 在产品语义上是 `1:1`
 - `Gateway` 不直接拥有 `AgentRuntime`；`AgentRuntime` 属于 `HarnessInstance` 内部
+- gateway 负责 chat/channel 交互面；runtime core 不直接面向 Feishu、WeChat、Telegram、TUI 等渠道
 
 它位于 `ChannelAdapter` 与 `Harness` 之间，承担统一入口边界。
 

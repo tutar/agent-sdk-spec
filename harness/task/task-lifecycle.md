@@ -12,7 +12,7 @@
 - foreground/background 与 UI 持有语义如何建模
 - task 何时可以恢复、何时可以回收
 
-本文讨论的是 task lifecycle 语义，不替代 [task-manager.md](task-manager.md) 中的 manager 职责与最小接口，也不替代 [../runtime-core/agent-runtime.md](../runtime-core/agent-runtime.md) 中的 turn 级 `terminal state`。
+本文讨论的是 task lifecycle 语义，不替代 [task-manager.md](task-manager.md) 中的 manager 职责与最小接口，也不替代 [../runtime/core/agent-runtime.md](../runtime/core/agent-runtime.md) 中的 turn 级 `terminal state`。
 
 ## 解决的问题
 
@@ -172,7 +172,8 @@ task 回收应晚于 task 完成。
 - `TaskManager` 的最小对象与接口见 [task-manager.md](task-manager.md)
 - task 的共享对象模型见 [task-model.md](task-model.md)
 - background agent 如何映射到 task lifecycle，见 [background-agent.md](background-agent.md)
-- `AgentRuntime` 的 turn 级 `terminal state` 见 [../runtime-core/failure-and-terminal-states.md](../runtime-core/failure-and-terminal-states.md)
+- `AgentRuntime` 的 turn 级 `terminal state` 见 [../runtime/core/failure-and-terminal-states.md](../runtime/core/failure-and-terminal-states.md)
+- task 的外部可见状态/事件投影见 [../runtime/projection/runtime-state-projection.md](../runtime/projection/runtime-state-projection.md)
 - 团队协作型任务列表不在本文范围内，见 [work-allocation.md](work-allocation.md)
 
 ## 规范结论

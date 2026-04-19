@@ -12,7 +12,7 @@
 
 ## Ingress
 
-- 一条普通 user message
+- 一条已经过 gateway 归一化的普通 user message
 
 ## Expected Lifecycle
 
@@ -52,3 +52,4 @@
 - session 未回到 `idle`
 - turn 被错误标记为 failure
 - assistant output 未进入 transcript 或等价 durable log
+- runtime 需要读取 raw channel payload 才能推进 turn

@@ -11,7 +11,7 @@
 1. `Input`
    gateway 接收输入
 2. `Eval`
-   harness 推进 turn
+   harness runtime 推进 turn
 3. `Projection`
    gateway 投影 runtime 事件
 4. `Continuation`
@@ -43,9 +43,9 @@ ContinuationController
 
 - 该循环必须是 channel-agnostic 的
 - CLI REPL 只是默认实现，不应成为规范术语绑定
-- `Eval` 必须由 harness 承担，而不是 gateway
+- `Eval` 必须由 `Harness.Runtime.AgentRuntime` 承担，而不是 gateway
 - `Projection` 必须由 gateway 协调，但不要求所有 egress 都同步完成
-- continuation 应绑定到 session，而不是某个 UI 组件
+- continuation 应绑定到 session/chat，而不是某个 UI 组件
 - supplement input 必须归入当前 interaction，而不是新建 chat 或新 session
 - interrupt 必须保持显式 control 语义，与 supplement input 分离
 

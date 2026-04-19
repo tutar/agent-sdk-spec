@@ -145,5 +145,5 @@ agent 应至少区分：
 - tool executor 负责编排，不负责定义或承载 hands 本身
 - `execute_stream()` 应是第一性接口
 - direct-call `execute()` 如存在，也必须严格由事件流语义推导
-- tool terminal state 与 error class 应与 [../harness/runtime-core/failure-and-terminal-states.md](../harness/runtime-core/failure-and-terminal-states.md) 对齐
+- tool terminal state 与 error class 应与 [../harness/runtime/core/failure-and-terminal-states.md](../harness/runtime/core/failure-and-terminal-states.md) 对齐
 - context modifier 必须具备 staged / committed / discarded 的事务语义

@@ -123,25 +123,29 @@ Harness
 
 这一页回答：
 
-- 同进程优化和分布式语义应如何区分
-- 哪些接口必须保持 transport-neutral
-- 为什么 `Cloud` 不应被实现成 “本地 runtime + 远程工具”
+- harness 作为整体如何在 `Local` / `Cloud` 下部署
+- harness 调用 `Session` / `Tools` / `Sandbox` 的 binding 如何变化
+- 为什么 `Cloud-compatible` 不等于 harness 内部服务拆分
 
-### 1. Runtime Core
+### 1. Runtime
 
-- [runtime-overview.md](runtime-core/runtime-overview.md)
-- [agent-runtime.md](runtime-core/agent-runtime.md)
-- [failure-and-terminal-states.md](runtime-core/failure-and-terminal-states.md)
-- [state-layering.md](runtime-core/state-layering.md)
-- [message-and-event-pipeline.md](runtime-core/message-and-event-pipeline.md)
+- [runtime/README.md](runtime/README.md)
+- [runtime/core/agent-runtime.md](runtime/core/agent-runtime.md)
+- [runtime/core/failure-and-terminal-states.md](runtime/core/failure-and-terminal-states.md)
+- [runtime/core/state-layering.md](runtime/core/state-layering.md)
+- [runtime/core/message-and-event-pipeline.md](runtime/core/message-and-event-pipeline.md)
+- [runtime/hooks/hook-runtime.md](runtime/hooks/hook-runtime.md)
+- [runtime/projection/runtime-observability.md](runtime/projection/runtime-observability.md)
+- [runtime/projection/runtime-state-projection.md](runtime/projection/runtime-state-projection.md)
+- [runtime/post-turn/post-turn-processing.md](runtime/post-turn/post-turn-processing.md)
 
 这一组回答：
 
-- harness 主循环是什么
-- turn 如何推进
+- runtime 如何按 `core / hooks / projection / post-turn` 分层
+- harness 主循环和 turn state machine 如何推进
 - 失败、取消、阻塞和终止态如何统一
-- 内部状态怎么分层
-- 内部消息与外部事件如何分开
+- 内部状态、内部消息、外部事件如何分开
+- hooks、observability、state projection、post-turn processing 各自落在哪个 runtime 子平面
 
 ### 2. Model Provider
 
@@ -195,21 +199,7 @@ Harness
 - 内外消息如何投影
 - 本地 runtime 如何适配成 gateway 可承载 session
 
-### 5. Extension And Projection
-
-- [agent-observability.md](extension-and-projection/agent-observability.md)
-- [hook-and-lifecycle-extensions.md](extension-and-projection/hook-and-lifecycle-extensions.md)
-- [post-turn-processing.md](extension-and-projection/post-turn-processing.md)
-- [agent-event-transport.md](extension-and-projection/agent-event-transport.md)
-
-这一组回答：
-
-- agent 运行状态、进度、usage、trace 如何投影
-- lifecycle hook 如何扩展 harness
-- turn 结束后的后处理如何触发和编排
-- runtime state 如何投影给外部 agent client
-
-### 6. Task
+### 5. Task
 
 - [task/README.md](task/README.md)
 - [task/task-model.md](task/task-model.md)
@@ -226,7 +216,7 @@ Harness
 - verification 如何作为本地运行时单元进入标准链路
 - 多 worker 协作中的 work allocation 如何与 task 分层
 
-### 7. Multi-Agent
+### 6. Multi-Agent
 
 - [multi-agent/README.md](multi-agent/README.md)
 - [multi-agent/agent-delegation.md](multi-agent/agent-delegation.md)
@@ -241,7 +231,7 @@ Harness
 - leader / worker 的消息与结果如何路由
 - viewed transcript 如何作为 UI projection 存在
 
-### 8. Permission
+### 7. Permission
 
 - [permission/README.md](permission/README.md)
 - [permission/permission-runtime.md](permission/permission-runtime.md)
@@ -255,7 +245,7 @@ Harness
 - `ask -> requires_action` 如何投影、路由和恢复
 - worker / leader / headless / remote 场景下如何避免不可达审批
 
-### 9. Reliability Guidance
+### 8. Reliability Guidance
 
 - [hallucination-mitigation.md](hallucination-mitigation.md)
 

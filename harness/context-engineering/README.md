@@ -60,6 +60,8 @@
   定义 context budget、compact、externalization、delta injection 与 drift mitigation。
 - [prompt-cache-strategy.md](prompt-cache-strategy.md)
   定义 stable prefix、dynamic suffix、cache boundary 与 cache break 语义。
+- [anthropic-native-prompt-cache-guide.md](anthropic-native-prompt-cache-guide.md)
+  作为 Anthropic 原生 prompt cache 的默认实现指南，说明 block splitting、scope、tool/message cache marker、fork sharing 与 cache break detection。
 
 ## 规范结论
 

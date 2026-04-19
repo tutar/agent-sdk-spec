@@ -12,7 +12,7 @@
 
 ## Ingress
 
-- 一条会触发该 tool 的 user message
+- 一条已经过 gateway 归一化、会触发该 tool 的 user message
 
 ## Expected Lifecycle
 
@@ -54,3 +54,4 @@
 - tool 执行完成后 turn 无法继续
 - 非并发安全工具被错误并发执行
 - compact / resume 后同一 `tool_use` 的结果引用漂移
+- runtime 依赖 raw channel 协议细节才能完成 tool roundtrip

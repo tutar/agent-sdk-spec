@@ -15,6 +15,7 @@
 | `Gateway` | channel 与 harness 之间的双向交互边界 | `Harness` | `Session`, `Orchestration` | 负责 input normalization、control routing、egress projection |
 | `ChannelAdapter` | 具体 channel 的协议边缘适配层 | `Harness` | `Session`, `Tools` | 在 gateway 外缘，不负责 turn eval |
 | `InteractionLoop` | gateway 与 runtime 之间的标准交互循环 | `Harness` | `Session`, `Sandbox` | supplement input 属于当前 interaction |
+| `GatewayInteractionState` | chat/channel 交互面的状态集合 | `Harness.Gateway` | `Harness.Runtime`, `Session` | Feishu/WeChat/Telegram/TUI 等 channel 状态止步于 gateway |
 | `ModelProviderAdapter` | 吸收模型厂商/API 差异的统一适配层 | `Harness` | `Tools`, `Session` | 是模型差异的唯一主吸收层 |
 | `ContextGovernance` | context budget、compact、overflow recovery 的治理层 | `Harness` | `Session` | 不等于 transcript 或 memory store |
 | `TaskManager` | 本地 task-driven runtime 的任务生命周期与恢复接口 | `Harness` | `Session`, `Orchestration` | task 不是 transcript |
@@ -100,6 +101,9 @@
 
 - `Gateway` vs `AgentRuntime`
   `Gateway` 协调入口和外投；`AgentRuntime` 推进 turn 本体。
+
+- `GatewayInteractionState` vs `RuntimeExecutionState`
+  前者保存 chat/channel 交互面；后者只保存 turn-local execution state。
 
 - `HarnessInstance` vs `AgentRuntime`
   前者是 gateway 可管理的 worker identity；后者是该 worker 内部的 turn loop。

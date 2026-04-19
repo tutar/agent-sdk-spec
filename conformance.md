@@ -52,6 +52,18 @@
 
 事件字段名可以随语言习惯调整，但事件含义不能变化。
 
+实现还必须保持：
+
+- runtime core 消费 normalized ingress，而不是 raw channel payload
+- 一次 turn 可以跨多次 provider call 与 continuation 完成
+- `tool_use / tool_result` pairing 与 ordering 语义稳定
+
+若实现宣称支持完整的 runtime state projection，还必须保持：
+
+- session / turn / task 的 observer-facing facts 可稳定对外暴露
+- task-derived projection 不改变 `Harness.Task` 对 task lifecycle 的所有权
+- projection channel 与 transcript / message stream 语义分离
+
 ### Harness 与 Permission
 
 实现必须保持：
@@ -62,6 +74,8 @@
 - `ask -> requires_action` 为稳定阻塞投影
 - headless / background / worker 场景不会产生不可达 approval
 - static rule、tool-specific check、safety check、mode transform、approval route 的先后语义稳定
+- `Local` 与 `Cloud` 下的 harness 都保持为一个完整整体
+- `Local` 下 direct-call、`Cloud` 下 RPC 只改变 binding，不改变 harness 内部语义边界
 
 ### Session
 

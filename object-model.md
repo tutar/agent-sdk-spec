@@ -63,7 +63,9 @@ RuntimeEvent
 约束：
 
 - `RuntimeEvent` 是外部稳定协议，不等于内部消息对象
-- `event_type` 应与 [harness/runtime-core/failure-and-terminal-states.md](harness/runtime-core/failure-and-terminal-states.md) 中的终止态和错误语义兼容
+- `RuntimeEvent` 可以承载 runtime 自身事件，也可以承载由 task 等子系统派生出来的 observer-facing projection facts
+- `task_id` 的存在不意味着 `Runtime` 拥有 task lifecycle；task lifecycle 的 source of truth 仍归 `Harness.Task`
+- `event_type` 应与 [harness/runtime/core/failure-and-terminal-states.md](harness/runtime/core/failure-and-terminal-states.md) 中的终止态和错误语义兼容
 - `causation_id / correlation_id` 用于把 event 与 tool call、task、request 或外部动作关联起来
 
 推荐补充事件：
@@ -100,7 +102,7 @@ TerminalState
 
 约束：
 
-- `status` 必须与 [harness/runtime-core/failure-and-terminal-states.md](harness/runtime-core/failure-and-terminal-states.md) 中的统一终止态保持一致
+- `status` 必须与 [harness/runtime/core/failure-and-terminal-states.md](harness/runtime/core/failure-and-terminal-states.md) 中的统一终止态保持一致
 - `retryable` 必须显式
 - `error` 如存在，应使用统一 `AgentError`
 

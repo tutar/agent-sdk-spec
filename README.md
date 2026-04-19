@@ -88,15 +88,15 @@
 此外，规范现在显式面向两种宿主场景：
 
 - `Local`
-  单机部署，模块可 direct-call，本地 session / task / verifier / multi-agent 为主
+  单机部署，harness 通常与 session / tools / sandbox direct-call 协作
 - `Cloud`
-  托管 control plane + remote execution
+  harness 整体远端部署，并通过 RPC / remote binding 调用其它核心模块
 
 这两种场景不改变五个核心模块的边界，但会改变它们的部署位置、职责分布和默认实现映射。
 其中：
 
 - `Harness`
-  表达本地 task、background task、verification、multi-agent 等默认运行时语义
+  无论 `Local` 还是 `Cloud` 都是一个完整整体；差异主要在于它调用其它模块的 binding
 - `Orchestration`
   只表达 cloud 托管控制面与远端可管控编排语义
 

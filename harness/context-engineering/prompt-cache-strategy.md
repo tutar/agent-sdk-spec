@@ -113,6 +113,10 @@ ForkCachePlan
 
 用于底层 provider 原生提供 Anthropic-style prompt caching 语义时。
 
+这是一条默认本地映射，适合支持 system block、content block cache marker 和 cache usage 观测的 Anthropic Messages 风格 provider。
+
+实现指南见 [anthropic-native-prompt-cache-guide.md](anthropic-native-prompt-cache-guide.md)。
+
 ### 2. OpenClaw-Mediated Strategy
 
 用于底层 provider 能力不统一，但系统通过中间层统一了 prompt cache 语义。
@@ -157,6 +161,6 @@ ForkCachePlan
 ## 规范结论
 
 - prompt caching 不是单纯 provider 开关，而是 harness 的输入组织策略
-- 当前源码应沉淀为 `Anthropic Native Strategy`
+- [`Anthropic Native Strategy`](anthropic-native-prompt-cache-guide.md)
 - 其他 provider 可以通过 `OpenClaw-Mediated Strategy` 接入统一语义
 - 规范应稳定策略接口，不应稳定某个 provider 的私有字段名

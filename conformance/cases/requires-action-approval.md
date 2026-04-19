@@ -13,7 +13,7 @@
 ## Ingress
 
 1. 一条会触发该 tool 的 user message
-2. 一条 approval response，表示用户批准
+2. 一条由 gateway/control 路由注入的 approval response，表示用户批准
 
 ## Expected Lifecycle
 
@@ -57,3 +57,4 @@
 - `requires_action` 不是结构化对象
 - 批准后无法恢复到执行态
 - 批准结果没有绑定到原 `tool_use`
+- runtime 需要依赖某个特定 UI 才能完成 approval 恢复

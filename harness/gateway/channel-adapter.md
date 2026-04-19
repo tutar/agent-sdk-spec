@@ -6,12 +6,15 @@
 
 它直接贴着具体接入渠道工作，例如：
 
-- CLI
+- Feishu
+- WeChat
 - Telegram
 - Slack
+- TUI
+- CLI bridge
+- API client
 - WebSocket
 - Webhook
-- Local UI
 
 它的职责不是运行 agent，也不是做 session restore，而是：
 
@@ -70,4 +73,4 @@ InboundEnvelope
 
 - `ChannelAdapter` 属于 gateway 侧，不属于 harness
 - `ChannelAdapter` 是协议边缘，不是运行时控制面
-- terminal、GUI、Telegram、Slack、API client 都应被视为不同的 channel adapter 落地
+- Feishu、WeChat、Telegram、TUI、Slack、API client 都应被视为不同的 channel adapter 落地

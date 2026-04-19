@@ -1,8 +1,8 @@
-# Agent Observability
+# Runtime Observability
 
 ## 职责
 
-`AgentObservability` 定义 harness 必须如何暴露 agent 运行状态、进度、usage、cost、latency 和 trace 信息。
+`RuntimeObservability` 定义 runtime 必须如何暴露运行状态、进度、usage、cost、latency 和 trace 信息。
 
 它负责：
 
@@ -20,10 +20,8 @@
 
 ## 稳定接口
 
-推荐最小接口：
-
 ```text
-AgentObservability
+RuntimeObservability
   - emit_runtime_metric(metric)
   - emit_progress(update)
   - emit_session_state(state)
@@ -70,30 +68,15 @@ AgentObservability
 - ttft
 - success / error
 
-### 5. observability 不应绑定单一 vendor
+## 与 `runtime-state-projection` 的边界
 
-实现可以接：
-
-- OTel
-- vendor tracing backend
-- IDE runtime viewer
-- custom agent event queue
-
-但规范不应强绑具体平台。
-
-## 推荐默认策略
-
-- interaction span 作为顶层 span
-- llm request span 和 tool span 作为子 span
-- session lifecycle 走轻量状态流
-- background agent 走 task progress 流
-- 大对象用 hash / delta 记录，避免重复传输
-
-## 默认实现映射
-
+- `RuntimeObservability`
+  定义“观测什么”
+- `RuntimeStateProjection`
+  定义“哪些 runtime-visible facts 对外暴露，以及这些 facts 如何与 transcript / task registry 分离”
 
 ## 规范结论
 
-- agent runtime 必须有独立 observability 平面
+- runtime 必须有独立 observability 平面
 - session signal、task progress、span tracing 必须分层
 - observability 只回答“发生了什么”，不直接承担“是否通过”的评估职责

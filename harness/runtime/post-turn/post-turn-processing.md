@@ -2,7 +2,7 @@
 
 ## 职责
 
-`Post-Turn Processing` 负责在一次 turn 结束后，执行不属于主推理链但会影响后续行为的加工流程。
+`PostTurnProcessing` 负责在一次 turn 结束后，执行不属于主推理链但会影响后续行为的加工流程。
 
 典型职责包括：
 
@@ -19,8 +19,6 @@
 - 它可以异步执行，但必须有明确触发边界
 
 ## 稳定接口
-
-推荐最小接口：
 
 ```text
 PostTurnContext
@@ -43,30 +41,6 @@ PostTurnRegistry
   - execute_all(context)
 ```
 
-执行结果建议以事件流表达：
-
-```text
-PostTurnEvent
-  - processor_name
-  - kind: hook | suggestion | memory_extract | dream | task_completed | idle
-  - status: started | progress | completed | failed | skipped
-  - payload?
-```
-
-## 默认实现
-
-
-它会在 turn 结束时触发：
-
-- `executeStopHooks()`
-- `executePromptSuggestion()`
-- `executeExtractMemories()`
-- `executeAutoDream()`
-- task completed / teammate idle hooks
-
-相关默认映射包括：
-
-
 ## 要解决的问题
 
 - 如何把 turn 结束后的加工逻辑从主推理回路中拆出来
@@ -74,9 +48,18 @@ PostTurnEvent
 - 如何防止这些后处理逻辑污染主 query loop
 - 如何在同步返回与后台任务之间平衡时延与完整性
 
+## 与其它模块的边界
+
+- 不是 core loop
+- 不是 verification
+- 不是 compact
+- 不是 task runtime
+
+它是 runtime 在 turn terminal / stop boundary 上的独立阶段。
+
 ## 规范结论
 
-- post-turn processing 应作为 harness 的独立扩展平面存在
+- post-turn processing 应作为 runtime 的独立子平面存在
 - 它应由明确的 turn 边界触发，而不是散落在业务逻辑中
 - post-turn processor 可以异步，但触发点和事件投影必须稳定
 - post-turn processing 不是 verification，也不是 compact
