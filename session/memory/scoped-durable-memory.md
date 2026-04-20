@@ -37,6 +37,10 @@
 - `agent-scoped memory` 属于 durable memory scope，而不是单独的新 memory 类型
 - scope 会影响 sharing / visibility / recall candidate selection
 - scope 不应改变 durable memory 作为 recall object 的核心语义
+- 常见默认映射包括：
+  - project-level auto memory
+  - team-shared durable memory
+  - agent-scoped durable memory
 - scope 是组织维度，不是 ownership 单元
 - 当前产品绑定关系仍是 `1 Agent = 1 Global Long-Term Memory`
 
@@ -56,6 +60,8 @@
 
 - 与 [memory-model.md](memory-model.md)
   `memory-model` 只定义 3 个核心 memory layers；本文件定义 durable memory 的 scope 维度
+- 与 [durable-memory-recall.md](durable-memory-recall.md)
+  recall 负责在 scope 内选择和读取 memory；本文件只定义 scope 边界
 - 与 [memory-injection.md](memory-injection.md)
   injection 负责把显式 source 注入当前 turn；scope 负责 durable memory 的共享/可见性边界
 - 与 [memory-consolidation.md](memory-consolidation.md)

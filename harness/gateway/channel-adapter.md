@@ -74,3 +74,4 @@ InboundEnvelope
 - `ChannelAdapter` 属于 gateway 侧，不属于 harness
 - `ChannelAdapter` 是协议边缘，不是运行时控制面
 - Feishu、WeChat、Telegram、TUI、Slack、API client 都应被视为不同的 channel adapter 落地
+- assistant agent profile 常把 channel 作为主 user-facing surface，但 profile 仍归 `Harness`，channel adapter 仍归 `Gateway`

@@ -121,6 +121,8 @@
 - 纯粹可由 transcript 重新推导的细节
 - 已经过时且没有保留价值的操作痕迹
 
+durable memory 的 recall 语义见 [durable-memory-recall.md](durable-memory-recall.md)。
+
 durable memory 的 scope 维度见 [scoped-durable-memory.md](scoped-durable-memory.md)。
 
 显式 durable injection 的详细语义见 [memory-injection.md](memory-injection.md)。

@@ -268,7 +268,7 @@ SessionBranchStore
 - resume 是 lease 交接，而不是复制出第二个可写 session
 - short-term memory 必须跟随 session 恢复，而不是跟随 harness 进程丢失
 
-session 域内的 memory 详细模型见 [memory/memory-model.md](memory/memory-model.md)，scope 语义见 [memory/scoped-durable-memory.md](memory/scoped-durable-memory.md)，显式 durable injection 见 [memory/memory-injection.md](memory/memory-injection.md)。
+session 域内的 memory 详细模型见 [memory/memory-model.md](memory/memory-model.md)，长期记忆召回见 [memory/durable-memory-recall.md](memory/durable-memory-recall.md)，scope 语义见 [memory/scoped-durable-memory.md](memory/scoped-durable-memory.md)，显式 durable injection 见 [memory/memory-injection.md](memory/memory-injection.md)。
 
 ## 子代理与 remote session
 
@@ -313,10 +313,11 @@ BranchRef
 - [event-log-schema.md](event-log-schema.md)
 - [lifecycle-state.md](lifecycle-state.md)
 - [memory-model.md](memory/memory-model.md)
+- [durable-memory-recall.md](memory/durable-memory-recall.md)
 - [scoped-durable-memory.md](memory/scoped-durable-memory.md)
 - [memory-injection.md](memory/memory-injection.md)
 - [memory-consolidation.md](memory/memory-consolidation.md)
-- [dream-consolidation.md](dream-consolidation.md)
+- [dream-consolidation.md](memory/dream-consolidation.md)
 
 ## 规范结论
 

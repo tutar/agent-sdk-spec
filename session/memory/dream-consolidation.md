@@ -162,17 +162,23 @@ Automatic Dream 的失败不得影响：
   `Memory Consolidation` 是上层能力；`Dream Consolidation` 是其中面向 cross-session memory 整理的标准模式
 - 与 [memory-model.md](memory-model.md)
   `Dream Consolidation` 主要作用于 durable memory，而不是 short-term session memory
-- 与 [memory/scoped-durable-memory.md](memory/scoped-durable-memory.md)
+- 与 [scoped-durable-memory.md](scoped-durable-memory.md)
   dream 可以操作不同 scope 的 durable memory，但 scope 语义不由 dream 定义
-- 与 [../harness/task/task-manager.md](../harness/task/task-manager.md)
+- 与 [../../harness/task/task-manager.md](../../harness/task/task-manager.md)
   `Auto Dream` 可作为后台 task 落地，但 task lifecycle 不等于 dream 语义本身
-- 与 [../tools/command-surface/reflection-and-verification-commands.md](../tools/command-surface/reflection-and-verification-commands.md)
+- 与 [../../tools/command-surface/reflection-and-verification-commands.md](../../tools/command-surface/reflection-and-verification-commands.md)
   `Dream` 是 memory reflection，不是 correctness verification
 
 ## 默认实现映射
 
 当前仓库中的默认实现映射为：
 
+- `manual /dream`
+  用户显式触发的 durable memory consolidation
+- `autoDream`
+  基于时间门槛、session 数量和锁语义的后台 consolidation
+- 默认执行面
+  受限 forked subagent + background task surface
 
 当前代码库还明确保留了手动 `/dream` 概念：
 
@@ -181,7 +187,7 @@ Automatic Dream 的失败不得影响：
 
 ## 规范结论
 
-- `dream` 应作为 session 域内的标准 consolidation 模式存在
+- `dream` 应作为 session memory 子域内的标准 consolidation 模式存在
 - 规范应同时覆盖 `manual /dream` 与 `autoDream`
 - `autoDream` 是调度模式，`dream` 是 consolidation 语义
 - dream 的默认执行形态可以是受限 subagent + task surface

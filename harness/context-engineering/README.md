@@ -72,3 +72,4 @@
 - bootstrap prompt、structured context、attachments、capability surface、memory recall 必须分层
 - payload externalization、working-view projection、compact rewrite 是 context engineering 的稳定编辑面
 - 本地与云端的差异只应体现在依赖输入的获取方式，不应改变装配语义
+- assistant agent 这类长期运行 profile 可以改变 memory accumulation / continuity operating mode，但不改变 context planes、assembly pipeline 和 editing 的核心语义

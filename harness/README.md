@@ -80,6 +80,9 @@ Harness
   - task model and lifecycle
   - local verification runtime
   - local work allocation
+- `AgentProfiles`
+  - assistant-mode host profile
+  - profile-specific runtime composition
 - `Permission`
   - permission runtime
   - permission rules
@@ -246,7 +249,18 @@ Harness
 - `ask -> requires_action` 如何投影、路由和恢复
 - worker / leader / headless / remote 场景下如何避免不可达审批
 
-### 8. Reliability Guidance
+### 8. Agent Profiles
+
+- [agent-profiles/README.md](agent-profiles/README.md)
+- [agent-profiles/assistant-agent.md](agent-profiles/assistant-agent.md)
+
+这一组回答：
+
+- 哪些 agent 形态属于长期运行 profile，而不是单个 tool / task / runtime 细节
+- assistant agent 这类 long-lived host profile 至少应承诺哪些行为
+- profile 如何组合 gateway、task、multi-agent、context-engineering、session.memory 的既有能力
+
+### 9. Reliability Guidance
 
 - [hallucination-mitigation.md](hallucination-mitigation.md)
 
@@ -264,5 +278,6 @@ Harness
 - harness 相关状态应至少区分 `ProcessState`、`InteractionState` 与各领域状态投影
 - harness 规范必须同时适配 Local、Cloud 两种 host
 - prompt cache、context governance、streaming 与 post-turn processing 应优先建模为标准扩展，而不是隐含在某个默认实现内部
+- assistant-mode host profile 这类长期运行形态应作为 `Harness` 标准扩展显式建模，而不是散落在 gateway、task、memory 注释中
 - 在产品级绑定关系上，`Harness` 与 `Session` 不是永久 1:1 owner，而是 `single active lease`
 - 同一 session 任一时刻只能被一个 active harness 推进；重启或迁移应通过 `wake / resume` 交接 lease

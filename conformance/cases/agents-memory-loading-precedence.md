@@ -24,6 +24,7 @@
 - 冲突内容以后加载者为准
 - sibling 子目录的 `AGENTS.md` 不应进入当前 target 的注入结果
 - 注入结果进入 context plane，而不是 transcript
+- 该注入语义独立于 durable memory recall，不要求把 `AGENTS.md` 先转成 durable memory record
 
 ## Expected Persistent Effects
 

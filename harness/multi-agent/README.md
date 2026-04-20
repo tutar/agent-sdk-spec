@@ -52,6 +52,8 @@ cloud 侧的 many brains / many hands 见 [../../orchestration/README.md](../../
   解决执行对象如何注册、跟踪、恢复和回收
 - `multi-agent/`
   解决多个 worker 如何被启动、隔离、通信、投影给 leader
+- `agent-profiles/`
+  解决 assistant agent 这类长期运行 host profile 如何组合使用 multi-agent；profile 不等于 multi-agent 机制本体
 - `gateway/`
   解决外部 channel 与 harness worker 的边界
 - `orchestration/`

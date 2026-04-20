@@ -820,6 +820,52 @@ HostingProfile
 - `HostingProfile` 影响部署映射，不影响模块语义
 - 对本规范而言，默认 profile 是 `local`
 
+## AgentProfile
+
+用于表达 harness 内部的长期运行形态。
+
+推荐最小字段：
+
+```text
+AgentProfile
+  - profile_name
+  - interaction_style
+  - session_shape
+  - user_output_contract
+  - background_work_policy
+  - memory_write_policy
+  - continuity_policy
+  - channel_affinity?
+```
+
+约束：
+
+- `AgentProfile` 描述的是 harness 内部的 host/runtime 形态，不等于 deployment hosting profile
+- `AgentProfile` 可以组合 gateway、task、multi-agent、session.memory 等子域能力，但不改变这些子域的 ownership
+
+## AssistantAgentProfile
+
+用于表达 assistant-mode host profile。
+
+推荐最小字段：
+
+```text
+AssistantAgentProfile
+  - profile_type: assistant
+  - long_lived_session: true
+  - requires_explicit_user_channel: true
+  - prefer_responsive_main_thread: true
+  - supports_viewer_attach: true
+  - append_first_memory_mode?
+  - scheduled_maintenance_mode?
+  - preseeded_team_context?
+```
+
+约束：
+
+- `AssistantAgentProfile` 不是 single agent definition，不是 task type，也不是 channel adapter
+- 它定义的是一种长期运行的 assistant host profile 语义
+
 ## TaskRecord
 
 用于表达 task-driven runtime 中的统一任务对象。

@@ -18,6 +18,8 @@
 | `GatewayInteractionState` | chat/channel 交互面的状态集合 | `Harness.Gateway` | `Harness.Runtime`, `Session` | Feishu/WeChat/Telegram/TUI 等 channel 状态止步于 gateway |
 | `ModelProviderAdapter` | 吸收模型厂商/API 差异的统一适配层 | `Harness` | `Tools`, `Session` | 是模型差异的唯一主吸收层 |
 | `ContextGovernance` | context budget、compact、overflow recovery 的治理层 | `Harness` | `Session` | 不等于 transcript 或 memory store |
+| `AgentProfile` | harness 内部的长期运行形态描述对象 | `Harness` | `Gateway`, `Task`, `Session` | 描述 host/runtime 形态，不等于 deployment hosting profile |
+| `AssistantAgentProfile` | long-lived assistant-mode host profile | `Harness` | `MultiAgent`, `Gateway`, `Task`, `Session.memory` | 组合使用多个子域能力，但不拥有它们 |
 | `TaskManager` | 本地 task-driven runtime 的任务生命周期与恢复接口 | `Harness` | `Session`, `Orchestration` | task 不是 transcript |
 | `BackgroundAgent` | 长于单 turn 生命周期的后台 agent | `Harness` | `Orchestration` | local 默认由 harness 管理生命周期 |
 | `VerifierTask` | 评估/校验型运行时单元 | `Harness` | `Tools` | capability surface 仍可由 tools 暴露 |

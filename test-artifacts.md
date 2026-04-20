@@ -90,6 +90,8 @@ ObjectFixture
 - [conformance/golden/session-resume.event-log.json](conformance/golden/session-resume.event-log.json)
 - [conformance/golden/sandbox-deny.events.json](conformance/golden/sandbox-deny.events.json)
 - [conformance/golden/memory-recall-and-consolidation.json](conformance/golden/memory-recall-and-consolidation.json)
+
+没有 golden 的长期记忆 case（例如 bounded recall / durable memory index 分层）只保留 canonical case，不强制维护快照样本。
 - [conformance/golden/agents-memory-loading-precedence.json](conformance/golden/agents-memory-loading-precedence.json)
 - [conformance/golden/policy-ask-deny-allow.json](conformance/golden/policy-ask-deny-allow.json)
 - [conformance/golden/persisted-tool-result-resume.json](conformance/golden/persisted-tool-result-resume.json)

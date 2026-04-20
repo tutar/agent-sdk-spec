@@ -19,6 +19,7 @@
 
 - session B 可从同一个 agent long-term memory 中召回该记忆
 - long-term memory 不要求按 user 或 chat 拆分 ownership
+- global long-term memory 可以再有 project / team / agent scope 之分，但不改变“同一 agent 的多个 session 共享 durable long-term memory”这一产品语义
 - short-term memory 仍然保持 session 独占
 
 ## Failure Conditions

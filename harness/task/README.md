@@ -13,6 +13,7 @@
 这里的 task 是独立执行层对象，不等于 `AgentRuntime` 的 turn state machine。
 `AgentRuntime` 负责一轮 agent turn 的推进；task 负责长生命周期执行对象的注册、状态、输出、通知、恢复和回收。
 多 agent 的委派、teammate 执行和消息路由见 [../multi-agent/README.md](../multi-agent/README.md)。
+assistant agent 这类长期运行 host profile 可能要求主线程保持响应式并倾向后台化长工作，但这不改变 task lifecycle 的所有权，相关 profile 语义见 [../agent-profiles/assistant-agent.md](../agent-profiles/assistant-agent.md)。
 
 这组文档描述的是 `Local-first` 默认 task 主线，不等于 cloud deployment 下的托管控制面。
 cloud 侧的控制面语义见 [../../orchestration/README.md](../../orchestration/README.md) 与 [../../orchestration/cloud/README.md](../../orchestration/cloud/README.md)。

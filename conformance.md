@@ -159,6 +159,15 @@
 - notification、mailbox、viewed input 的 recipient scope deterministic
 - worker identity 稳定，不因前后台切换或观察方式改变
 
+### Harness.AgentProfiles
+
+若实现宣称支持 assistant-mode 等长期运行的 `Harness.AgentProfiles`，还必须保持：
+
+- profile 语义是对 gateway、task、multi-agent、session.memory 等子域能力的组合，而不是 ownership 替代
+- assistant agent profile 的主交互面偏响应式
+- assistant agent profile 可以采用 append-first / consolidate-later 的 memory operating mode
+- continuity / viewer attach 与上述 memory operating mode 兼容
+
 ### Harness.Permission
 
 若实现宣称支持完整 permission rule system，还必须保持：
@@ -175,6 +184,7 @@
 
 - short-term session continuity 与 transcript 分离
 - durable memory recall 不承担 restore 责任
+- durable memory 具有常驻索引与 bounded recall 的语义分层
 - consolidation 不得破坏 resume 语义
 - branch / sidechain transcript 与父 session 的追溯关系一致
 - 同一 agent 下多个 session 可共享同一个 global long-term memory
@@ -258,6 +268,9 @@
   - [conformance/cases/teammate-mailbox-delivery.md](conformance/cases/teammate-mailbox-delivery.md)
   - [conformance/cases/teammate-output-not-auto-routed-to-leader.md](conformance/cases/teammate-output-not-auto-routed-to-leader.md)
   - [conformance/cases/viewed-teammate-direct-input.md](conformance/cases/viewed-teammate-direct-input.md)
+- `Harness.AgentProfiles`
+  - [conformance/cases/assistant-agent-profile-background-responsiveness.md](conformance/cases/assistant-agent-profile-background-responsiveness.md)
+  - [conformance/cases/assistant-agent-profile-memory-and-continuity.md](conformance/cases/assistant-agent-profile-memory-and-continuity.md)
 - `Harness.ContextEngineering`
   - [conformance/cases/context-planes-and-projection.md](conformance/cases/context-planes-and-projection.md)
   - [conformance/cases/attachment-assembly-order-and-scope.md](conformance/cases/attachment-assembly-order-and-scope.md)
@@ -265,6 +278,7 @@
   - [conformance/cases/context-provider-vs-assembly-boundary.md](conformance/cases/context-provider-vs-assembly-boundary.md)
 - `Session.MemoryConsolidation`
   - [conformance/cases/agent-global-long-memory.md](conformance/cases/agent-global-long-memory.md)
+  - [conformance/cases/durable-memory-index-and-bounded-recall.md](conformance/cases/durable-memory-index-and-bounded-recall.md)
   - [conformance/cases/agents-memory-loading-precedence.md](conformance/cases/agents-memory-loading-precedence.md)
   - [conformance/cases/memory-recall-and-consolidation.md](conformance/cases/memory-recall-and-consolidation.md)
   - [conformance/cases/memory-consolidation-background-safety.md](conformance/cases/memory-consolidation-background-safety.md)
