@@ -156,14 +156,35 @@ Automatic Dream 的失败不得影响：
 
 不应默认允许它写业务代码或修改非 memory 区域。
 
+### 6. Dream 应允许作为 assistant-style operating mode 运行
+
+`Dream Consolidation` 可以被 long-lived assistant-style host profile 采用为常见的后台 maintenance 语义。
+
+在这种 operating mode 下，系统通常会表现为：
+
+- 新记忆先进入 append-first capture stream
+- durable index / topic memory 的整理延后到 dream 或语义等价的 consolidation
+- dream 更常由 scheduled/background path 触发，而不是每次 turn 立即完成
+- viewer continuity、reattach 和长期 session 累积不依赖 dream 立即完成
+
+但这些变化只影响 operating mode，不改变：
+
+- `Session.memory` 对 durable memory 的所有权
+- `Dream Consolidation` 的 request/result/lock 语义
+- `Task`、`Gateway`、`Harness` 的职责边界
+
 ## 与其它模块的边界
 
 - 与 [memory-consolidation.md](memory-consolidation.md)
   `Memory Consolidation` 是上层能力；`Dream Consolidation` 是其中面向 cross-session memory 整理的标准模式
-- 与 [memory-model.md](memory-model.md)
+- 与 [auto-memory/auto-memory-write-paths.md](auto-memory/auto-memory-write-paths.md)
+  dream 可以作为 auto-memory 的标准 consolidation path，但不等于 auto-memory runtime 本体
+- 与 [durable-memory-model.md](durable-memory-model.md)
   `Dream Consolidation` 主要作用于 durable memory，而不是 short-term session memory
 - 与 [scoped-durable-memory.md](scoped-durable-memory.md)
   dream 可以操作不同 scope 的 durable memory，但 scope 语义不由 dream 定义
+- 与 [../../harness/agent-profiles/assistant-agent.md](../../harness/agent-profiles/assistant-agent.md)
+  assistant agent profile 可以把 dream 作为常见 maintenance operating mode，但 profile 不拥有 dream 的 consolidation 语义或对象模型
 - 与 [../../harness/task/task-manager.md](../../harness/task/task-manager.md)
   `Auto Dream` 可作为后台 task 落地，但 task lifecycle 不等于 dream 语义本身
 - 与 [../../tools/command-surface/reflection-and-verification-commands.md](../../tools/command-surface/reflection-and-verification-commands.md)

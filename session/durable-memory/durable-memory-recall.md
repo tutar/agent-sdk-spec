@@ -183,10 +183,10 @@ durable memory 是长期知识，不保证永远新鲜。
 
 ## 与其它子规范的边界
 
-### 与 [memory-model.md](memory-model.md)
+### 与 [durable-memory-model.md](durable-memory-model.md)
 
-- `memory-model`
-  定义长短期记忆的总模型
+- `durable-memory-model`
+  定义 durable memory 的总模型
 - 本页
   只定义 durable long-term memory 的 recall 语义
 
@@ -225,6 +225,14 @@ consolidation 可以更新 recall 的输入，但不替代 recall 本身。
 - bounded 的每轮 recall 数量与大小限制
 
 这只是默认映射，不构成对具体文件布局的强约束。
+
+auto-memory 作为默认 local mapping 的更完整语义，见 [auto-memory/README.md](auto-memory/README.md)。
+
+其中 resident entrypoint、topic payload、header manifest 的默认本地映射，见：
+
+- [auto-memory/memory-entrypoint-index.md](auto-memory/memory-entrypoint-index.md)
+- [auto-memory/topic-memory.md](auto-memory/topic-memory.md)
+- [auto-memory/frontmatter-and-header-manifest.md](auto-memory/frontmatter-and-header-manifest.md)
 
 ## 规范结论
 

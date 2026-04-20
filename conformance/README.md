@@ -69,9 +69,12 @@
 - [cases/single-active-harness-lease.md](cases/single-active-harness-lease.md)
 - [cases/agent-global-long-memory.md](cases/agent-global-long-memory.md)
 - [cases/durable-memory-index-and-bounded-recall.md](cases/durable-memory-index-and-bounded-recall.md)
+- [cases/auto-memory-resident-index-and-bounded-recall.md](cases/auto-memory-resident-index-and-bounded-recall.md)
+- [cases/auto-memory-header-manifest-and-payload-selection.md](cases/auto-memory-header-manifest-and-payload-selection.md)
 - [cases/agents-memory-loading-precedence.md](cases/agents-memory-loading-precedence.md)
 - [cases/memory-recall-and-consolidation.md](cases/memory-recall-and-consolidation.md)
 - [cases/memory-consolidation-background-safety.md](cases/memory-consolidation-background-safety.md)
+- [cases/auto-memory-write-paths-and-consolidation.md](cases/auto-memory-write-paths-and-consolidation.md)
 
 ### Tools.SkillImport
 
@@ -237,9 +240,12 @@ golden 只保留当前正文仍有明确稳定对象或稳定事件输出的场�
 - `single-active-harness-lease`
 - `agent-global-long-memory`
 - `durable-memory-index-and-bounded-recall`
+- `auto-memory-resident-index-and-bounded-recall`
+- `auto-memory-header-manifest-and-payload-selection`
 - `agents-memory-loading-precedence`
 - `memory-recall-and-consolidation`
 - `memory-consolidation-background-safety`
+- `auto-memory-write-paths-and-consolidation`
 
 若要宣称支持 `Tools.SkillImport`，还应通过：
 

@@ -101,8 +101,8 @@ LoadedMemoryInjection
 
 ## 与其他 memory 子能力的边界
 
-- 与 [memory-model.md](memory-model.md)
-  `memory-model` 定义分层；本文件定义 injection 这一层的具体行为
+- 与 [durable-memory-model.md](durable-memory-model.md)
+  `durable-memory-model` 定义 durable 侧的总模型；本文件定义 injection 这一层的具体行为
 - 与 [durable-memory-recall.md](durable-memory-recall.md)
   durable recall 面向长期记忆 store；本文件面向显式 file-backed injection source
 - 与 [scoped-durable-memory.md](scoped-durable-memory.md)

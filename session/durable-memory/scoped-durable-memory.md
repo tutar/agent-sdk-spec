@@ -58,8 +58,8 @@
 
 ## 与其它 memory 子规范的边界
 
-- 与 [memory-model.md](memory-model.md)
-  `memory-model` 只定义 3 个核心 memory layers；本文件定义 durable memory 的 scope 维度
+- 与 [durable-memory-model.md](durable-memory-model.md)
+  `durable-memory-model` 只定义 durable memory 的总模型；本文件定义 durable memory 的 scope 维度
 - 与 [durable-memory-recall.md](durable-memory-recall.md)
   recall 负责在 scope 内选择和读取 memory；本文件只定义 scope 边界
 - 与 [memory-injection.md](memory-injection.md)
@@ -80,3 +80,5 @@
 - scope 是 durable memory 的维度，不是新的 memory layer
 - 默认 scope 语义推荐为 `user / project / agent / local`
 - `DurableMemoryRecord.scope` 足以承载当前 canonical object 需求，无需新增独立 scoped object
+
+auto-memory 作为 project-scoped durable runtime 的默认映射，见 [auto-memory/README.md](auto-memory/README.md)。

@@ -24,6 +24,8 @@
 - context planes、attachment ordering、startup context lifecycle、provider/assembly boundary、context editing 分层退化与恢复语义
 - session event log / checkpoint / resume / short-term continuity 语义
 - durable memory recall / injection / consolidation / branch tracing 语义
+- auto-memory 的 resident index、bounded recall 与 write-path layering 语义
+- auto-memory 的 entrypoint index、topic payload、header manifest 与 payload-selection layering 语义
 - task lifecycle / output cursor / notification / retention 语义
 - local multi-agent delegation / mailbox / viewed transcript / notification routing 语义
 - MCP lifecycle / transport / capability negotiation / runtime adaptation 语义
@@ -185,6 +187,8 @@
 - short-term session continuity 与 transcript 分离
 - durable memory recall 不承担 restore 责任
 - durable memory 具有常驻索引与 bounded recall 的语义分层
+- auto-memory 作为默认 durable runtime 时，resident index、background extraction、dream consolidation 与 assistant-style append-first mode 的分层语义稳定
+- auto-memory 作为默认 durable runtime 时，entrypoint index、topic payload、header manifest 与 payload-selection layering 语义稳定
 - consolidation 不得破坏 resume 语义
 - branch / sidechain transcript 与父 session 的追溯关系一致
 - 同一 agent 下多个 session 可共享同一个 global long-term memory
@@ -279,9 +283,11 @@
 - `Session.MemoryConsolidation`
   - [conformance/cases/agent-global-long-memory.md](conformance/cases/agent-global-long-memory.md)
   - [conformance/cases/durable-memory-index-and-bounded-recall.md](conformance/cases/durable-memory-index-and-bounded-recall.md)
+  - [conformance/cases/auto-memory-resident-index-and-bounded-recall.md](conformance/cases/auto-memory-resident-index-and-bounded-recall.md)
   - [conformance/cases/agents-memory-loading-precedence.md](conformance/cases/agents-memory-loading-precedence.md)
   - [conformance/cases/memory-recall-and-consolidation.md](conformance/cases/memory-recall-and-consolidation.md)
   - [conformance/cases/memory-consolidation-background-safety.md](conformance/cases/memory-consolidation-background-safety.md)
+  - [conformance/cases/auto-memory-write-paths-and-consolidation.md](conformance/cases/auto-memory-write-paths-and-consolidation.md)
   - [conformance/cases/chat-session-binding.md](conformance/cases/chat-session-binding.md)
   - [conformance/cases/single-active-harness-lease.md](conformance/cases/single-active-harness-lease.md)
 - `Tools.SkillImport`

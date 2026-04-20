@@ -126,6 +126,14 @@ assistant agent 可支持一类宿主级 background maintenance：
 
 这些任务属于 profile 的常见 operating mode，但并不改变 `Task` 或 `Session.memory` 的子域归属。
 
+其中，dream-style background work 的 consolidation 语义、调度门槛、锁与结果对象仍归
+[../../session/durable-memory/dream-consolidation.md](../../session/durable-memory/dream-consolidation.md)。
+`AssistantAgentProfile` 只定义：
+
+- 为什么长期运行宿主会偏好 dream-style maintenance
+- 为什么它通常与 append-first memory capture 同时出现
+- 为什么它适合后台执行而不应阻塞主交互面
+
 ### 7. pre-seeded worker / team context
 
 assistant agent 可以在宿主启动时预置 worker/team context，使 delegation 与 teammate execution 更自然。
@@ -194,6 +202,11 @@ assistant agent 可以采用：
 - consolidate-later durable memory organization
 
 但 durable memory 的 recall、scope、consolidation 对象模型仍归 `Session.memory`。
+
+assistant-style durable memory operating mode 的上层 consolidation 语义见：
+
+- [../../session/durable-memory/memory-consolidation.md](../../session/durable-memory/memory-consolidation.md)
+- [../../session/durable-memory/dream-consolidation.md](../../session/durable-memory/dream-consolidation.md)
 
 ## Default Local Mapping
 

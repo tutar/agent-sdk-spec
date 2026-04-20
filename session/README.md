@@ -235,7 +235,7 @@ SessionBranchStore
   读取 session 切片并构造当前 model input
 - `ContextProvider`
   把 durable memory / project memory 注入当前 turn
-- file-backed durable memory injection（例如 `AGENTS.md`）属于 `Session.memory` 的注入面，不属于 transcript，详细规则见 [memory/memory-injection.md](memory/memory-injection.md)
+- file-backed durable memory injection（例如 `AGENTS.md`）属于 `Session.memory` 的注入面，不属于 transcript，详细规则见 [durable-memory/memory-injection.md](durable-memory/memory-injection.md)
 - `ContextGovernance`
   决定 compact，不等于 session 自身
 - `SessionLifecycleState`
@@ -268,7 +268,7 @@ SessionBranchStore
 - resume 是 lease 交接，而不是复制出第二个可写 session
 - short-term memory 必须跟随 session 恢复，而不是跟随 harness 进程丢失
 
-session 域内的 memory 详细模型见 [memory/memory-model.md](memory/memory-model.md)，长期记忆召回见 [memory/durable-memory-recall.md](memory/durable-memory-recall.md)，scope 语义见 [memory/scoped-durable-memory.md](memory/scoped-durable-memory.md)，显式 durable injection 见 [memory/memory-injection.md](memory/memory-injection.md)。
+session 域内的 short-term continuity 详细模型见 [short-term-memory/short-term-memory-model.md](short-term-memory/short-term-memory-model.md)，durable memory 总模型见 [durable-memory/durable-memory-model.md](durable-memory/durable-memory-model.md)，default durable runtime 见 [durable-memory/auto-memory/README.md](durable-memory/auto-memory/README.md)，长期记忆召回见 [durable-memory/durable-memory-recall.md](durable-memory/durable-memory-recall.md)，scope 语义见 [durable-memory/scoped-durable-memory.md](durable-memory/scoped-durable-memory.md)，显式 durable injection 见 [durable-memory/memory-injection.md](durable-memory/memory-injection.md)。
 
 ## 子代理与 remote session
 
@@ -312,18 +312,25 @@ BranchRef
 
 - [event-log-schema.md](event-log-schema.md)
 - [lifecycle-state.md](lifecycle-state.md)
-- [memory-model.md](memory/memory-model.md)
-- [durable-memory-recall.md](memory/durable-memory-recall.md)
-- [scoped-durable-memory.md](memory/scoped-durable-memory.md)
-- [memory-injection.md](memory/memory-injection.md)
-- [memory-consolidation.md](memory/memory-consolidation.md)
-- [dream-consolidation.md](memory/dream-consolidation.md)
+- [short-term-memory/README.md](short-term-memory/README.md)
+- [short-term-memory/short-term-memory-model.md](short-term-memory/short-term-memory-model.md)
+- [short-term-memory/continuity-summary.md](short-term-memory/continuity-summary.md)
+- [short-term-memory/coverage-boundary-and-stability.md](short-term-memory/coverage-boundary-and-stability.md)
+- [durable-memory/README.md](durable-memory/README.md)
+- [durable-memory/durable-memory-model.md](durable-memory/durable-memory-model.md)
+- [durable-memory/durable-memory-recall.md](durable-memory/durable-memory-recall.md)
+- [durable-memory/memory-injection.md](durable-memory/memory-injection.md)
+- [durable-memory/scoped-durable-memory.md](durable-memory/scoped-durable-memory.md)
+- [durable-memory/memory-consolidation.md](durable-memory/memory-consolidation.md)
+- [durable-memory/dream-consolidation.md](durable-memory/dream-consolidation.md)
+- [durable-memory/auto-memory/README.md](durable-memory/auto-memory/README.md)
+- [durable-memory/memory-types/README.md](durable-memory/memory-types/README.md)
 
 ## 规范结论
 
 - `Session` 是 durable state boundary，不是 message array
 - `Session` 模块主要负责 transcript、restore、working state 和 session memory linkage
-- 长短期记忆的详细规范应下沉到独立文档，而不是挤在总览页里
+- short-term memory 与 durable memory 的详细规范应下沉到独立子目录，而不是挤在总览页里
 - session 语义不应因为 Local、Cloud 的落盘位置不同而漂移
 - session 应作为 harness / sandbox 可替换后的恢复真源
 - `append_events()` 与 `session_checkpoint` 应优先于进程内 transcript 变异
