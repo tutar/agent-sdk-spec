@@ -54,6 +54,9 @@
 - [cases/attachment-assembly-order-and-scope.md](cases/attachment-assembly-order-and-scope.md)
 - [cases/startup-context-lifecycle.md](cases/startup-context-lifecycle.md)
 - [cases/context-provider-vs-assembly-boundary.md](cases/context-provider-vs-assembly-boundary.md)
+- [cases/context-editing-progressive-degradation.md](cases/context-editing-progressive-degradation.md)
+- [cases/content-externalization-and-evidence-ref.md](cases/content-externalization-and-evidence-ref.md)
+- [cases/working-view-projection-vs-compaction-boundary.md](cases/working-view-projection-vs-compaction-boundary.md)
 
 ### Session And Memory
 
@@ -213,6 +216,9 @@ golden 只保留当前正文仍有明确稳定对象或稳定事件输出的场�
 - `attachment-assembly-order-and-scope`
 - `startup-context-lifecycle`
 - `context-provider-vs-assembly-boundary`
+- `context-editing-progressive-degradation`
+- `content-externalization-and-evidence-ref`
+- `working-view-projection-vs-compaction-boundary`
 
 若要宣称支持 `Session.MemoryConsolidation` 或 file-backed memory injection，还应通过：
 

@@ -109,6 +109,8 @@ attachment 不只是“额外文件”。
 - 完整结果外部化
 - 通过 `EvidenceRef` 在后续轮次中重新引用
 
+`EvidenceRef` 也是 `ContextEditing` 中 content externalization 的稳定结果之一。
+
 ## Local Mapping And Cloud-Compatible Mapping
 
 ### Local Mapping

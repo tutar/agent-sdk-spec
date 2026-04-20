@@ -10,6 +10,14 @@
 
 它负责的是 harness 内部的 context shaping，不等于 durable session storage。
 
+具体的上下文编辑语义，包括：
+
+- payload externalization
+- working-view projection
+- compact boundary / compaction rewrite
+
+见 [context-editing.md](context-editing.md)。
+
 ## 必须覆盖的能力
 
 - token usage 估算
@@ -55,6 +63,8 @@ compact 的职责是 continuity shaping，不是替代 transcript、tool result 
 - 在当前轮只保留 preview
 - 将完整内容外部化
 - 通过 `EvidenceRef` 或等价引用在后续显式 read back
+
+外部化属于 `ContextEditing` 的执行面；`ContextGovernance` 负责决定何时触发以及如何纳入预算。
 
 ### 3. delta 注入优先于重写静态 prompt
 
@@ -124,3 +134,4 @@ memory recall、relevant evidence surfacing 与普通 attachment 不能共用无
 - 上下文治理需要和 runtime 深度集成，不能做成纯后处理
 - 治理策略必须可跨模型迁移
 - recoverable history 属于 session，context shaping 属于 harness
+- editing 的具体形态见 [context-editing.md](context-editing.md)，governance 负责决策与触发

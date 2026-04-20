@@ -102,6 +102,14 @@
 - long result externalization
 - prompt cache boundary placement
 
+典型执行面包括：
+
+- payload externalization
+- working-view projection
+- compaction rewrite
+
+这些编辑语义见 [context-editing.md](context-editing.md)。
+
 这一步不会改变前面各平面的语义归属，只负责控制体积和稳定性。
 
 ## 装配原则

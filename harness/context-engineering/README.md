@@ -58,6 +58,8 @@
   定义 session-start、agent-start、turn-zero、resume-start 的差异。
 - [context-governance.md](context-governance.md)
   定义 context budget、compact、externalization、delta injection 与 drift mitigation。
+- [context-editing.md](context-editing.md)
+  定义多阶段上下文编辑、working view projection、compact rewrite 与恢复边界。
 - [prompt-cache-strategy.md](prompt-cache-strategy.md)
   定义 stable prefix、dynamic suffix、cache boundary 与 cache break 语义。
 - [anthropic-native-prompt-cache-guide.md](anthropic-native-prompt-cache-guide.md)
@@ -68,4 +70,5 @@
 - 上下文工程是 `Harness` 的内部能力，不是独立模块
 - 上下文工程不等于“拼 prompt”，而是多平面输入装配
 - bootstrap prompt、structured context、attachments、capability surface、memory recall 必须分层
+- payload externalization、working-view projection、compact rewrite 是 context engineering 的稳定编辑面
 - 本地与云端的差异只应体现在依赖输入的获取方式，不应改变装配语义

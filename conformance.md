@@ -21,7 +21,7 @@
 - tool validation / policy / execution / persistence 的分层语义
 - permission mode / rule / approval / headless degradation 语义
 - context governance 与 prompt cache strategy 的触发与恢复语义
-- context planes、attachment ordering、startup context lifecycle、provider/assembly boundary 的语义
+- context planes、attachment ordering、startup context lifecycle、provider/assembly boundary、context editing 分层退化与恢复语义
 - session event log / checkpoint / resume / short-term continuity 语义
 - durable memory recall / injection / consolidation / branch tracing 语义
 - task lifecycle / output cursor / notification / retention 语义
@@ -135,6 +135,9 @@
 - attachment ordering 与 scope 语义 deterministic
 - startup-only context 与 per-turn context 生命周期分离
 - provider 只产出 fragment，assembly 与 governance 保持独立职责
+- context editing 支持从低损 externalization / projection 到高损 rewrite 的分层退化
+- externalized payload 在 compact / resume 后保持稳定 evidence ref
+- working-view projection 与 transcript-visible compaction rewrite 语义分离
 
 ### Harness.Task
 

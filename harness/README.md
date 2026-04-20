@@ -170,6 +170,7 @@ Harness
 - [attachment-assembly.md](context-engineering/attachment-assembly.md)
 - [startup-and-turn-zero-context.md](context-engineering/startup-and-turn-zero-context.md)
 - [context-governance.md](context-engineering/context-governance.md)
+- [context-editing.md](context-engineering/context-editing.md)
 - [prompt-cache-strategy.md](context-engineering/prompt-cache-strategy.md)
 
 这一组回答：
@@ -179,7 +180,7 @@ Harness
 - bootstrap prompt、structured context、attachments、tool surface 如何装配
 - startup、turn-zero、resume、agent-start 的上下文差异是什么
 - memory / attachment / delta / persisted evidence 如何进入模型输入
-- 上下文预算、compact、治理与 prompt cache 如何协同
+- 上下文预算、editing、compact、治理与 prompt cache 如何协同
 
 ### 4. Gateway
 
