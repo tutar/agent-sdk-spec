@@ -164,6 +164,8 @@ auto-memory 下的默认写入/整理路径见 [auto-memory/auto-memory-write-pa
 
 topic memory 作为 auto-memory consolidation 的典型 durable target，见 [auto-memory/topic-memory.md](auto-memory/topic-memory.md)。
 
+不同 durable memory types 的 staleness 与 consolidation 特征见 [memory-types/README.md](memory-types/README.md)。
+
 ## 规范结论
 
 - memory consolidation 应作为 session 域内独立能力存在

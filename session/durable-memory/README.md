@@ -32,6 +32,13 @@ durable memory 不应被建模成单一文件或单一路径。
 - default runtime (`auto-memory`)
 - taxonomy (`memory-types`)
 
+其中：
+
+- `auto-memory`
+  回答默认 durable runtime 如何运作
+- `memory-types`
+  回答 durable payload 按什么语义分类
+
 ## 子页
 
 - [durable-memory-model.md](durable-memory-model.md)

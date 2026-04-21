@@ -26,6 +26,7 @@
 - durable memory recall / injection / consolidation / branch tracing 语义
 - auto-memory 的 resident index、bounded recall 与 write-path layering 语义
 - auto-memory 的 entrypoint index、topic payload、header manifest 与 payload-selection layering 语义
+- durable memory taxonomy 中 `user / feedback / project / reference` 的类型边界、scope 与 staleness 语义
 - task lifecycle / output cursor / notification / retention 语义
 - local multi-agent delegation / mailbox / viewed transcript / notification routing 语义
 - MCP lifecycle / transport / capability negotiation / runtime adaptation 语义
@@ -189,6 +190,10 @@
 - durable memory 具有常驻索引与 bounded recall 的语义分层
 - auto-memory 作为默认 durable runtime 时，resident index、background extraction、dream consolidation 与 assistant-style append-first mode 的分层语义稳定
 - auto-memory 作为默认 durable runtime 时，entrypoint index、topic payload、header manifest 与 payload-selection layering 语义稳定
+- durable memory taxonomy 中 `user / feedback / project / reference` 的类型边界稳定
+- `feedback` 同时覆盖 correction 与 validated success，并保持 private-vs-shared guidance 语义
+- `project` 允许绝对时间锚点与 staleness 建模
+- `reference` 作为 pointer memory 与 `user` 作为 private personalization layer 的边界稳定
 - consolidation 不得破坏 resume 语义
 - branch / sidechain transcript 与父 session 的追溯关系一致
 - 同一 agent 下多个 session 可共享同一个 global long-term memory
@@ -284,6 +289,10 @@
   - [conformance/cases/agent-global-long-memory.md](conformance/cases/agent-global-long-memory.md)
   - [conformance/cases/durable-memory-index-and-bounded-recall.md](conformance/cases/durable-memory-index-and-bounded-recall.md)
   - [conformance/cases/auto-memory-resident-index-and-bounded-recall.md](conformance/cases/auto-memory-resident-index-and-bounded-recall.md)
+  - [conformance/cases/durable-memory-type-boundaries-and-exclusions.md](conformance/cases/durable-memory-type-boundaries-and-exclusions.md)
+  - [conformance/cases/feedback-memory-success-correction-and-scope.md](conformance/cases/feedback-memory-success-correction-and-scope.md)
+  - [conformance/cases/project-memory-staleness-and-absolute-date.md](conformance/cases/project-memory-staleness-and-absolute-date.md)
+  - [conformance/cases/reference-vs-user-memory-pointer-and-private-boundary.md](conformance/cases/reference-vs-user-memory-pointer-and-private-boundary.md)
   - [conformance/cases/agents-memory-loading-precedence.md](conformance/cases/agents-memory-loading-precedence.md)
   - [conformance/cases/memory-recall-and-consolidation.md](conformance/cases/memory-recall-and-consolidation.md)
   - [conformance/cases/memory-consolidation-background-safety.md](conformance/cases/memory-consolidation-background-safety.md)

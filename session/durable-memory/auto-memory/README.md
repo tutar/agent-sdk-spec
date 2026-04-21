@@ -35,6 +35,9 @@
 - direct write、extraction、dream consolidation 是不同但可协作的写入路径
 - assistant-style host profile 可将写入模式切换为 append-first / consolidate-later
 
+`AutoMemory` 是这些 durable memory types 的默认本地映射来源，但 taxonomy 本身属于
+[../memory-types/README.md](../memory-types/README.md)，而不是 `AutoMemory` 私有定义。
+
 ## 子页
 
 - [auto-memory-runtime.md](auto-memory-runtime.md)

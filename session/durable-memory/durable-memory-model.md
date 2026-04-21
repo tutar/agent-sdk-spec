@@ -61,6 +61,8 @@ durable memory 不应承担：
   short-term memory 服务 continuity；本页定义 cross-session recall layer
 - 与 [durable-memory-recall.md](durable-memory-recall.md)
   recall 语义见该页
+- 与 [memory-types/README.md](memory-types/README.md)
+  durable payload 的标准 taxonomy 见该子目录
 - 与 [scoped-durable-memory.md](scoped-durable-memory.md)
   scope 语义见该页
 - 与 [memory-injection.md](memory-injection.md)

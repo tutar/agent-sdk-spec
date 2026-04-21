@@ -70,6 +70,10 @@
 - [cases/agent-global-long-memory.md](cases/agent-global-long-memory.md)
 - [cases/durable-memory-index-and-bounded-recall.md](cases/durable-memory-index-and-bounded-recall.md)
 - [cases/auto-memory-resident-index-and-bounded-recall.md](cases/auto-memory-resident-index-and-bounded-recall.md)
+- [cases/durable-memory-type-boundaries-and-exclusions.md](cases/durable-memory-type-boundaries-and-exclusions.md)
+- [cases/feedback-memory-success-correction-and-scope.md](cases/feedback-memory-success-correction-and-scope.md)
+- [cases/project-memory-staleness-and-absolute-date.md](cases/project-memory-staleness-and-absolute-date.md)
+- [cases/reference-vs-user-memory-pointer-and-private-boundary.md](cases/reference-vs-user-memory-pointer-and-private-boundary.md)
 - [cases/auto-memory-header-manifest-and-payload-selection.md](cases/auto-memory-header-manifest-and-payload-selection.md)
 - [cases/agents-memory-loading-precedence.md](cases/agents-memory-loading-precedence.md)
 - [cases/memory-recall-and-consolidation.md](cases/memory-recall-and-consolidation.md)
@@ -241,6 +245,10 @@ golden 只保留当前正文仍有明确稳定对象或稳定事件输出的场�
 - `agent-global-long-memory`
 - `durable-memory-index-and-bounded-recall`
 - `auto-memory-resident-index-and-bounded-recall`
+- `durable-memory-type-boundaries-and-exclusions`
+- `feedback-memory-success-correction-and-scope`
+- `project-memory-staleness-and-absolute-date`
+- `reference-vs-user-memory-pointer-and-private-boundary`
 - `auto-memory-header-manifest-and-payload-selection`
 - `agents-memory-loading-precedence`
 - `memory-recall-and-consolidation`

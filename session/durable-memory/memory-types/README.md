@@ -1,8 +1,48 @@
 # Durable Memory Types
 
-`memory-types/` 定义 durable memory 的标准 taxonomy。
+`memory-types/` 定义 durable memory payload 的标准 taxonomy。
 
-这些类型在默认 local mapping 中通常由 `auto-memory` prompt/runtime 引入，但语义层属于 durable memory type system，而不是某个具体 runtime 私有实现。
+这些类型在默认 local mapping 中通常由 `auto-memory` prompt/runtime 引入，但语义层属于 `Session.durable-memory` 的通用类型系统，而不是某个具体 runtime 的私有实现。
+
+它们不是 4 套独立机制，而是同一 durable memory runtime 下的 4 类 payload 语义：
+
+- `user`
+- `feedback`
+- `project`
+- `reference`
+
+这 4 类的权威语义应至少覆盖：
+
+- 存什么
+- 不存什么
+- 什么时候写
+- 如何用于未来回合
+- shared/private scope 倾向
+- consolidation / staleness 特征
+
+taxonomy 只定义 durable payload 的语义分类，不直接定义：
+
+- payload 载体格式
+- resident index
+- header manifest
+- recall transport
+
+这些结构语义分别见：
+
+- [../auto-memory/topic-memory.md](../auto-memory/topic-memory.md)
+- [../auto-memory/memory-entrypoint-index.md](../auto-memory/memory-entrypoint-index.md)
+- [../auto-memory/frontmatter-and-header-manifest.md](../auto-memory/frontmatter-and-header-manifest.md)
+
+taxonomy 还必须受 durable memory 的排除规则约束。  
+例如：
+
+- code patterns
+- architecture
+- git history
+- file paths
+- ephemeral task details
+
+不应被误存为以下任一类型。
 
 - [user-memory.md](user-memory.md)
 - [feedback-memory.md](feedback-memory.md)
