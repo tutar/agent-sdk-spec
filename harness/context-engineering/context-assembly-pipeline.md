@@ -72,6 +72,8 @@
 - main-thread-only attachments
 - thread-scoped teammate / worker attachments
 
+attachment envelope、ordering、scope 与 audience 的细节，见 [attachment-assembly.md](attachment-assembly.md)。
+
 ### 6. Capability Surface
 
 把模型可见工具面并入最终请求。

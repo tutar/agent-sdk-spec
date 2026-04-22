@@ -25,8 +25,10 @@
 
 - recalled memory 应进入 context plane，而不是伪装成 transcript 原消息
 - recall 与 consolidation 必须是两条不同链路：前者负责读取，后者负责提炼和整理
+- recall 必须保持 resident entrypoint / manifest / payload 的分层，而不是把 durable store 当成单一 blob
 - consolidation 应更新 durable memory，而不是改写历史 transcript
 - short-term memory、durable memory、transcript 三者边界必须清晰
+- harness-level instruction markdown loading 可以与 recall 并存，但不应被当成 recall 本体
 
 ## Expected Persistent Effects
 

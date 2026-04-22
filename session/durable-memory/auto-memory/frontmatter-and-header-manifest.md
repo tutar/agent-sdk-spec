@@ -96,7 +96,7 @@ header 层应允许建模 freshness，例如：
   本页定义 candidate metadata layer；topic memory 定义 durable正文层
 - 与 [memory-entrypoint-index.md](memory-entrypoint-index.md)
   entrypoint index 是 resident orientation layer；header manifest 是 recall selection layer
-- 与 [../durable-memory-recall.md](../durable-memory-recall.md)
+- 与 [../durable-memory-recall-pipeline.md](../durable-memory-recall-pipeline.md)
   本页是 auto-memory 默认本地映射；上层 recall 分层语义仍以 durable-memory-recall 为准
 
 ## Default Local Mapping

@@ -390,12 +390,12 @@ DurableMemoryRecord
 - durable memory 服务 recall，不服务 restore
 - source refs 应足以支持来源追溯或语义等价能力
 
-## Durable Memory Injection Objects
+## Instruction Markdown Objects
 
-用于表达 file-backed durable memory injection 的最小共享对象。
+用于表达 file-backed instruction markdown loading 的最小共享对象。
 
 ```text
-DurableMemoryInjectionSource
+InstructionMarkdownSource
   - source_id
   - kind: agents_file
   - scope: user | project | subtree
@@ -405,7 +405,7 @@ DurableMemoryInjectionSource
 ```
 
 ```text
-LoadedMemoryInjection
+LoadedInstructionMarkdown
   - source_ref
   - content
   - priority
@@ -414,8 +414,8 @@ LoadedMemoryInjection
 
 约束：
 
-- `DurableMemoryInjectionSource` 描述的是显式注入源，不等于 `DurableMemoryRecord`
-- `LoadedMemoryInjection` 应进入 context injection plane，而不是 transcript plane
+- `InstructionMarkdownSource` 描述的是显式 instruction source，不等于 `DurableMemoryRecord`
+- `LoadedInstructionMarkdown` 应进入 context injection plane，而不是 transcript plane
 - `precedence` 必须足以表达 `~/.openagent/AGENTS.md -> workdir/AGENTS.md -> subtree/AGENTS.md` 的确定性顺序
 
 ## Agent And Gateway Relationship Objects

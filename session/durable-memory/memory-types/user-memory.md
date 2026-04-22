@@ -166,6 +166,14 @@ UserMemoryRecord
   - `ReferenceMemory` 记外部入口
   - `UserMemory` 记 personalization
 
+## 与 overlay 的边界
+
+- 与 [../scopes/user-memory.md](../scopes/user-memory.md)
+  - 本页定义 `user` 作为 payload semantics
+  - overlay 页定义 `user` 作为 private durable binding
+
+二者可以同时命中同一条 record，但不应被建模成同一字段语义。
+
 ## Default Local Mapping
 
 当前默认本地映射中，`UserMemory` 的权威语义包括：

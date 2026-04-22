@@ -171,6 +171,14 @@ ProjectMemoryRecord
   - `UserMemory` 记协作对象画像
   - `ProjectMemory` 记项目背景上下文
 
+## 与 overlay 的边界
+
+- 与 [../scopes/project-memory.md](../scopes/project-memory.md)
+  - 本页定义 `project` 作为 payload semantics
+  - overlay 页定义 `project` 作为 project-scoped durable binding
+
+二者可以同时命中同一条 record，但不应被建模成同一字段语义。
+
 ## Default Local Mapping
 
 当前默认本地映射中，`ProjectMemory` 的权威语义包括：

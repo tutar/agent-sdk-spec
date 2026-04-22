@@ -71,11 +71,11 @@ AutoDurableMemoryConfig
 
 ## 与其它 durable scope 的边界
 
-- 与 [../scoped-durable-memory.md](../scoped-durable-memory.md)
+- 与 [../durable-memory-scopes-and-overlays.md](../durable-memory-scopes-and-overlays.md)
   `AutoMemoryRuntime` 提供默认 project-scoped durable runtime；scope 本身仍由 scoped durable memory 定义
-- 与 [../durable-memory-recall.md](../durable-memory-recall.md)
+- 与 [../durable-memory-recall-pipeline.md](../durable-memory-recall-pipeline.md)
   recall 语义在上层保持 provider-neutral；本页只定义默认 runtime 如何提供 recall input
-- 与 [../memory-consolidation.md](../memory-consolidation.md)
+- 与 [../durable-memory-write-and-consolidation.md](../durable-memory-write-and-consolidation.md)
   consolidation 仍是独立能力；本页只定义它在 auto-memory 下的默认落点
 
 ## Default Local Mapping
@@ -89,4 +89,3 @@ AutoDurableMemoryConfig
 - background dream consolidation
 
 这只是默认映射，不构成唯一合法实现。
-

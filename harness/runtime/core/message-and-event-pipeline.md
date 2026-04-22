@@ -90,6 +90,8 @@ Raw Channel Input
 
 对外投影到 host/channel 的行为，见 `runtime/projection/` 和 `gateway/`。
 
+turn-local progression、`tool loop` 与 `recursive follow-up` 的边界，见 [ralph-loop.md](ralph-loop.md)。
+
 ## Tool Use / Tool Result 闭环
 
 这是 runtime core 的核心约束之一。

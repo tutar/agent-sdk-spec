@@ -22,6 +22,7 @@
 - `UserMemory` 保存的是 personalization context，而不是 behavior rule
 - `UserMemory` 在支持 shared/private split 的实现中必须保持 private
 - `ReferenceMemory` 通常应偏 shared/team，但不应因此吞并 user profile 语义
+- `UserMemory` 作为 payload semantics 必须与 user/private/local overlay 语义分离
 
 ## Expected Persistent Effects
 
@@ -33,6 +34,7 @@
 
 - `ReferenceMemory` 可额外建模 authority kind、purpose、resource type
 - `UserMemory` 可额外建模 role、knowledge profile、stable preferences 的细分字段
+- user-private overlay 可以存在，但不应与 `UserMemory` payload 语义混成同一字段
 
 ## Failure Conditions
 
@@ -40,3 +42,4 @@
 - `ReferenceMemory` 缺失 purpose，导致 recall 只有无上下文链接
 - `UserMemory` 被升级到 shared/team scope
 - `UserMemory` 被当作 behavior rule 使用，或 `ReferenceMemory` 被当作 project background 使用
+- `UserMemory` payload semantics 与 user/private/local overlay semantics 被混成单一概念

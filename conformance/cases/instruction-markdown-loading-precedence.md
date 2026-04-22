@@ -1,12 +1,12 @@
-# Case: AGENTS Memory Loading Precedence
+# Case: Instruction Markdown Loading Precedence
 
 ## 目标
 
-验证 `AGENTS.md` 作为 file-backed durable memory injection 的加载顺序与作用域语义。
+验证 `AGENTS.md` 作为 file-backed instruction markdown source 的加载顺序与作用域语义。
 
 ## Preconditions
 
-- session / context assembly 支持 `AGENTS.md` memory injection
+- harness / context assembly 支持 `AGENTS.md` instruction markdown loading
 - 存在 `~/.openagent/AGENTS.md`
 - 工作目录存在 `AGENTS.md`
 - 目标子目录存在 `AGENTS.md`
@@ -14,7 +14,7 @@
 ## Ingress
 
 1. 在目标位于该子目录时发起一轮 turn
-2. 组装当前 turn 的 memory injection
+2. 组装当前 turn 的 instruction markdown inputs
 3. 观察最终注入顺序与来源
 
 ## Expected Runtime Semantics
@@ -24,7 +24,8 @@
 - 冲突内容以后加载者为准
 - sibling 子目录的 `AGENTS.md` 不应进入当前 target 的注入结果
 - 注入结果进入 context plane，而不是 transcript
-- 该注入语义独立于 durable memory recall，不要求把 `AGENTS.md` 先转成 durable memory record
+- 该加载语义独立于 durable memory recall，不要求把 `AGENTS.md` 先转成 durable memory record
+- `AGENTS.md` 属于 harness-level instruction markdown loading，而不是 resident entrypoint / manifest / payload recall pipeline
 
 ## Expected Persistent Effects
 
@@ -41,4 +42,4 @@
 - 优先级顺序不稳定
 - sibling 子目录污染当前目标上下文
 - `AGENTS.md` 被写入 transcript 伪装成普通消息
-- 缺失某一层 `AGENTS.md` 导致 session restore 语义失效
+- 缺失某一层 `AGENTS.md` 不应被误建模为 durable memory store 损坏

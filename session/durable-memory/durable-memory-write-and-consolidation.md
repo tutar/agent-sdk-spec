@@ -1,8 +1,8 @@
-# Memory Consolidation
+# Durable Memory Write And Consolidation
 
 ## 职责
 
-`Memory Consolidation` 负责把 session 中已产生的经验提炼为更稳定的长期记忆表示。
+`DurableMemoryWriteAndConsolidation` 定义 durable memory 的写侧：如何捕获 durable signal、写入 durable target、以及如何在后续做整理与压实。
 
 它不同于：
 
@@ -12,18 +12,21 @@
   面向 continuity 的短期摘要
 - `compact`
   面向上下文窗口治理的重组
+- `durable recall`
+  面向已存在 durable store 的读侧选择
 
-它的核心目标是：
+## 核心结论
 
-- 从 session 或跨 session 经验中提炼 durable memory
-- 把碎片化记忆整合成更可复用的长期结构
-- 为 `manual /dream` 与 `autoDream` 提供统一的 consolidation 语义
+durable memory 的写侧至少应允许三条可区分的路径：
 
-它不负责：
+1. `direct write`
+   - 当前主路径显式写入 durable memory
+2. `turn-end extraction`
+   - turn 结束后补提取 durable signal
+3. `cross-session consolidation`
+   - 对多个 session 和记忆存量做 merge / prune / tighten
 
-- bounded durable memory recall
-- `MEMORY.md` / topic files 的常驻索引注入
-- `AGENTS.md` 一类显式 injection source 的发现
+这三条路径可以协作，但不应被混成单一不可区分操作。
 
 ## 稳定接口
 
@@ -49,7 +52,7 @@ DreamConsolidationRequest
   - index_ref?
   - consolidation_policy?
 
-MemoryConsolidator
+DurableMemoryWriter
   - extract(request) -> extracted_memories
   - consolidate(request) -> consolidated_memories
   - commit(memories) -> memory_refs
@@ -77,38 +80,41 @@ ConsolidationResult
   - status: completed | no_change | failed | killed
 ```
 
-### 与 canonical object model 的关系
+## 典型 durable target
 
-- extraction 输出应收敛到 `DurableMemoryRecord` 或语义等价对象
-- commit 结果应返回 durable memory refs，而不是未提交的临时文本
-- `ConsolidationResult` 如被跨模块消费，应与 `Session`、`Harness`、`Orchestration` 的事件语义兼容
+默认 durable target 应建模为：
 
-## 默认实现
+- topic memory records / files
+- resident entrypoint index 的更新或压实
+- taxonomy-preserving durable payload rewrite
 
-当前代码库里，这一层默认由两条链路组成：
+其中：
 
-- 从当前 session transcript 提炼 durable memories
-- 对多个 session 和记忆文件做 consolidation
+- `memory-types/`
+  定义 payload 的语义分类
+- `auto-memory/topic-memory.md`
+  定义默认本地 payload 形态
+- `auto-memory/memory-entrypoint-index.md`
+  定义默认本地 index 形态
 
-同时，规范上还应把手动 dream 一并纳入：
+assistant-style append-first mode 可以改变 capture path，但不改变这些 durable target 的语义。
 
-- `manual /dream`
-  用户显式触发的 consolidation
-- `autoDream`
-  系统按门槛自动调度的 consolidation
+## 默认实现映射
 
-相关默认映射还包括：
+当前代码库里的默认写侧体系可抽象为：
 
-- bounded durable recall 与 consolidation 分层
-- consolidation 结果落到 durable memory files / index，而不是 transcript
-- manual 与 automatic 触发共享同一 consolidation 结果语义
+- direct write
+  - 主路径显式写 memory files / index
+- extraction
+  - turn 结束后补提取 durable signal
+- dream
+  - 跨 session consolidation、dedupe、stale repair、index tightening
 
 从默认实现可以看出：
 
-- extraction 是 session-level
-- dream / consolidation 是 cross-session
-- dream 同时有 manual 和 automatic 两种触发模式
-- 两者都不应和 transcript restore 混为同一层
+- extraction 是 session-level incremental capture
+- dream / consolidation 是 cross-session rewrite and tightening
+- manual 与 automatic dream 共用同一 consolidation 目标语义
 
 ## 状态与恢复语义
 
@@ -129,19 +135,9 @@ ConsolidationResult
 - 未 commit 的 memory 不得被当作 durable memory 生效
 - 下次重试应能基于 `source_cursor` 或等价状态继续，而不是无约束重跑
 
-## 要解决的问题
-
-- 如何把“当前 session 值得记住的内容”从 transcript 中提炼出来
-- 如何避免 durable memory 无限制碎片化
-- 如何让多个 session 的经验可以后台整合
-- 如何让手动 consolidation 与自动 consolidation 共享同一语义模型
-- 如何在 consolidation 期间避免并发冲突
-- 如何把长期记忆整合与短期 continuity summary 区分开
-- 如何保证 consolidation failure / delay 不影响 session restore
-
 ## Failure And Delay Semantics
 
-`Memory Consolidation` 是标准扩展，不是 session restore 前提。
+durable memory write-side 是标准扩展，不是 session restore 前提。
 
 因此必须保持：
 
@@ -156,9 +152,22 @@ ConsolidationResult
 - 用 process-local state 假装 memory 已 durable commit
 - 将 consolidation 错误上升为 session 不可恢复错误，除非 durable store 本身已损坏且实现明确这样建模
 
-durable recall 的详细语义见 [durable-memory-recall.md](durable-memory-recall.md)。
+## 与其它子规范的边界
 
-dream 相关的详细规范见 [dream-consolidation.md](dream-consolidation.md)。
+- 与 [durable-memory-architecture.md](durable-memory-architecture.md)
+  本页只定义 durable 写侧，不定义 durable-memory 总模型
+- 与 [durable-memory-recall-pipeline.md](durable-memory-recall-pipeline.md)
+  recall 是读侧；本页是写侧
+- 与 [dream-consolidation.md](dream-consolidation.md)
+  dream 是本页 consolidation 的后台 / cross-session 模式
+- 与 [../../harness/context-engineering/instruction-markdown/README.md](../../harness/context-engineering/instruction-markdown/README.md)
+  instruction markdown loading 是 harness-level context input，不是 durable store write pipeline
+- 与 [durable-memory-scopes-and-overlays.md](durable-memory-scopes-and-overlays.md)
+  scope 可以影响写入根和共享边界，但不重新定义写侧职责
+- 与 [scopes/README.md](scopes/README.md)
+  `user / project / team / agent / local` overlays 可以改变 write destination、visibility 与 sync surface，但不改变 consolidation 的核心职责
+
+## Default Local Mapping
 
 auto-memory 下的默认写入/整理路径见 [auto-memory/auto-memory-write-paths.md](auto-memory/auto-memory-write-paths.md)。
 
@@ -168,10 +177,10 @@ topic memory 作为 auto-memory consolidation 的典型 durable target，见 [au
 
 ## 规范结论
 
-- memory consolidation 应作为 session 域内独立能力存在
-- extraction 与 consolidation 应分为两步，不应混成单一操作
+- durable memory write-side 应作为 session 域内独立能力存在
+- direct write、extraction 与 consolidation 应分为三条可区分路径
 - `manual /dream` 与 `autoDream` 应被视为同一 consolidation 能力的两种触发方式
 - consolidation 可以后台执行，但状态与锁语义应显式建模
-- memory consolidation 不等于 compact，也不等于 verification
+- durable memory write-side 不等于 compact，也不等于 verification
 - `ConsolidationResult`、`ConsolidationState` 与 `DurableMemoryRecord` 应共同形成可恢复的长期记忆语义
 - assistant agent 这类长期运行 profile 可以采用 append-first / consolidate-later 的 operating mode，但不改变 durable memory 的归属与 consolidation 语义；profile-specific 运行形态见 [../../harness/agent-profiles/assistant-agent.md](../../harness/agent-profiles/assistant-agent.md)，dream-specific trigger/runtime 见 [dream-consolidation.md](dream-consolidation.md)

@@ -17,6 +17,9 @@
 ## Expected Runtime Semantics
 
 - 同一 turn 可以跨多次 provider call 推进
+- `tool loop` 发生在单 iteration 内
+- `recursive follow-up` 发生在 iteration 与 iteration 之间
+- 若 turn 继续进入新的 iteration，context assembly 与 context editing 必须重新发生或语义等价重算
 - continuation reason 必须是显式 runtime fact，而不是隐含在 channel 行为中
 - runtime 最终产出单一 `TerminalState`
 - direct-call facade 如存在，也必须能还原为同一 turn state machine
@@ -29,6 +32,7 @@
 ## Allowed Variance
 
 - continuation 可由 tool loop、compact recovery、output limit recovery、stop hook retry 等触发
+- terminal 后可立即结束，或先进入稳定的 post-turn handoff boundary
 - provider call 次数可以不同
 
 ## Failure Conditions

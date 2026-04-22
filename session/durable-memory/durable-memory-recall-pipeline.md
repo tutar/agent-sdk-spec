@@ -1,8 +1,8 @@
-# Durable Memory Recall
+# Durable Memory Recall Pipeline
 
 ## 职责
 
-`DurableMemoryRecall` 定义 `Session.memory` 如何从长期记忆中选择、读取并注入当前 turn 所需的 durable memory。
+`DurableMemoryRecall` 定义 `Session.durable-memory` 如何从长期记忆中选择、读取并注入当前 turn 所需的 durable knowledge。
 
 它负责：
 
@@ -16,7 +16,7 @@
 - short-term session memory
 - transcript restore
 - memory consolidation
-- `AGENTS.md` 这类显式 injection source 的发现规则
+- `AGENTS.md` / `rules` 一类 instruction markdown source 的发现规则
 
 ## 核心结论
 
@@ -24,9 +24,9 @@
 
 推荐至少分三层建模：
 
-- `memory index`
+- `resident entrypoint/index`
   - 常驻、低成本、只提供目录/指针/摘要
-- `recall candidates`
+- `recall manifest / headers`
   - 当前轮可被选中的 durable memory headers
 - `recalled payloads`
   - 真正进入当前 turn 的长期记忆内容
@@ -38,14 +38,14 @@
 推荐最小对象：
 
 ```text
-DurableMemoryIndex
+DurableMemoryEntrypointIndex
   - entrypoints[]
   - pointers[]
   - updated_at?
 ```
 
 ```text
-DurableMemoryHeader
+DurableMemoryManifestEntry
   - memory_ref
   - title?
   - description?
@@ -68,7 +68,7 @@ DurableMemoryRecallRequest
 ```text
 DurableMemoryRecallResult
   - selected_refs[]
-  - selected_headers[]
+  - selected_manifest_entries[]
   - selected_payloads[]
   - skipped_refs[]
 ```
@@ -77,7 +77,7 @@ DurableMemoryRecallResult
 
 ## 推荐流程
 
-### 1. 常驻索引
+### 1. Resident Entrypoint / Index
 
 长期记忆系统应允许一个低成本常驻索引进入上下文。
 
@@ -89,7 +89,7 @@ DurableMemoryRecallResult
 
 常驻索引不等于全部长期记忆正文。
 
-### 2. Header Scan
+### 2. Manifest / Header Scan
 
 在需要 recall 时，runtime 应先读取 bounded 的 header / manifest，而不是直接读取所有正文。
 
@@ -116,7 +116,7 @@ runtime 应根据：
 - 可去重
 - 不无界展开 durable store
 
-### 4. Payload Read
+### 4. Payload Load
 
 只有被选中的 memories 才应读取正文并注入当前 turn。
 
@@ -151,14 +151,15 @@ durable memory 被召回后，应进入 context plane，而不是伪装成 trans
 
 但不得改写 transcript 来模拟 recall。
 
-### 3. index 与 payload 分离
+### 3. index / manifest / payload 分离
 
 实现必须允许：
 
 - index 常驻
+- manifest/header bounded scan
 - payload 按需读取
 
-这两层不应混成“永远加载全部长期记忆”。
+这三层不应混成“永远加载全部长期记忆”。
 
 ### 4. freshness / staleness 可建模
 
@@ -183,30 +184,30 @@ durable memory 是长期知识，不保证永远新鲜。
 
 ## 与其它子规范的边界
 
-### 与 [durable-memory-model.md](durable-memory-model.md)
+### 与 [durable-memory-architecture.md](durable-memory-architecture.md)
 
-- `durable-memory-model`
+- `durable-memory-architecture`
   定义 durable memory 的总模型
 - 本页
   只定义 durable long-term memory 的 recall 语义
 
-### 与 [scoped-durable-memory.md](scoped-durable-memory.md)
+### 与 [durable-memory-scopes-and-overlays.md](durable-memory-scopes-and-overlays.md)
 
 - `scope`
   定义长期记忆的可见性和共享边界
 - 本页
   定义 recall 如何在这些 scope 内选择和读取
 
-### 与 [memory-injection.md](memory-injection.md)
+### 与 [../../harness/context-engineering/instruction-markdown/README.md](../../harness/context-engineering/instruction-markdown/README.md)
 
-- file-backed injection source（如 `AGENTS.md`）
-  属于显式 durable context injection
+- `AGENTS.md` / `rules`
+  属于 harness-level instruction markdown loading
 - durable memory recall
-  属于长期记忆 store 的按需召回
+  属于 store-backed durable knowledge 的按需召回
 
 二者不应混成同一机制。
 
-### 与 [memory-consolidation.md](memory-consolidation.md)
+### 与 [durable-memory-write-and-consolidation.md](durable-memory-write-and-consolidation.md)
 
 - consolidation
   负责提炼、合并、整理 durable memory
@@ -214,6 +215,14 @@ durable memory 是长期知识，不保证永远新鲜。
   负责把 durable memory 注入当前 turn
 
 consolidation 可以更新 recall 的输入，但不替代 recall 本身。
+
+### 与 [scopes/README.md](scopes/README.md)
+
+scope 可以改变 candidate source、visibility 或配额策略，但不改变 recall 的：
+
+- resident index / manifest / payload layering
+- bounded selection 要求
+- payload load 只发生在 selected refs 上的语义
 
 ## Default Local Mapping
 
@@ -234,9 +243,11 @@ auto-memory 作为默认 local mapping 的更完整语义，见 [auto-memory/REA
 - [auto-memory/topic-memory.md](auto-memory/topic-memory.md)
 - [auto-memory/frontmatter-and-header-manifest.md](auto-memory/frontmatter-and-header-manifest.md)
 
+memory taxonomy 对 recall 的参与见 [memory-types/README.md](memory-types/README.md)。
+
 ## 规范结论
 
-- durable memory recall 必须和 short-term session memory 分层
-- 常驻索引与正文按需召回必须语义分离
+- durable memory recall 必须和 short-term session memory、transcript、instruction markdown loading 分层
+- resident entrypoint、manifest/header、payload 三层必须语义分离
 - recall 必须 bounded、可去重、可建模 freshness
 - recalled durable memory 进入 context plane，而不是 transcript

@@ -19,6 +19,7 @@
 
 ## Expected Lifecycle
 
+- resume 必须表现为 restore-and-rebind，而不是 transcript replay
 - 恢复后 session 能重新进入 `running`
 - 恢复后新的 turn 能正常完成并回到 `idle`
 - 若恢复前处于 `requires_action`，恢复后必须回到同一结构化阻塞语义

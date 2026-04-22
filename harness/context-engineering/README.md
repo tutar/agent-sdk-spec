@@ -44,6 +44,8 @@
 
 ## 子主题
 
+- [instruction-markdown/README.md](instruction-markdown/README.md)
+  定义 `AGENTS.md` / `rules` 一类 file-backed instruction loading、include expansion 与 conditional matching。
 - [bootstrap-prompts.md](bootstrap-prompts.md)
   定义 system prompt skeleton、section registry、静态/动态边界与覆盖关系。
 - [context-input-model.md](context-input-model.md)
@@ -53,7 +55,7 @@
 - [context-provider.md](context-provider.md)
   只定义 provider 接口、作用域、生命周期、cacheability 与 provenance。
 - [attachment-assembly.md](attachment-assembly.md)
-  定义 attachment 的来源、顺序、thread scope 与 audience。
+  定义 attachment envelope、顺序、thread scope 与 audience。
 - [startup-and-turn-zero-context.md](startup-and-turn-zero-context.md)
   定义 session-start、agent-start、turn-zero、resume-start 的差异。
 - [context-governance.md](context-governance.md)
@@ -73,3 +75,4 @@
 - payload externalization、working-view projection、compact rewrite 是 context engineering 的稳定编辑面
 - 本地与云端的差异只应体现在依赖输入的获取方式，不应改变装配语义
 - assistant agent 这类长期运行 profile 可以改变 memory accumulation / continuity operating mode，但不改变 context planes、assembly pipeline 和 editing 的核心语义
+- `AGENTS.md` / `rules` 这类 instruction markdown source 属于 `Harness.ContextEngineering`，不是 `Session.durable-memory`

@@ -108,7 +108,7 @@ scope 可以改变：
   header / manifest 负责 recall candidate projection；本页定义被选择后的 durable payload
 - 与 [auto-memory-write-paths.md](auto-memory-write-paths.md)
   direct write、background extraction、dream consolidation 的默认 durable target 通常是 topic memory
-- 与 [../scoped-durable-memory.md](../scoped-durable-memory.md)
+- 与 [../durable-memory-scopes-and-overlays.md](../durable-memory-scopes-and-overlays.md)
   scope 是共享边界；本页只定义 payload unit 语义
 
 ## Default Local Mapping

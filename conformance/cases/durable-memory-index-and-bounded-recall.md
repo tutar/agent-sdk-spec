@@ -20,10 +20,12 @@
 
 - runtime 不应把整个 durable memory store 无界注入当前 turn
 - 应能区分：
-  - 常驻索引或等价 manifest
+  - 常驻 entrypoint / index
+  - bounded manifest / header candidate layer
   - 当前轮被选中的 recalled payload
 - recall 必须有 bounded 语义，例如数量、体积或等价预算上界
 - recalled memory 进入 context plane，而不是 transcript
+- harness-level instruction markdown loading 不应被混成上述 bounded recall pipeline
 
 ## Expected Persistent Effects
 
@@ -33,7 +35,8 @@
 
 ## Allowed Variance
 
-- 索引可以是 `MEMORY.md`、manifest 文件、header cache 或语义等价结构
+- entrypoint 可以是 `MEMORY.md`、resident index 文件或语义等价结构
+- manifest 可以是 frontmatter scan、header cache、sidecar metadata 或语义等价结构
 - recall 选择器可以是规则、检索器或模型辅助路径
 - recalled memory 可以进入 attachment-like context 或 structured context
 

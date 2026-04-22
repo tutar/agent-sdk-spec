@@ -20,7 +20,7 @@
 
 - short-term session memory
 - transcript restore
-- `AGENTS.md` 一类显式 durable injection source
+- `AGENTS.md` / `rules` 一类 harness-level instruction markdown source
 - team-shared durable memory 的同步协议本体
 
 ## 核心结论
@@ -37,6 +37,8 @@
 
 `AutoMemory` 是这些 durable memory types 的默认本地映射来源，但 taxonomy 本身属于
 [../memory-types/README.md](../memory-types/README.md)，而不是 `AutoMemory` 私有定义。
+
+`AutoMemory` 也不是 durable memory 全部。instruction markdown loading、scope overlay 与上层 recall / consolidation 边界仍以上级 durable-memory 页面为准。
 
 ## 子页
 

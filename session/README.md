@@ -38,7 +38,7 @@
 
 - transcript 不是 memory
 - compact summary 不是 transcript
-- `CLAUDE.md`、`AGENTS.md` / memory files 不是 session 本身
+- `AGENTS.md` / rules / memory files 不是 session 本身
 - agent memory 不是主 session transcript
 
 本规范中的 `Session` 同样采用 `Local-first` 抽取方式：
@@ -235,7 +235,7 @@ SessionBranchStore
   读取 session 切片并构造当前 model input
 - `ContextProvider`
   把 durable memory / project memory 注入当前 turn
-- file-backed durable memory injection（例如 `AGENTS.md`）属于 `Session.memory` 的注入面，不属于 transcript，详细规则见 [durable-memory/memory-injection.md](durable-memory/memory-injection.md)
+- file-backed instruction markdown loading（例如 `AGENTS.md` / `rules`）属于 `Harness.ContextEngineering`，不属于 `Session.memory` 或 transcript，详细规则见 [../harness/context-engineering/instruction-markdown/README.md](../harness/context-engineering/instruction-markdown/README.md)
 - `ContextGovernance`
   决定 compact，不等于 session 自身
 - `SessionLifecycleState`
@@ -268,7 +268,7 @@ SessionBranchStore
 - resume 是 lease 交接，而不是复制出第二个可写 session
 - short-term memory 必须跟随 session 恢复，而不是跟随 harness 进程丢失
 
-session 域内的 short-term continuity 详细模型见 [short-term-memory/short-term-memory-model.md](short-term-memory/short-term-memory-model.md)，durable memory 总模型见 [durable-memory/durable-memory-model.md](durable-memory/durable-memory-model.md)，default durable runtime 见 [durable-memory/auto-memory/README.md](durable-memory/auto-memory/README.md)，长期记忆召回见 [durable-memory/durable-memory-recall.md](durable-memory/durable-memory-recall.md)，scope 语义见 [durable-memory/scoped-durable-memory.md](durable-memory/scoped-durable-memory.md)，显式 durable injection 见 [durable-memory/memory-injection.md](durable-memory/memory-injection.md)。
+session 域内的 short-term continuity 详细模型见 [short-term-memory/short-term-memory-model.md](short-term-memory/short-term-memory-model.md)，durable memory 总模型见 [durable-memory/durable-memory-architecture.md](durable-memory/durable-memory-architecture.md)，default durable runtime 见 [durable-memory/auto-memory/README.md](durable-memory/auto-memory/README.md)，长期记忆召回见 [durable-memory/durable-memory-recall-pipeline.md](durable-memory/durable-memory-recall-pipeline.md)，scope 语义见 [durable-memory/durable-memory-scopes-and-overlays.md](durable-memory/durable-memory-scopes-and-overlays.md)，instruction markdown loading 见 [../harness/context-engineering/instruction-markdown/README.md](../harness/context-engineering/instruction-markdown/README.md)。
 
 ## 子代理与 remote session
 
@@ -317,11 +317,10 @@ BranchRef
 - [short-term-memory/continuity-summary.md](short-term-memory/continuity-summary.md)
 - [short-term-memory/coverage-boundary-and-stability.md](short-term-memory/coverage-boundary-and-stability.md)
 - [durable-memory/README.md](durable-memory/README.md)
-- [durable-memory/durable-memory-model.md](durable-memory/durable-memory-model.md)
-- [durable-memory/durable-memory-recall.md](durable-memory/durable-memory-recall.md)
-- [durable-memory/memory-injection.md](durable-memory/memory-injection.md)
-- [durable-memory/scoped-durable-memory.md](durable-memory/scoped-durable-memory.md)
-- [durable-memory/memory-consolidation.md](durable-memory/memory-consolidation.md)
+- [durable-memory/durable-memory-architecture.md](durable-memory/durable-memory-architecture.md)
+- [durable-memory/durable-memory-recall-pipeline.md](durable-memory/durable-memory-recall-pipeline.md)
+- [durable-memory/durable-memory-scopes-and-overlays.md](durable-memory/durable-memory-scopes-and-overlays.md)
+- [durable-memory/durable-memory-write-and-consolidation.md](durable-memory/durable-memory-write-and-consolidation.md)
 - [durable-memory/dream-consolidation.md](durable-memory/dream-consolidation.md)
 - [durable-memory/auto-memory/README.md](durable-memory/auto-memory/README.md)
 - [durable-memory/memory-types/README.md](durable-memory/memory-types/README.md)

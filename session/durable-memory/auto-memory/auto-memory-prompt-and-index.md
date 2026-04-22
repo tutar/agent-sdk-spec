@@ -8,7 +8,7 @@
 
 - short-term continuity summary
 - transcript restore
-- explicit file-backed injection precedence
+- instruction markdown loading precedence
 
 ## 核心结论
 
@@ -66,9 +66,10 @@ resident index 常见用途：
 
 ## 与其它子规范的边界
 
-- 与 [../durable-memory-recall.md](../durable-memory-recall.md)
-  本页是 auto-memory 的默认 local mapping；上层 recall 语义仍以 `durable-memory-recall.md` 为准
-- 与 [../memory-injection.md](../memory-injection.md)
+- 与 [../durable-memory-recall-pipeline.md](../durable-memory-recall-pipeline.md)
+  本页是 auto-memory 的默认 local mapping；上层 recall 语义仍以 `durable-memory-recall-pipeline.md` 为准
+- 与 [../../../harness/context-engineering/instruction-markdown/README.md](../../../harness/context-engineering/instruction-markdown/README.md)
+  `AGENTS.md` / `rules` 一类 instruction markdown loading 属于 harness-level context input，不属于 auto-memory
   resident index 属于 durable memory runtime，不等于显式 injection source
 - 与 [memory-entrypoint-index.md](memory-entrypoint-index.md)
   本页定义 resident instructions + resident index 的组合语义；entrypoint 的细化约束见该页

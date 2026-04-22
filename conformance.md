@@ -23,10 +23,11 @@
 - context governance 与 prompt cache strategy 的触发与恢复语义
 - context planes、attachment ordering、startup context lifecycle、provider/assembly boundary、context editing 分层退化与恢复语义
 - session event log / checkpoint / resume / short-term continuity 语义
-- durable memory recall / injection / consolidation / branch tracing 语义
+- durable memory architecture / recall / consolidation / branch tracing 语义
 - auto-memory 的 resident index、bounded recall 与 write-path layering 语义
 - auto-memory 的 entrypoint index、topic payload、header manifest 与 payload-selection layering 语义
 - durable memory taxonomy 中 `user / feedback / project / reference` 的类型边界、scope 与 staleness 语义
+- durable memory taxonomy 与 `user / project / team / agent / local` overlays 的正交语义
 - task lifecycle / output cursor / notification / retention 语义
 - local multi-agent delegation / mailbox / viewed transcript / notification routing 语义
 - MCP lifecycle / transport / capability negotiation / runtime adaptation 语义
@@ -58,7 +59,9 @@
 实现还必须保持：
 
 - runtime core 消费 normalized ingress，而不是 raw channel payload
+- runtime 拥有 session binding / switching orchestration，但不拥有 session durable store
 - 一次 turn 可以跨多次 provider call 与 continuation 完成
+- `tool loop` 与 `recursive follow-up` 语义可区分
 - `tool_use / tool_result` pairing 与 ordering 语义稳定
 
 若实现宣称支持完整的 runtime state projection，还必须保持：
@@ -141,6 +144,7 @@
 - context editing 支持从低损 externalization / projection 到高损 rewrite 的分层退化
 - externalized payload 在 compact / resume 后保持稳定 evidence ref
 - working-view projection 与 transcript-visible compaction rewrite 语义分离
+- `AGENTS.md` / `rules` / include expansion 一类 instruction markdown loading 属于 harness-level context input，而不是 durable memory recall
 
 ### Harness.Task
 
@@ -187,24 +191,20 @@
 
 - short-term session continuity 与 transcript 分离
 - durable memory recall 不承担 restore 责任
+- durable memory 必须区分 architecture、recall、write/consolidation 与 scope overlay
 - durable memory 具有常驻索引与 bounded recall 的语义分层
 - auto-memory 作为默认 durable runtime 时，resident index、background extraction、dream consolidation 与 assistant-style append-first mode 的分层语义稳定
 - auto-memory 作为默认 durable runtime 时，entrypoint index、topic payload、header manifest 与 payload-selection layering 语义稳定
 - durable memory taxonomy 中 `user / feedback / project / reference` 的类型边界稳定
+- durable memory 的 taxonomy axis 与 scope overlay axis 必须可区分
 - `feedback` 同时覆盖 correction 与 validated success，并保持 private-vs-shared guidance 语义
 - `project` 允许绝对时间锚点与 staleness 建模
 - `reference` 作为 pointer memory 与 `user` 作为 private personalization layer 的边界稳定
+- `user / project / team / agent / local` overlays 只改变 binding、sharing 与 sync surface，不定义新的 durable plane
 - consolidation 不得破坏 resume 语义
 - branch / sidechain transcript 与父 session 的追溯关系一致
 - 同一 agent 下多个 session 可共享同一个 global long-term memory
 - 同一 session 任一时刻只能有一个 active harness lease
-
-若实现宣称支持 `AGENTS.md` file-backed memory injection，还必须保持：
-
-- `~/.openagent/AGENTS.md -> workdir/AGENTS.md -> subtree/AGENTS.md` 的优先级 deterministic
-- 注入结果进入 context plane，而不是 transcript / event log
-- 子目录 `AGENTS.md` 只影响对应子树
-- compact / resume 后不通过 transcript 反推 `AGENTS.md`
 
 ### Tools.SkillImport
 
@@ -259,6 +259,12 @@
 - [conformance/cases/tool-call-roundtrip.md](conformance/cases/tool-call-roundtrip.md)
 - [conformance/cases/requires-action-approval.md](conformance/cases/requires-action-approval.md)
 - [conformance/cases/session-resume.md](conformance/cases/session-resume.md)
+- [conformance/cases/runtime-session-binding-and-switching.md](conformance/cases/runtime-session-binding-and-switching.md)
+- [conformance/cases/runtime-turn-state-machine.md](conformance/cases/runtime-turn-state-machine.md)
+- [conformance/cases/turn-loop-iteration-and-handoff.md](conformance/cases/turn-loop-iteration-and-handoff.md)
+- [conformance/cases/runtime-tool-use-and-tool-result-pairing.md](conformance/cases/runtime-tool-use-and-tool-result-pairing.md)
+- [conformance/cases/gateway-ingress-vs-runtime-core-boundary.md](conformance/cases/gateway-ingress-vs-runtime-core-boundary.md)
+- [conformance/cases/harness-deployment-binding-equivalence.md](conformance/cases/harness-deployment-binding-equivalence.md)
 
 按标准扩展追加覆盖：
 
@@ -285,6 +291,8 @@
   - [conformance/cases/attachment-assembly-order-and-scope.md](conformance/cases/attachment-assembly-order-and-scope.md)
   - [conformance/cases/startup-context-lifecycle.md](conformance/cases/startup-context-lifecycle.md)
   - [conformance/cases/context-provider-vs-assembly-boundary.md](conformance/cases/context-provider-vs-assembly-boundary.md)
+  - [conformance/cases/instruction-markdown-loading-precedence.md](conformance/cases/instruction-markdown-loading-precedence.md)
+  - [conformance/cases/instruction-rules-and-include-expansion.md](conformance/cases/instruction-rules-and-include-expansion.md)
 - `Session.MemoryConsolidation`
   - [conformance/cases/agent-global-long-memory.md](conformance/cases/agent-global-long-memory.md)
   - [conformance/cases/durable-memory-index-and-bounded-recall.md](conformance/cases/durable-memory-index-and-bounded-recall.md)
@@ -293,7 +301,6 @@
   - [conformance/cases/feedback-memory-success-correction-and-scope.md](conformance/cases/feedback-memory-success-correction-and-scope.md)
   - [conformance/cases/project-memory-staleness-and-absolute-date.md](conformance/cases/project-memory-staleness-and-absolute-date.md)
   - [conformance/cases/reference-vs-user-memory-pointer-and-private-boundary.md](conformance/cases/reference-vs-user-memory-pointer-and-private-boundary.md)
-  - [conformance/cases/agents-memory-loading-precedence.md](conformance/cases/agents-memory-loading-precedence.md)
   - [conformance/cases/memory-recall-and-consolidation.md](conformance/cases/memory-recall-and-consolidation.md)
   - [conformance/cases/memory-consolidation-background-safety.md](conformance/cases/memory-consolidation-background-safety.md)
   - [conformance/cases/auto-memory-write-paths-and-consolidation.md](conformance/cases/auto-memory-write-paths-and-consolidation.md)

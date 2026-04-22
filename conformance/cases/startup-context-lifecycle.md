@@ -23,6 +23,7 @@
 ## Expected Runtime Semantics
 
 - `session_start`、`agent_start`、`turn_zero`、`resume_start` 必须可区分
+- `session_start` 与 `resume_start` 应分别绑定 fresh session start 与 resumed session rebind，而不是同一种模糊 startup hook
 - startup-only context 不得被误建模为 bootstrap prompt 本体
 - `agent_start` 不得污染主 session 的 `session_start`
 - `turn_zero` 只应影响首轮或显式 reentry 策略指定的轮次

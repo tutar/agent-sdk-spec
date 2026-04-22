@@ -57,6 +57,8 @@ PostTurnRegistry
 
 它是 runtime 在 turn terminal / stop boundary 上的独立阶段。
 
+turn-local loop 如何进入 terminal 或 handoff boundary，见 [../core/ralph-loop.md](../core/ralph-loop.md)。
+
 ## 规范结论
 
 - post-turn processing 应作为 runtime 的独立子平面存在

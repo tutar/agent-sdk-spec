@@ -105,6 +105,7 @@
 约束：
 
 - runtime core 消费 session durable state
+- runtime orchestration 可以拥有 session binding / switching
 - 但 durable ownership 仍在 session 子域
 
 ## 推荐抽象

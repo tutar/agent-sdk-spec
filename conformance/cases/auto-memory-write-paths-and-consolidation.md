@@ -29,6 +29,7 @@
 - direct write 会产生或更新 durable memory
 - background extraction 可补充未被 foreground path 显式保存的 durable signal
 - dream consolidation 可 merge / prune / tighten durable memory 与 resident index
+- 三条写入路径的 durable target 仍应保持 topic payload + entrypoint/index 的语义分层
 - consolidation 失败或延迟不应破坏 session restore 或提前暴露未提交 memory
 
 ## Allowed Variance
@@ -42,4 +43,3 @@
 - direct write 后 extraction 重复写入同一语义范围，且没有 skip / dedupe 语义
 - dream consolidation 通过改写 transcript 伪装成功
 - assistant-style append-first mode 改变了 durable memory 的 ownership 边界
-

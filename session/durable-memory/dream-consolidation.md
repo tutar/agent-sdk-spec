@@ -2,9 +2,9 @@
 
 ## 职责
 
-`Dream Consolidation` 是 durable memory 的周期性整合机制。
+`Dream Consolidation` 是 durable memory 的后台 / 跨 session consolidation mode。
 
-它的目标不是从单个 turn 提取记忆，而是对已有 memory files、近期 session 线索和历史索引做一次反思式整理。
+它的目标不是从单个 turn 提取记忆，而是对已有 durable store、近期 session 线索和 resident index 做一次反思式整理。
 
 它通常负责：
 
@@ -17,10 +17,29 @@
 
 - `extract memories`
   偏 session-level 的增量提取
+- `direct write`
+  偏当前主路径的显式 durable write
 - `compact`
   偏上下文窗口治理
 - `verification`
   偏任务正确性复核
+
+## 核心结论
+
+dream 不是独立 memory plane，而是 `durable write and consolidation` 的一种标准运行模式。
+
+它处理的是：
+
+- recent sessions
+- append-first capture stream
+- existing durable payloads
+- resident entrypoint/index
+
+它产出的是：
+
+- updated topic memories
+- pruned or merged durable refs
+- tightened or rebuilt entrypoint index
 
 ## 触发模式
 
@@ -106,7 +125,7 @@ DreamRunner
 - 对 index / topic memory 的处理目标
 - 对最终结果对象的定义
 
-推荐直接复用 [memory-consolidation.md](memory-consolidation.md) 中的 `ConsolidationResult` 语义，
+推荐直接复用 [durable-memory-write-and-consolidation.md](durable-memory-write-and-consolidation.md) 中的 `ConsolidationResult` 语义，
 仅额外补 `trigger` 或语义等价字段。
 
 ### 2. Dream 必须是 consolidation，不是普通 extraction
@@ -175,13 +194,13 @@ Automatic Dream 的失败不得影响：
 
 ## 与其它模块的边界
 
-- 与 [memory-consolidation.md](memory-consolidation.md)
-  `Memory Consolidation` 是上层能力；`Dream Consolidation` 是其中面向 cross-session memory 整理的标准模式
+- 与 [durable-memory-write-and-consolidation.md](durable-memory-write-and-consolidation.md)
+  `DurableMemoryWriteAndConsolidation` 是上层写侧能力；`Dream Consolidation` 是其中面向 cross-session memory 整理的标准模式
 - 与 [auto-memory/auto-memory-write-paths.md](auto-memory/auto-memory-write-paths.md)
   dream 可以作为 auto-memory 的标准 consolidation path，但不等于 auto-memory runtime 本体
-- 与 [durable-memory-model.md](durable-memory-model.md)
+- 与 [durable-memory-architecture.md](durable-memory-architecture.md)
   `Dream Consolidation` 主要作用于 durable memory，而不是 short-term session memory
-- 与 [scoped-durable-memory.md](scoped-durable-memory.md)
+- 与 [durable-memory-scopes-and-overlays.md](durable-memory-scopes-and-overlays.md)
   dream 可以操作不同 scope 的 durable memory，但 scope 语义不由 dream 定义
 - 与 [../../harness/agent-profiles/assistant-agent.md](../../harness/agent-profiles/assistant-agent.md)
   assistant agent profile 可以把 dream 作为常见 maintenance operating mode，但 profile 不拥有 dream 的 consolidation 语义或对象模型
@@ -208,8 +227,9 @@ Automatic Dream 的失败不得影响：
 
 ## 规范结论
 
-- `dream` 应作为 session memory 子域内的标准 consolidation 模式存在
+- `dream` 应作为 session memory 子域内的标准 consolidation mode 存在
 - 规范应同时覆盖 `manual /dream` 与 `autoDream`
 - `autoDream` 是调度模式，`dream` 是 consolidation 语义
 - dream 的默认执行形态可以是受限 subagent + task surface
 - `DreamConsolidationResult` 应与 `ConsolidationResult` 共享字段与终态语义
+- assistant-style append-first operating mode 可以改变 dream 的触发频率和输入来源，但不改变 dream 的 ownership 与结果语义

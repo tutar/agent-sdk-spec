@@ -1,5 +1,5 @@
 {
-  "case": "agents-memory-loading-precedence",
+  "case": "instruction-markdown-loading-precedence",
   "sources": [
     {
       "path": "~/.openagent/AGENTS.md",

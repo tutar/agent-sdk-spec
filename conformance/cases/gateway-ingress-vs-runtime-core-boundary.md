@@ -19,6 +19,7 @@
 - runtime core 只看到 normalized inbound 或语义等价对象
 - 相同语义输入从不同 channel 进入时，runtime core 行为应等价
 - turn progression 不依赖 Feishu、WeChat、Telegram、TUI 或其它特定 channel 的协议细节
+- runtime 可以拥有 session binding / switching orchestration，但不得因此吞并 channel/chat binding ownership
 
 ## Expected Persistent Effects
 

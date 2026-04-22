@@ -73,13 +73,13 @@ dream 详细语义见 [../dream-consolidation.md](../dream-consolidation.md)。
 
 ## 与其它子规范的边界
 
-- 与 [../memory-consolidation.md](../memory-consolidation.md)
+- 与 [../durable-memory-write-and-consolidation.md](../durable-memory-write-and-consolidation.md)
   consolidation 是上层能力；本页只定义 auto-memory 下默认写入路径如何接入它
 - 与 [../dream-consolidation.md](../dream-consolidation.md)
   dream 是 auto-memory 的标准 consolidation path，不是 auto-memory 的全部
 - 与 [../../../harness/agent-profiles/assistant-agent.md](../../../harness/agent-profiles/assistant-agent.md)
   assistant agent profile 可以偏好 append-first / consolidate-later，但不拥有 durable memory 本体
-- 与 [../scoped-durable-memory.md](../scoped-durable-memory.md)
+- 与 [../durable-memory-scopes-and-overlays.md](../durable-memory-scopes-and-overlays.md)
   team memory / agent memory 是 scoped extension，不改变这些写入路径的上层语义
 - 与 [topic-memory.md](topic-memory.md)
   direct write、background extraction、dream consolidation 的默认 durable payload target 见该页

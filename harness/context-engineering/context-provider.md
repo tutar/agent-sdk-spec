@@ -116,7 +116,7 @@ provider 可以是：
 - [context-assembly-pipeline.md](context-assembly-pipeline.md)
   定义这些 fragments 如何被装配
 - [attachment-assembly.md](attachment-assembly.md)
-  定义 attachment 的顺序、scope 与 audience
+  定义 attachment envelope、顺序、scope 与 audience
 - [startup-and-turn-zero-context.md](startup-and-turn-zero-context.md)
   定义 startup-only context 的专门语义
 

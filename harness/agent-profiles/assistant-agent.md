@@ -205,7 +205,7 @@ assistant agent 可以采用：
 
 assistant-style durable memory operating mode 的上层 consolidation 语义见：
 
-- [../../session/durable-memory/memory-consolidation.md](../../session/durable-memory/memory-consolidation.md)
+- [../../session/durable-memory/durable-memory-write-and-consolidation.md](../../session/durable-memory/durable-memory-write-and-consolidation.md)
 - [../../session/durable-memory/dream-consolidation.md](../../session/durable-memory/dream-consolidation.md)
 
 ## Default Local Mapping

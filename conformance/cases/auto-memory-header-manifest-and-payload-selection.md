@@ -23,6 +23,7 @@
 - selection 可以使用规则、检索器或模型辅助路径，但不应要求整库正文预读
 - freshness / mtime / description 一类 metadata 至少应允许被建模
 - selected payload 与 resident entrypoint 必须语义分离
+- header / manifest layer 不应被显式 durable injection source 取代或混同
 
 ## Expected Persistent Effects
 

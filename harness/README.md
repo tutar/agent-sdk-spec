@@ -134,6 +134,7 @@ Harness
 
 - [runtime/README.md](runtime/README.md)
 - [runtime/core/agent-runtime.md](runtime/core/agent-runtime.md)
+- [runtime/core/ralph-loop.md](runtime/core/ralph-loop.md)
 - [runtime/core/failure-and-terminal-states.md](runtime/core/failure-and-terminal-states.md)
 - [runtime/core/state-layering.md](runtime/core/state-layering.md)
 - [runtime/core/message-and-event-pipeline.md](runtime/core/message-and-event-pipeline.md)
@@ -145,7 +146,7 @@ Harness
 这一组回答：
 
 - runtime 如何按 `core / hooks / projection / post-turn` 分层
-- harness 主循环和 turn state machine 如何推进
+- runtime lifecycle、session binding orchestration 与 turn-local loop 如何推进
 - 失败、取消、阻塞和终止态如何统一
 - 内部状态、内部消息、外部事件如何分开
 - hooks、observability、state projection、post-turn processing 各自落在哪个 runtime 子平面
@@ -166,6 +167,7 @@ Harness
 ### 3. Context Engineering
 
 - [context-engineering/README.md](context-engineering/README.md)
+- [context-engineering/instruction-markdown/README.md](context-engineering/instruction-markdown/README.md)
 - [bootstrap-prompts.md](context-engineering/bootstrap-prompts.md)
 - [context-input-model.md](context-engineering/context-input-model.md)
 - [context-assembly-pipeline.md](context-engineering/context-assembly-pipeline.md)
@@ -179,6 +181,7 @@ Harness
 这一组回答：
 
 - context engineering 在 harness 中的职责是什么
+- `AGENTS.md` / `rules` 一类 instruction markdown loading 为什么属于 harness/context，而不是 session memory
 - 模型可见输入有哪些 context planes
 - bootstrap prompt、structured context、attachments、tool surface 如何装配
 - startup、turn-zero、resume、agent-start 的上下文差异是什么

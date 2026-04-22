@@ -34,13 +34,15 @@
 ### Core
 
 - [core/agent-runtime.md](core/agent-runtime.md)
+- [core/ralph-loop.md](core/ralph-loop.md)
 - [core/failure-and-terminal-states.md](core/failure-and-terminal-states.md)
 - [core/state-layering.md](core/state-layering.md)
 - [core/message-and-event-pipeline.md](core/message-and-event-pipeline.md)
 
 这一组回答：
 
-- turn state machine 如何推进
+- runtime lifecycle、session binding 与 turn loop 如何分层
+- turn-local loop 如何推进
 - terminal state、error class、retryability 如何统一
 - runtime 内部状态如何分层
 - normalized ingress、internal message、stream event 如何分开

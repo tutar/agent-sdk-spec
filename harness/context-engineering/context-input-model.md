@@ -90,6 +90,8 @@ attachment 不只是“额外文件”。
 
 因此 attachment 必须被建模为独立 context plane，而不是 `user_context` 的一种别名。
 
+attachment assembled 之后的 envelope、ordering、scope 与 audience 语义，见 [attachment-assembly.md](attachment-assembly.md)。
+
 ### 4. capability surface 属于上下文的一部分
 
 模型可见的 tool schemas、deferred tool search surface、searchable capability listing 都会改变模型行为。

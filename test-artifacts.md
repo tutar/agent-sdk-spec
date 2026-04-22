@@ -67,7 +67,7 @@ ObjectFixture
 - compact boundary
 - session wake / resume
 - memory recall injection
-- `AGENTS.md` memory injection precedence
+- `AGENTS.md` instruction loading precedence
 - background task completion
 - remote task status sync
 - policy decision serialization
@@ -92,7 +92,7 @@ ObjectFixture
 - [conformance/golden/memory-recall-and-consolidation.json](conformance/golden/memory-recall-and-consolidation.json)
 
 没有 golden 的长期记忆 case（例如 bounded recall / durable memory index 分层）只保留 canonical case，不强制维护快照样本。
-- [conformance/golden/agents-memory-loading-precedence.json](conformance/golden/agents-memory-loading-precedence.json)
+- [conformance/golden/instruction-markdown-loading-precedence.json](conformance/golden/instruction-markdown-loading-precedence.json)
 - [conformance/golden/policy-ask-deny-allow.json](conformance/golden/policy-ask-deny-allow.json)
 - [conformance/golden/persisted-tool-result-resume.json](conformance/golden/persisted-tool-result-resume.json)
 - [conformance/golden/memory-consolidation-background-safety.json](conformance/golden/memory-consolidation-background-safety.json)
@@ -117,6 +117,6 @@ ObjectFixture
 - 所有语言 agent 实现应共享同一套录制样本和重放样本语义
 - canonical object fixture 应优先覆盖 `PolicyDecision`、`ResumeSnapshot`、`DurableMemoryRecord`、`PersistedToolResultRef`
 - context engineering object fixture 应优先覆盖 `ContextAssemblyInput`、`AttachmentEnvelope`
-- memory injection object fixture 应优先覆盖 `DurableMemoryInjectionSource`、`LoadedMemoryInjection`
+- instruction markdown object fixture 应优先覆盖 `InstructionMarkdownSource`、`LoadedInstructionMarkdown`
 - skills 相关 object fixture 应优先覆盖 `ImportedSkillManifest`、`SkillCatalogEntry`、`SkillActivationResult`
 - MCP 相关 object fixture 应优先覆盖 capability view、request envelope、auth metadata、session handle
