@@ -2,7 +2,7 @@
 
 ## 职责
 
-`ContextEditing` 定义 `Harness.ContextEngineering` 如何在不破坏会话连续性的前提下，减少、重组或重写模型可见上下文。
+`AgentRuntime` 在 governance 决定触发后，调用 `ContextEditing` 对模型可见上下文执行 externalization、projection 或 rewrite。
 
 它回答的不是“上下文来自哪里”，而是：
 
@@ -17,6 +17,7 @@
 - tool 执行本身
 - prompt cache provider 细节
 - memory consolidation 本体
+- budget 分析与 compact 触发决策
 
 ## 核心结论
 
@@ -191,32 +192,6 @@ summary 不应被当作：
   - 负责上下文本身如何被 externalize、折叠、重写
 
 二者会协同，但不应混成同一能力。
-
-## Default Local Mapping
-
-本地实现中，常见映射包括：
-
-- tool result content replacement
-- request-local microcompact
-- working-view collapse / projection
-- proactive compact / reactive compact / session-memory-backed compact
-
-这些只是默认映射，不构成规范对算法名或文件布局的约束。
-
-## Local Mapping And Cloud-Compatible Mapping
-
-### Local Mapping
-
-- harness 通常 direct-call transcript slice、tool result store、memory recall 与本地 output store
-- externalization 常映射到本地持久化结果或本地文件引用
-
-### Cloud-Compatible Mapping
-
-- `ContextEditing` 仍在 harness 内部执行
-- transcript、tool result、memory links、environment snapshot 可以来自远程 `Session` / `Tools` / `Sandbox` 绑定
-- externalized ref 可以指向远程对象或远程结果存储
-
-部署方式改变不应改变 editing 语义。
 
 ## 规范结论
 

@@ -2,7 +2,7 @@
 
 ## 职责
 
-`ConditionalInstructionRules` 定义 rules/frontmatter/`paths` 一类 conditional instruction matching 语义。
+`AgentRuntime` 在 instruction loading 与 target selection 之间调用 `ConditionalInstructionRules`，决定哪些 rules/frontmatter/`paths` 应进入当前上下文。
 
 它回答的是：
 
@@ -76,11 +76,3 @@ InstructionRuleMatcher
 
 - rules 适合必须自动生效的约束
 - skills 适合按需触发的能力或流程
-
-## Default Local Mapping
-
-默认本地映射是：
-
-- `.claude/rules/*.md`
-- `paths` frontmatter
-- unconditional / conditional rule split

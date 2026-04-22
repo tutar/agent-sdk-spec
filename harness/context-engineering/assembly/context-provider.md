@@ -2,7 +2,7 @@
 
 ## 职责
 
-`ContextProvider` 负责为某个 context plane 提供结构化上下文片段。
+`AgentRuntime` 在 assembly 前调用 `ContextProvider`，为不同 context planes 收集结构化上下文片段。
 
 它不负责：
 
@@ -11,7 +11,7 @@
 - token budget 决策
 - compact / overflow recovery
 
-这些职责属于 [context-assembly-pipeline.md](context-assembly-pipeline.md) 和 [context-governance.md](context-governance.md)。
+这些职责分别属于 [context-assembly-pipeline.md](context-assembly-pipeline.md) 和 [../governance/context-governance.md](../governance/context-governance.md)。
 
 ## 标准接口
 
@@ -98,17 +98,6 @@ provider 可以是：
 - recall providers 提供 memory / relevant evidence fragments
 - capability providers 提供 tool surface 与 deferred/searchable capability 信息
 
-## Local Mapping And Cloud-Compatible Mapping
-
-### Local Mapping
-
-- provider 常直接访问本地 session slice、rules files、tool registry、workspace snapshot
-
-### Cloud-Compatible Mapping
-
-- provider 可通过远程 session/tool/sandbox 接口取得结构化 fragment
-- provider 依然只返回 fragment，不承担最终 assembly
-
 ## 与其它页面的边界
 
 - [context-input-model.md](context-input-model.md)
@@ -117,11 +106,13 @@ provider 可以是：
   定义这些 fragments 如何被装配
 - [attachment-assembly.md](attachment-assembly.md)
   定义 attachment envelope、顺序、scope 与 audience
-- [startup-and-turn-zero-context.md](startup-and-turn-zero-context.md)
+- [../entry/startup-and-turn-zero-context.md](../entry/startup-and-turn-zero-context.md)
   定义 startup-only context 的专门语义
+- [../governance/context-governance.md](../governance/context-governance.md)
+  provider 产出 fragments，但不负责预算、compact 和 overflow 治理
 
 ## 规范结论
 
-- `ContextProvider` 只负责提供结构化片段
+- runtime 应通过 `ContextProvider` 收集结构化片段，而不是直接耦合具体来源
 - provider 必须声明 plane、lifecycle、cacheability 与 provenance
 - provider 不拥有最终 ordering 和治理决策

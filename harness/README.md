@@ -168,19 +168,19 @@ Harness
 
 - [context-engineering/README.md](context-engineering/README.md)
 - [context-engineering/instruction-markdown/README.md](context-engineering/instruction-markdown/README.md)
-- [bootstrap-prompts.md](context-engineering/bootstrap-prompts.md)
-- [context-input-model.md](context-engineering/context-input-model.md)
-- [context-assembly-pipeline.md](context-engineering/context-assembly-pipeline.md)
-- [context-provider.md](context-engineering/context-provider.md)
-- [attachment-assembly.md](context-engineering/attachment-assembly.md)
-- [startup-and-turn-zero-context.md](context-engineering/startup-and-turn-zero-context.md)
-- [context-governance.md](context-engineering/context-governance.md)
-- [context-editing.md](context-engineering/context-editing.md)
-- [prompt-cache-strategy.md](context-engineering/prompt-cache-strategy.md)
+- [entry/bootstrap-prompts.md](context-engineering/entry/bootstrap-prompts.md)
+- [entry/startup-and-turn-zero-context.md](context-engineering/entry/startup-and-turn-zero-context.md)
+- [assembly/context-input-model.md](context-engineering/assembly/context-input-model.md)
+- [assembly/context-assembly-pipeline.md](context-engineering/assembly/context-assembly-pipeline.md)
+- [assembly/context-provider.md](context-engineering/assembly/context-provider.md)
+- [assembly/attachment-assembly.md](context-engineering/assembly/attachment-assembly.md)
+- [governance/context-governance.md](context-engineering/governance/context-governance.md)
+- [governance/context-editing.md](context-engineering/governance/context-editing.md)
+- [governance/prompt-cache-strategy.md](context-engineering/governance/prompt-cache-strategy.md)
 
 这一组回答：
 
-- context engineering 在 harness 中的职责是什么
+- context engineering 作为独立子域，如何被 `AgentRuntime` 在 startup、resume、assembly 和 pre-sampling shaping 阶段调用
 - `AGENTS.md` / `rules` 一类 instruction markdown loading 为什么属于 harness/context，而不是 session memory
 - 模型可见输入有哪些 context planes
 - bootstrap prompt、structured context、attachments、tool surface 如何装配

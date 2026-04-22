@@ -18,6 +18,8 @@
 
 跨 provider 的稳定语义仍以 [prompt-cache-strategy.md](prompt-cache-strategy.md) 为准。
 
+`AgentRuntime` 不会直接依赖本页暴露的 provider-specific 对象；它只依赖 `PromptCacheStrategy` 的通用语义。本页只说明当底层 provider 提供 Anthropic-style prompt caching 时，默认实现通常如何映射这些语义。
+
 ## 适用前提
 
 这条路线通常适用于满足以下条件的 provider/runtime：
@@ -271,9 +273,9 @@ Anthropic native 路线中最常见的 cache bust 来源包括：
 
 - [prompt-cache-strategy.md](prompt-cache-strategy.md)
   定义跨 provider 的稳定策略接口与语义
-- [bootstrap-prompts.md](bootstrap-prompts.md)
+- [../entry/bootstrap-prompts.md](../entry/bootstrap-prompts.md)
   定义 system skeleton 与 static/dynamic boundary 的上游结构
-- [context-assembly-pipeline.md](context-assembly-pipeline.md)
+- [../assembly/context-assembly-pipeline.md](../assembly/context-assembly-pipeline.md)
   定义 cache boundary placement 所属的 assembly 阶段
 
 ## 规范外结论

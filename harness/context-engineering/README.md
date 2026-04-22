@@ -2,77 +2,84 @@
 
 ## 职责
 
-`ContextEngineering` 定义 `Harness` 如何把来自 `Session`、`Tools`、`Sandbox` 与当前交互输入的材料，组织成一次模型调用可见的上下文。
+`Harness.ContextEngineering` 是 `Harness` 内部的上下文子域。
 
-它负责：
+`AgentRuntime` 会在以下阶段调用它：
 
-- 定义模型可见输入的对象模型
-- 定义 bootstrap prompt、structured context、attachments、capability surface 的边界
-- 定义上下文装配流水线
-- 定义 startup、turn-zero、resume、agent-start 的注入差异
-- 定义 context budget、compact、externalization、cache-aware assembly 等治理策略
+- startup / resume 前，建立稳定 instruction 与 bootstrap 输入
+- 每轮 sampling 前，装配本轮模型可见输入
+- pre-sampling request shaping 时，执行预算治理、编辑和 cache-aware 组织
+
+它辅助 runtime 完成：
+
+- 建模多平面模型输入，而不是只处理 prompt 字符串
+- 区分 stable skeleton、startup-only context、per-turn dynamic context
+- 装配 attachments、capability surface、instruction fragments、structured context
+- 在预算压力下执行 governance、editing 和 prompt-cache-aware shaping
 
 它不负责：
 
-- durable transcript 持久化
+- runtime loop 本身
+- session durable ownership
 - tool 执行本身
 - sandbox enforcement
-- verifier / task lifecycle
+- task lifecycle
 
 ## 设计定位
 
 本子域采用 `Local-first + Cloud-compatible`：
 
 - `Local-first`
-  默认实现映射来自本地 harness 与本地 session/tool/sandbox 的协作路径。
+  默认实现映射来自本地 harness 对 session、tools、sandbox 和 host state 的直接协作。
 - `Cloud-compatible`
-  在云端形态下，通常是整套 harness 作为无状态服务运行；`ContextEngineering` 仍在 harness 内部执行，只是它消费的 transcript、memory、tool surface、evidence refs、environment context 来自远程模块接口，而不是本地直读。
+  `ContextEngineering` 仍由 harness 持有；变化的只是它消费 transcript、memory links、tool surface 和 environment context 的方式，而不是语义边界。
 
 这意味着：
 
-- `ContextEngineering` 始终属于 `Harness`
-- 它不是独立顶层模块
-- 它也不是一个单独远程服务
+- `ContextEngineering` 属于 `Harness`
+- 它被 `AgentRuntime` 调用，但不并入 `Runtime`
+- 它不是单独远程服务，也不是第六个顶层模块
 
-## 要解决的问题
+## Runtime 调用总图
 
-- 模型可见输入不只是一个 prompt 字符串，规范必须明确它的多平面结构
-- 稳定 prompt skeleton 与高波动上下文必须分开
-- startup-only context、turn-zero briefing、resume context 不能混成一类
-- attachment、memory recall、tool schemas、request metadata 都会影响模型输入，但来源和预算策略不同
-- 长会话中必须避免 context drift、evidence loss 和无意义 cache bust
+```text
+runtime startup / resume
+-> instruction-markdown
+-> entry
+-> per-turn assembly
+-> pre-sampling governance
+-> final model input
+```
 
-## 子主题
+## 子组
 
 - [instruction-markdown/README.md](instruction-markdown/README.md)
-  定义 `AGENTS.md` / `rules` 一类 file-backed instruction loading、include expansion 与 conditional matching。
-- [bootstrap-prompts.md](bootstrap-prompts.md)
-  定义 system prompt skeleton、section registry、静态/动态边界与覆盖关系。
-- [context-input-model.md](context-input-model.md)
-  定义模型可见输入的最小对象模型与 context planes。
-- [context-assembly-pipeline.md](context-assembly-pipeline.md)
-  定义从 transcript、structured context、attachments、tool surface 到最终模型输入的装配流水线。
-- [context-provider.md](context-provider.md)
-  只定义 provider 接口、作用域、生命周期、cacheability 与 provenance。
-- [attachment-assembly.md](attachment-assembly.md)
-  定义 attachment envelope、顺序、thread scope 与 audience。
-- [startup-and-turn-zero-context.md](startup-and-turn-zero-context.md)
-  定义 session-start、agent-start、turn-zero、resume-start 的差异。
-- [context-governance.md](context-governance.md)
-  定义 context budget、compact、externalization、delta injection 与 drift mitigation。
-- [context-editing.md](context-editing.md)
-  定义多阶段上下文编辑、working view projection、compact rewrite 与恢复边界。
-- [prompt-cache-strategy.md](prompt-cache-strategy.md)
-  定义 stable prefix、dynamic suffix、cache boundary 与 cache break 语义。
-- [anthropic-native-prompt-cache-guide.md](anthropic-native-prompt-cache-guide.md)
-  作为 Anthropic 原生 prompt cache 的默认实现指南，说明 block splitting、scope、tool/message cache marker、fork sharing 与 cache break detection。
+  定义 file-backed instruction loading、include expansion 与 conditional instruction matching。
+- [entry/bootstrap-prompts.md](entry/bootstrap-prompts.md)
+  定义 runtime 在进入主 loop 前建立的 stable system skeleton。
+- [entry/startup-and-turn-zero-context.md](entry/startup-and-turn-zero-context.md)
+  定义 session-start、agent-start、turn-zero、resume-start 一类 lifecycle-scoped context。
+- [assembly/context-input-model.md](assembly/context-input-model.md)
+  定义模型可见输入的 canonical object model 与 context planes。
+- [assembly/context-provider.md](assembly/context-provider.md)
+  定义 fragment provider 如何为 runtime 提供结构化上下文片段。
+- [assembly/context-assembly-pipeline.md](assembly/context-assembly-pipeline.md)
+  定义 runtime 在一次 sampling 前如何按阶段装配最终模型输入。
+- [assembly/attachment-assembly.md](assembly/attachment-assembly.md)
+  定义 attachment envelope、ordering、scope 与 audience。
+- [governance/context-governance.md](governance/context-governance.md)
+  定义 runtime 如何在 pre-sampling 阶段做预算分析与治理决策。
+- [governance/context-editing.md](governance/context-editing.md)
+  定义 governance 触发后 runtime 可执行的 editing layers。
+- [governance/prompt-cache-strategy.md](governance/prompt-cache-strategy.md)
+  定义 harness 如何组织输入以提高 prompt cache reuse。
+- [governance/anthropic-native-prompt-cache-guide.md](governance/anthropic-native-prompt-cache-guide.md)
+  作为 provider-specific 的默认实现指南，不是规范能力本身。
 
 ## 规范结论
 
-- 上下文工程是 `Harness` 的内部能力，不是独立模块
-- 上下文工程不等于“拼 prompt”，而是多平面输入装配
-- bootstrap prompt、structured context、attachments、capability surface、memory recall 必须分层
-- payload externalization、working-view projection、compact rewrite 是 context engineering 的稳定编辑面
-- 本地与云端的差异只应体现在依赖输入的获取方式，不应改变装配语义
-- assistant agent 这类长期运行 profile 可以改变 memory accumulation / continuity operating mode，但不改变 context planes、assembly pipeline 和 editing 的核心语义
-- `AGENTS.md` / `rules` 这类 instruction markdown source 属于 `Harness.ContextEngineering`，不是 `Session.durable-memory`
+- `ContextEngineering` 是 `Harness` 内部的 runtime-facing 子域
+- `AgentRuntime` 依赖它建立 startup input、per-turn assembly 和 pre-sampling shaping
+- 模型可见输入必须按 object model、assembly、attachment、governance 分层
+- startup-only context、per-turn context、editing 和 prompt cache strategy 不能混层
+- `AGENTS.md` / `rules` 一类 instruction sources 属于 `Harness.ContextEngineering`，不是 `Session.durable-memory`

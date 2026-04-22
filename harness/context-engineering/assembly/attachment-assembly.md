@@ -2,6 +2,8 @@
 
 ## 职责
 
+`AgentRuntime` 在完成 per-turn assembly 的 attachment 阶段时，调用 `AttachmentAssembly` 的稳定语义。
+
 `AttachmentAssembly` 只定义 attachment-specific 的装配语义。
 
 它回答的不是：

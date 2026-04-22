@@ -2,9 +2,9 @@
 
 ## 职责
 
-本页定义哪些上下文只在启动期注入，哪些需要按 turn 重算。
+`AgentRuntime` 在 fresh start、resume、delegated worker start 和 first turn 之前调用本页定义的 startup context 语义。
 
-它解决的核心问题是：不要把 session-start、agent-start、turn-zero briefing、resume-start 混成同一种 prompt patch。
+它解决的核心问题是：不要把 `session_start`、`agent_start`、`turn_zero`、`resume_start` 混成同一种 prompt patch 或 prompt override。
 
 ## 最小对象
 
@@ -21,9 +21,9 @@ StartupContext
 ## 推荐分类
 
 - `session_start`
-  主会话刚开始时的启动上下文。
+  主会话刚开始时注入的一次性或受 reentry 策略控制的上下文。
 - `agent_start`
-  delegated agent / teammate 首次启动时的本地 briefing。
+  delegated agent / teammate 首次启动时的 role-local briefing。
 - `turn_zero`
   在第一轮模型调用前提供的一次性 kickoff 信息。
 - `resume_start`
@@ -45,7 +45,7 @@ StartupContext
 
 ### 2. startup context 不是 bootstrap prompt
 
-bootstrap prompt 是稳定 system skeleton。
+bootstrap prompt 是 stable system skeleton。
 
 startup context 是一次性或按 reentry 策略重放的运行时上下文。
 
@@ -70,19 +70,19 @@ startup context 是一次性或按 reentry 策略重放的运行时上下文。
 
 这些内容不能假设模型会从压缩后的历史中自动推断。
 
-## Local Mapping And Cloud-Compatible Mapping
+## 与相邻页面的边界
 
-### Local Mapping
-
-- startup payload 常来自本地 runtime state、当前 mode、delegation setup、UI 视图状态
-
-### Cloud-Compatible Mapping
-
-- startup payload 仍由 harness 组织
-- 所需状态可来自远程 session/runtime state，但 lifecycle 语义不变
+- 与 [bootstrap-prompts.md](bootstrap-prompts.md)
+  `BootstrapPrompts` 定义稳定 skeleton；本页只定义 lifecycle-scoped injected context
+- 与 [../assembly/context-assembly-pipeline.md](../assembly/context-assembly-pipeline.md)
+  本页定义 startup-only input 的语义；per-turn 装配顺序见 `ContextAssemblyPipeline`
+- 与 [../assembly/context-provider.md](../assembly/context-provider.md)
+  provider 可以产出 startup fragments，但 startup lifecycle 分类由本页定义
+- 与 [../governance/context-governance.md](../governance/context-governance.md)
+  startup context 不是预算治理或 editing 触发面
 
 ## 规范结论
 
 - startup-only context 必须是独立语义层
-- session-start、agent-start、turn-zero、resume-start 必须区分
-- 一次性 briefing 不应污染 bootstrap prompt 或 agent prompt 本体
+- `session_start`、`agent_start`、`turn_zero`、`resume_start` 必须区分
+- runtime 不应通过污染 bootstrap prompt 或 agent prompt 本体来表达一次性 briefing

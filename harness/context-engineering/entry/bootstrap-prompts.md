@@ -2,22 +2,23 @@
 
 ## 职责
 
-`BootstrapPrompts` 定义 `Harness.ContextEngineering` 在进入主 query loop 前必须建立的 `system prompt skeleton`。
+`AgentRuntime` 在进入主 loop 前调用 `BootstrapPrompts`，建立稳定的 `system prompt skeleton`。
 
 它负责：
 
-- 为 agent 提供稳定的初始行为约束
+- 为 runtime 提供稳定的行为骨架
 - 提供模型可见的身份、能力和环境说明
-- 以分段方式组织系统提示词
+- 以 section 方式组织 system prompt
 - 为 prompt caching 提供 static / dynamic boundary
-- 为 override / agent / custom / append 等上层调用提供稳定合成规则
+- 为 override / agent / custom / append 等调用提供稳定合成规则
 
 它不负责：
 
-- durable session transcript
-- attachment context
+- startup-only lifecycle context
+- attachment assembly
 - tool result 注入
 - memory recall 结果本身
+- per-turn governance 与 editing
 
 ## 稳定接口
 
@@ -140,38 +141,24 @@ bootstrap prompt 应支持将：
 - agent prompt 视为稳定 prompt layer；首轮额外引导默认走 startup context
 - environment summary 可在 bootstrap prompt 中投影为 section，但其归属应先由 structured context 层定义
 
-## 与其它模块的边界
+## 与相邻页面的边界
 
-- 与 [context-input-model.md](context-input-model.md)
-  本页只定义 system prompt skeleton；输入平面见 `ContextInputModel`
-- 与 [context-provider.md](context-provider.md)
-  `BootstrapPrompts` 负责 system prompt skeleton；`ContextProvider` 负责向不同 context plane 提供结构化片段
-- 与 [context-assembly-pipeline.md](context-assembly-pipeline.md)
-  `BootstrapPrompts` 只定义装配前半段的 system skeleton；完整顺序见 `ContextAssemblyPipeline`
-- 与 [prompt-cache-strategy.md](prompt-cache-strategy.md)
-  `BootstrapPrompts` 定义 prompt skeleton 的结构；`PromptCacheStrategy` 定义这些结构如何组织成 cache-friendly 输入
-- 与 [context-governance.md](context-governance.md)
-  `BootstrapPrompts` 提供可分块输入；`ContextGovernance` 负责预算、compact 和大上下文治理
-- 与 [../model-provider/model-provider-adapter.md](../model-provider/model-provider-adapter.md)
+- 与 [../assembly/context-input-model.md](../assembly/context-input-model.md)
+  本页只定义 stable system skeleton；完整输入对象模型见 `ContextInputModel`
+- 与 [../assembly/context-provider.md](../assembly/context-provider.md)
+  `BootstrapPrompts` 定义 skeleton；`ContextProvider` 负责向其它 context planes 提供结构化片段
+- 与 [../assembly/context-assembly-pipeline.md](../assembly/context-assembly-pipeline.md)
+  本页不定义完整装配顺序；per-turn assembly 顺序见 `ContextAssemblyPipeline`
+- 与 [../governance/prompt-cache-strategy.md](../governance/prompt-cache-strategy.md)
+  本页定义 stable skeleton 的结构；`PromptCacheStrategy` 定义这些结构如何组织成 cache-friendly 输入
+- 与 [../governance/context-governance.md](../governance/context-governance.md)
+  本页不负责预算与 compact 决策；这些治理职责属于 `ContextGovernance`
+- 与 [../../model-provider/model-provider-adapter.md](../../model-provider/model-provider-adapter.md)
   `ModelProviderAdapter` 决定如何把 prompt blocks 投影到特定模型协议；不定义 bootstrap prompt 内容
-
-## Local Mapping And Cloud-Compatible Mapping
-
-### Local Mapping
-
-- section registry 常由本地常量、配置和 runtime state 解析得到
-- section cache 常与本地 harness 生命周期协同
-
-### Cloud-Compatible Mapping
-
-- bootstrap prompt 仍在 harness 内部构造
-- runtime state、integration capability、environment context 可来自远程模块接口
-- section 语义与 static/dynamic boundary 不因部署位置改变
 
 ## 规范结论
 
-- bootstrap prompt 应是 harness 中独立的一层
+- runtime 应在进入主 loop 前建立 bootstrap prompt
 - bootstrap prompt 应以 section 为基本单元，而不是单一字符串
-- bootstrap prompt 应支持优先级覆盖、section 级缓存与边界切分
-- bootstrap prompt 应与 structured context、attachment context、memory recall 分开建模
-- agent prompt 应被建模为稳定语义层，而不是首轮一次性引导容器
+- bootstrap prompt 应支持优先级覆盖、section 级缓存与 static/dynamic 边界
+- bootstrap prompt 应与 startup-only context、structured context、attachments 和 governance 分开建模

@@ -2,7 +2,7 @@
 
 ## 职责
 
-`InstructionIncludeExpansion` 定义 instruction markdown 中的 `@include` 或语义等价 include 机制。
+`AgentRuntime` 在 instruction loading 的解析阶段调用 `InstructionIncludeExpansion`，展开 instruction markdown 中的 `@include` 或语义等价 include 机制。
 
 它回答的是：
 
@@ -70,7 +70,3 @@ InstructionIncludeResolver
   include expansion 是 loading 的解析阶段，不替代 source discovery / precedence
 - 与 [conditional-instruction-rules.md](conditional-instruction-rules.md)
   conditional rules 决定 instruction applicability；include expansion 决定正文如何展开
-
-## Default Local Mapping
-
-默认本地映射是 `@include` 语法与 parse-time recursive expansion。

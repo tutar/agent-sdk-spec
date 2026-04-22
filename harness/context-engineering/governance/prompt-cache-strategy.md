@@ -2,7 +2,7 @@
 
 ## 职责
 
-`PromptCacheStrategy` 定义 harness 如何为了更好利用底层模型或 provider 的 prompt cache 能力而组织输入。
+`AgentRuntime` 在完成 assembly、进入最终 request emission 之前调用 `PromptCacheStrategy`，组织输入以提高 prompt cache reuse。
 
 它关注的是：
 
@@ -18,6 +18,7 @@
 - durable session storage
 - context governance 的预算策略本身
 - provider client 的认证与传输
+- context editing 的执行语义
 
 ## 稳定接口
 
@@ -134,33 +135,22 @@ ForkCachePlan
 
 ## 与其它模块的边界
 
-- 与 [bootstrap-prompts.md](bootstrap-prompts.md)
+- 与 [../entry/bootstrap-prompts.md](../entry/bootstrap-prompts.md)
   `BootstrapPrompts` 定义 system prompt skeleton；`PromptCacheStrategy` 定义如何让这些 skeleton 更适合被缓存复用
-- 与 [context-input-model.md](context-input-model.md)
+- 与 [../assembly/context-input-model.md](../assembly/context-input-model.md)
   本页只关心 cache-friendly 组织，不重新定义输入对象模型
-- 与 [context-assembly-pipeline.md](context-assembly-pipeline.md)
+- 与 [../assembly/context-assembly-pipeline.md](../assembly/context-assembly-pipeline.md)
   cache marker placement 必须服从 assembly pipeline，而不是替代它
-- 与 [context-provider.md](context-provider.md)
+- 与 [../assembly/context-provider.md](../assembly/context-provider.md)
   `ContextProvider` 决定上下文来源；`PromptCacheStrategy` 决定这些上下文如何组织成 cache-friendly 输入
 - 与 [context-governance.md](context-governance.md)
   `ContextGovernance` 处理预算、compact、overflow；`PromptCacheStrategy` 处理 cache reuse 与 cache stability
-- 与 [../model-provider/model-capability-routing.md](../model-provider/model-capability-routing.md)
+- 与 [../../model-provider/model-capability-routing.md](../../model-provider/model-capability-routing.md)
   模型能力路由决定是否启用 provider-native prompt caching；`PromptCacheStrategy` 负责实际组织输入
-
-## Local Mapping And Cloud-Compatible Mapping
-
-### Local Mapping
-
-- 本地 harness 常直接根据 section registry、tool schemas、message plan 放置 cache marker
-
-### Cloud-Compatible Mapping
-
-- prompt cache strategy 仍在 harness 内部执行
-- 云端仅改变 provider transport 和缓存宿主位置，不改变 stable prefix、dynamic suffix、cache break 的语义
 
 ## 规范结论
 
-- prompt caching 不是单纯 provider 开关，而是 harness 的输入组织策略
+- prompt caching 不是单纯 provider 开关，而是 runtime request emission 前的输入组织策略
 - [`Anthropic Native Strategy`](anthropic-native-prompt-cache-guide.md)
 - 其他 provider 可以通过 `OpenClaw-Mediated Strategy` 接入统一语义
 - 规范应稳定策略接口，不应稳定某个 provider 的私有字段名

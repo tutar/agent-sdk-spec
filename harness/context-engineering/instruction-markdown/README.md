@@ -2,7 +2,7 @@
 
 ## 职责
 
-`InstructionMarkdown` 定义 harness 如何发现、匹配、展开并注入 file-backed instruction markdown sources。
+`AgentRuntime` 在 startup、resume 和 target-sensitive turn 前调用 `InstructionMarkdown` 子组，发现、匹配、展开并装配 file-backed instruction sources。
 
 它覆盖：
 
@@ -35,6 +35,21 @@
   归 `Harness.ContextEngineering`
 - `AutoMemory` / `TeamMemory` / `AgentMemory`
   归 `Session.durable-memory`
+
+## 与 Runtime 的关系
+
+这组页面为 runtime 提供：
+
+- startup / resume 前可加载的 instruction fragments
+- subtree-scoped 或 target-scoped 的适用性判断
+- include expansion 后可进入 context assembly 的稳定文本输入
+
+它不负责：
+
+- durable memory recall
+- transcript replay
+- session restore
+- skill / workflow activation
 
 ## 子页
 

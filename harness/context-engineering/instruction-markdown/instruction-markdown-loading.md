@@ -2,7 +2,7 @@
 
 ## 职责
 
-`InstructionMarkdownLoading` 定义 file-backed instruction sources 如何被发现、排序、适用并注入当前 turn。
+`AgentRuntime` 在 startup、resume 或 target-sensitive turn 前调用 `InstructionMarkdownLoading`，发现、排序、适用并装配 file-backed instruction sources。
 
 它回答的是：
 
@@ -88,7 +88,7 @@ instruction markdown source 进入的是 context plane，而不是 transcript pl
 
 ## 与其它子规范的边界
 
-- 与 [../context-assembly-pipeline.md](../context-assembly-pipeline.md)
+- 与 [../assembly/context-assembly-pipeline.md](../assembly/context-assembly-pipeline.md)
   本页定义 instruction source loading；assembly pipeline 定义它如何进入模型输入
 - 与 [instruction-include-expansion.md](instruction-include-expansion.md)
   include expansion 是 loading 的子机制
@@ -96,14 +96,3 @@ instruction markdown source 进入的是 context plane，而不是 transcript pl
   conditional rules 定义 `paths` / target-path matching
 - 与 [../../../session/durable-memory/README.md](../../../session/durable-memory/README.md)
   durable memory 是 store-backed durable knowledge；instruction markdown loading 不属于 durable memory
-
-## Default Local Mapping
-
-默认本地映射通常包括：
-
-- user-level `AGENTS.md`
-- project-level `AGENTS.md`
-- local override file
-- nested subtree `AGENTS.md`
-
-在 `agent-spec` 中，统一以 `AGENTS.md` 作为通用命名承接这条语义。

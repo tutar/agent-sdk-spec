@@ -2,7 +2,7 @@
 
 ## 职责
 
-`ContextGovernance` 负责控制长会话中的上下文膨胀和预算退化。
+`AgentRuntime` 在 pre-sampling request-shaping 阶段调用 `ContextGovernance`，控制长会话中的上下文膨胀和预算退化。
 
 它不是优化项，而是 production agent runtime 的必备模块。
 
@@ -92,19 +92,16 @@ memory recall、relevant evidence surfacing 与普通 attachment 不能共用无
 - long result externalization
 - prompt-too-long 后的恢复
 
-## 与 Session 的边界
+## 与相邻页面的边界
 
-- `Session`
-  负责可恢复的原始事件历史
-- `ContextGovernance`
-  负责把这些历史塑形成当前模型上下文
-
-规范上必须允许：
-
-- session 保持完整
-- harness 对送入模型的上下文做裁剪、重排、摘要或缓存优化
-
-不能把“给模型看的上下文”误当成“系统保存的历史”。
+- 与 [../assembly/context-assembly-pipeline.md](../assembly/context-assembly-pipeline.md)
+  assembly 决定顺序；本页决定何时触发 budget、compact 和 overflow 治理
+- 与 [context-editing.md](context-editing.md)
+  本页负责决策与触发；editing 负责 externalization、projection 和 rewrite 的执行语义
+- 与 [../assembly/context-input-model.md](../assembly/context-input-model.md)
+  本页不重新定义输入对象，只定义这些对象如何进入预算治理
+- 与 [../../../session/README.md](../../../session/README.md)
+  session 持有 durable transcript 与恢复素材；本页只塑形模型可见上下文
 
 ## 推荐策略
 
@@ -114,18 +111,6 @@ memory recall、relevant evidence surfacing 与普通 attachment 不能共用无
 - 对 recall、attachments、tool schemas 维护单独 budget 视图
 - 将动态变化面优先投影成 delta，而不是重建静态前缀
 - 若底层模型原生支持 prompt cache、server-side truncation 或 context window 管理，agent 应优先接入这些能力，但仍保留统一预算与恢复语义
-
-## Local Mapping And Cloud-Compatible Mapping
-
-### Local Mapping
-
-- token 分析、compact 决策、外部化通常由本地 harness 基于本地 transcript slice 和本地结果存储完成
-
-### Cloud-Compatible Mapping
-
-- 治理逻辑仍在 harness 内部
-- transcript slice、tool result、memory recall 可以来自远程接口
-- 外部化目标可以是远程对象存储或远程 result store
 
 ## 规范结论
 
