@@ -6,7 +6,7 @@
 
 ## Preconditions
 
-- session / memory subsystem 支持 auto-memory 或语义等价的默认 durable runtime
+- durable-memory package 支持 auto-memory 或语义等价的默认 durable runtime
 - runtime 支持 foreground durable write
 - runtime 支持 background extraction、dream consolidation 或语义等价机制
 

@@ -34,7 +34,7 @@
 - `AGENTS.md` / `rules`
   归 `Harness.ContextEngineering`
 - `AutoMemory` / `TeamMemory` / `AgentMemory`
-  归 `Session.durable-memory`
+  归 `durable-memory`
 
 ## 与 Runtime 的关系
 

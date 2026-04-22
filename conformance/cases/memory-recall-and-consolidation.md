@@ -6,8 +6,8 @@
 
 ## Preconditions
 
-- session / context assembly 支持 memory recall
-- session / memory subsystem 支持 memory consolidation 或等价 durable memory update
+- runtime / context assembly 支持 memory recall
+- durable-memory package 支持 memory consolidation 或等价 durable memory update
 - 存在一段可被后续 turn 召回的 durable memory
 
 ## Ingress

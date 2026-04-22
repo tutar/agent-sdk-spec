@@ -30,6 +30,7 @@
 本规范包的主要交付包括：
 
 - 五个核心模块的稳定语义边界
+- 少量 shared spec packages，例如 durable memory
 - 跨模块共享的 canonical object model
 - `Local-first` 默认语义
 - 核心能力与标准扩展能力的分层
@@ -79,6 +80,21 @@
 
 在 `Context Engineering` 子主题下，现已将 bootstrap prompt、structured context、attachment assembly、startup context、context governance、prompt cache 统一收敛为一组规范，用于稳定模型可见输入的对象模型与装配流水线。
 
+另外，durable memory 已作为 shared spec package 独立到根目录：
+
+- [durable-memory/README.md](durable-memory/README.md)
+
+它不是第六个核心模块，而是被 `Session` 与 `Harness` 共同使用的共享规范组。
+
+另外，`Session` 子域已按稳定语义收口为 6 层模型：
+
+- Transcript
+- Short-Term Memory
+- Working State
+- Resume / Restore
+- Lifecycle / Progress
+- Sidechain / Subagent Transcript
+
 另外，反思相关能力已按职责拆入现有模块，而不是新增顶层 `reflection` 模块：
 
 - `harness` 下的 verification
@@ -112,7 +128,6 @@
 - [schema-serialization.md](schema-serialization.md)
 - [test-artifacts.md](test-artifacts.md)
 - [orchestration/conformance-scenarios.md](orchestration/conformance-scenarios.md)
-- [todo.md](todo.md)
 
 ## 设计原则
 

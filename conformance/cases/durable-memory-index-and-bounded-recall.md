@@ -6,7 +6,7 @@
 
 ## Preconditions
 
-- session / memory subsystem 支持 durable memory recall
+- runtime + durable-memory package 支持 durable memory recall
 - durable memory store 中存在多条可供召回的长期记忆
 - runtime 支持 context assembly 中的 memory 注入
 

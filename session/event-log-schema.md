@@ -1,22 +1,27 @@
 # Session Event Log Schema
 
-## 目标
+## 职责
 
-本文件定义 `Session` 的事件日志对象。
+本文件定义 `Session` transcript / event log 的标准对象模型。
 
-它关注 durable event log 的接口语义，而不是某种具体文件格式。
+它关注的是 durable event semantics，而不是某种具体文件格式。
+
+runtime 负责追加与读取这些对象；
+`Session` 负责它们的 durable ownership。
 
 ## SessionEvent
 
-用于表达 session 中的一条持久化事件。
+用于表达 session 中的一条 durable transcript / event entry。
 
 ```text
 SessionEvent
   - event_id
   - session_id
   - parent_event_id?
+  - logical_parent_event_id?
   - event_type
   - timestamp
+  - branch_ref?
   - agent_id?
   - task_id?
   - payload
@@ -33,18 +38,17 @@ SessionEvent
 - `branch_link`
 - `resume_marker`
 - `task_notification`
-- `memory_link`
 - `metadata_update`
 
 约束：
 
-- 进入 `SessionEvent` 的内容必须是 durable 语义，而不是纯 UI 临时态
-- 高频 `tool_progress`、spinner、ephemeral progress 默认不应直接进入 durable event log
-- 若工具结果被外存化，transcript/event log 中应持有稳定引用，而不是要求重新生成原结果
+- durable transcript 只应记录 durable semantics，而不是 UI 临时态
+- 高频 progress / spinner / ephemeral status 默认不应直接进入 event log
+- 若 tool result 被外存化，event log 中应持有稳定 reference，而不是要求重新生成原结果
 
 ## EventSelector
 
-用于表达读取 event log 的选择器。
+用于表达读取 transcript / event log 的选择器。
 
 ```text
 EventSelector
@@ -84,20 +88,19 @@ WakeRequest
 
 ## ResumeSnapshot
 
-用于表达从 event log 恢复后的运行时快照。
+用于表达 restore-and-rebind 的恢复产物。
 
 ```text
 ResumeSnapshot
   - session_id
   - wake_id
   - checkpoint
+  - transcript_slice
   - runtime_state
   - working_state
-  - transcript_slice
+  - lifecycle_state?
   - pending_action?
   - short_term_memory?
-  - memory_refs?
-  - child_refs?
   - branch_refs?
 ```
 
@@ -121,9 +124,11 @@ RuntimeState
 ```text
 WorkingState
   - active_messages?
+  - pending_action_binding?
   - content_replacements?
   - tool_execution_state?
-  - context_window_state?
+  - working_view_projection?
+  - continuation_inputs?
 ```
 
 ## ShortTermMemoryCoverageBoundary
@@ -141,12 +146,26 @@ ShortTermMemoryCoverageBoundary
 约束：
 
 - `ShortTermMemoryCoverageBoundary` 必须能与 `SessionCheckpoint` 对齐
-- `wake()` 时若需要消费 short-term memory，应能判断其是否覆盖到待恢复 checkpoint
+- `wake()` 时若消费 short-term memory，应能判断其是否覆盖待恢复 checkpoint
+
+## 稳定语义
+
+- transcript / event log 是 session durable truth source，而不是 continuity summary
+- compact boundary、branch link、resume marker 都应以 durable event semantics 表达
+- `ResumeSnapshot` 必须足以支撑 compact 后恢复，而不依赖旧进程内状态
+- branch / sidechain / persisted tool result reference 应通过 durable event 语义进入 session 边界
+
+## 与相邻页面的边界
+
+- [transcript.md](transcript.md)
+  定义 transcript 的 durable truth-source 语义
+- [resume-and-restore.md](resume-and-restore.md)
+  定义 restore-and-rebind 的行为语义
+- [working-state.md](working-state.md)
+  定义 working state 作为 continuation context 的语义
 
 ## 规范结论
 
-- `SessionEvent`、`EventSelector`、`WakeRequest`、`ResumeSnapshot` 应作为 session event log 的标准对象
-- `SessionCheckpoint` 应作为 append/read/resume 之间的标准衔接对象
+- `SessionEvent`、`EventSelector`、`WakeRequest`、`ResumeSnapshot` 应作为 `Session` 的标准对象
 - event log 接口应独立于 JSONL、数据库行或消息数组实现
-- `ResumeSnapshot` 必须足以支撑 compact 后恢复，而不依赖旧进程内状态
-- branch / sidechain / persisted tool result reference 应通过 durable event 语义进入 session 边界
+- transcript / event log 不得退化成 memory store、UI state store 或 lifecycle projection store

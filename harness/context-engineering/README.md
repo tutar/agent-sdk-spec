@@ -82,4 +82,4 @@ runtime startup / resume
 - `AgentRuntime` 依赖它建立 startup input、per-turn assembly 和 pre-sampling shaping
 - 模型可见输入必须按 object model、assembly、attachment、governance 分层
 - startup-only context、per-turn context、editing 和 prompt cache strategy 不能混层
-- `AGENTS.md` / `rules` 一类 instruction sources 属于 `Harness.ContextEngineering`，不是 `Session.durable-memory`
+- `AGENTS.md` / `rules` 一类 instruction sources 属于 `Harness.ContextEngineering`，不是 `durable-memory`

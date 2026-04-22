@@ -6,7 +6,7 @@
 
 ## Preconditions
 
-- session / durable-memory subsystem 支持 overlays 或语义等价 binding 模型
+- durable-memory package 支持 overlays 或语义等价 binding 模型
 - 实现支持 durable recall 与 write/consolidation
 
 ## Ingress

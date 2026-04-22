@@ -17,9 +17,9 @@
 因此：
 
 - `memory-types/`
-  - 定义 payload taxonomy
+  定义 payload taxonomy
 - `scopes/`
-  - 定义 storage / visibility / sharing overlays
+  定义 storage / visibility / sharing overlays
 
 这两条轴必须同时存在，但不能混成一个对象模型。
 
@@ -34,8 +34,8 @@
 联合阅读：
 
 - [../durable-memory-scopes-and-overlays.md](../durable-memory-scopes-and-overlays.md)
-- [../durable-memory-recall-pipeline.md](../durable-memory-recall-pipeline.md)
-- [../durable-memory-write-and-consolidation.md](../durable-memory-write-and-consolidation.md)
+- [../operations/relevant-memory-selection.md](../operations/relevant-memory-selection.md)
+- [../operations/extract-memories.md](../operations/extract-memories.md)
 - [../memory-types/README.md](../memory-types/README.md)
 
 规范要求：

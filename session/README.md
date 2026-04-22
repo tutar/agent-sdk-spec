@@ -9,43 +9,53 @@
 它负责：
 
 - 标识一条可持续运行的 agent 会话
-- 维护 runtime state
-- 持久化 append-only transcript
-- 恢复可继续运行的 working state
-- 挂载 session 内的短期连续性记忆
-- 串联 durable memory、subagent branch、remote session 等外部引用
+- 维护 append-only transcript 与 branch tracing
+- 维护 session-exclusive short-term continuity
+- 持有 restore 所需的 durable inputs 与 resume snapshot
+- 维护 observer-facing lifecycle / progress state
+- 为 runtime 提供可恢复的 working state
 
-在当前产品语义下，还应明确这些绑定关系：
+`Session` 的 6 层模型固定为：
 
-- `1 Chat = 1 Session`
-- `1 Session = 1 Short-Term Memory`
-- `1 Agent = 1 Global Long-Term Memory`
-- `1 Session @ any time = 1 Active Harness Lease`
+```text
+Session
+├─ Transcript
+├─ Short-Term Memory
+├─ Working State
+├─ Resume / Restore
+├─ Lifecycle / Progress
+└─ Sidechain / Subagent Transcript
+```
 
-它也必须跨部署形态稳定：
+## 核心边界
 
-- `Local`
-  通常是本地 durable transcript + restore
-- `Cloud`
-  通常是远端 event log / restore store
+`Session` 拥有：
 
-它也是 `resume` 的真源：
+- transcript
+- short-term memory
+- working state
+- resume / restore inputs
+- lifecycle / progress state
+- sidechain / subagent transcript linkage
 
-- `Local` 下应用或系统重启后，应仍可基于本地 durable transcript / working state 恢复
-- `Cloud` 下 harness 或 sandbox 实例被替换后，应仍可基于远端 event log / restore store 恢复
+`Session` 不拥有：
 
-规范上必须明确：
+- query loop
+- tool loop
+- model sampling
+- post-turn worker orchestration
+- durable-memory store
+
+因此必须明确：
 
 - transcript 不是 memory
-- compact summary 不是 transcript
-- `AGENTS.md` / rules / memory files 不是 session 本身
-- agent memory 不是主 session transcript
+- short-term memory 不是 transcript 替代物
+- lifecycle state 不是 working state
+- resume 不是 transcript replay
+- sidechain transcript 不是 durable memory
 
-本规范中的 `Session` 同样采用 `Local-first` 抽取方式：
-
-- 默认实现通常是本地 append-only transcript 与 working-state restore
-- 但稳定接口不得要求本地文件系统、单机场景或某一种持久化介质
-- `Local` 与 `Cloud` 的差异只能体现在部署位置和实现技术，不应改变 `resume` 语义
+durable memory 见 [../durable-memory/README.md](../durable-memory/README.md)。
+它是 shared package，不属于 `Session` 本体；`Session` 只提供 write-side 上游输入与 linkage。
 
 ## 稳定接口
 
@@ -59,10 +69,8 @@ SessionStore
   - get_events(session_id, selector) -> event_slice
   - get_runtime_state(session_id) -> runtime_state
   - get_working_state(session_id) -> working_state
-  - wake(session_id) -> resumed_session_handle
+  - wake(session_id) -> resume_snapshot
 ```
-
-这些接口表示可恢复 durable state boundary 的最小契约，不要求各语言实现暴露同名 API。
 
 推荐标准对象：
 
@@ -75,37 +83,26 @@ SessionCheckpoint
 ```
 
 ```text
-ResumedSessionHandle
+ResumeSnapshot
   - session_id
   - wake_id
-  - resume_snapshot
+  - checkpoint
+  - transcript_slice
+  - runtime_state
+  - working_state
+  - lifecycle_state?
+  - short_term_memory?
+  - branch_refs?
 ```
 
-若实现了 session 内记忆层，还应补：
+若实现了 session continuity 层，还应补：
 
 ```text
-SessionMemoryStore
-  - load_short_term_memory(session_id)
-  - update_short_term_memory(session_id, transcript_delta)
-  - list_memory_links(session_id)
-```
-
-推荐补充 lease 接口：
-
-```text
-SessionHarnessLeaseStore
-  - acquire(session_id, harness_instance_id) -> lease
-  - release(session_id, harness_instance_id) -> released
-  - get_active_lease(session_id) -> lease | null
-```
-
-推荐补充：
-
-```text
-SessionLifecycleController
-  - get_state(session_id) -> lifecycle_state
-  - set_state(session_id, lifecycle_state, details?)
-  - subscribe(session_id, listener) -> lifecycle_event_stream
+ShortTermMemoryStore
+  - load(session_id) -> short_term_memory | null
+  - update(session_id, transcript_delta, current_memory) -> updated_memory
+  - get_coverage_boundary(session_id) -> transcript_cursor | null
+  - wait_until_stable(session_id, timeout_ms) -> ready | timed_out
 ```
 
 若实现支持 branch / sidechain，还应补：
@@ -117,223 +114,87 @@ SessionBranchStore
   - resolve_branch(ref) -> branch_handle
 ```
 
-### 核心能力
+## 核心能力
 
 宣称实现 `Session` 模块时，至少应具备：
 
-- append-only event log 或语义等价机制
+- append-only transcript / event log
 - session identity
 - checkpoint / cursor
-- runtime / working state restore
-- wake / resume
-- 结构化 lifecycle state
+- resume snapshot
+- working state restore
+- structured lifecycle state
 - compact boundary 后可继续恢复
-- session 级 short-term memory 的稳定恢复
+- session-exclusive short-term memory
 - single active harness lease
+- sidechain / branch transcript linkage
 
-### 标准扩展
+## 标准扩展
 
 推荐把下列能力作为 `Session` 标准扩展实现：
 
 - `ShortTermSessionMemory`
   - continuity summary
-  - away summary
   - compact-aware continuation
-- `DurableMemoryLinkage`
-  - recall
-  - scoped memory linkage
-- `MemoryConsolidation`
-  - post-turn consolidation
-  - background consolidation
-  - dream-style consolidation
+  - away / handoff summary
 - `BranchAndSidechain`
   - subagent transcript
-  - teammate transcript
   - sidechain transcript
   - remote session link
+- `SessionDurableMemoryLinkage`
+  - transcript-backed write-side participation
+  - session-local memory refs
 
-这些扩展的重点是恢复语义与外部可观察行为，而不是某一种 summary 或 recall 算法。
+这些扩展的重点是 durable boundary、restore 语义与外部可观察行为，而不是某一种实现算法。
 
 ## 产品级绑定关系
 
-`Session` 在当前产品中不是 agent 本体，而是 agent 在某个 chat 上的一条 durable 工作线程。
+在当前产品关系里：
 
-因此必须满足：
+- `1 Chat = 1 Session`
+- `1 Session = 1 Short-Term Memory`
+- `1 Session @ any time = 1 Active Harness Lease`
 
-- 同一个 chat 不应绑定多个 session
-- 同一个 session 不应服务多个 chat
-- 同一个 session 只拥有一个 short-term memory
-- short-term memory 不得在多个 session 间共享
-- 多个 session 可以共享同一个 agent long-term memory
+同时：
 
-## 状态分层
+- session transcript 中的 conversation content 可以成为 durable-memory write-side 上游
+- 但 cross-session durable recall 不属于 `Session` 自己执行
 
-`Session` 规范必须至少区分三层状态：
+## 默认实现映射
 
-- `SessionLifecycleState`
-  - `idle / running / requires_action`
-  - 面向 gateway、UI、remote control、push 系统等外部消费者
-  - 不用于重建内部执行上下文
-- `RuntimeState`
-  - durable 的执行进度状态
-  - 例如当前 checkpoint、active branch、pending tool continuation、resume cursor
-  - 供 `wake()` / `resume` 读取
-- `WorkingState`
-  - 恢复当前 turn 或 continuation 所需的结构化运行上下文
-  - 例如 compact 后的当前消息窗口、pending action binding、tool result replacement state
-  - 不要求外部系统直接消费
+当前代码库中的默认 session 实现主要由这些语义层组成：
 
-约束：
+- append-only transcript
+- branch / sidechain transcript
+- short-term session memory
+- restore sidecars
+- working-state rebuild inputs
+- lifecycle / progress projection
 
-- `LifecycleState` 不能替代 `WorkingState`
-- `WorkingState` 不能通过扫描 transcript 文本临时推导来代替 durable restore
-- `RuntimeState` 与 `WorkingState` 可以落在同一存储里，但语义上必须可区分
-- harness process state 不是 session owner；session owner 始终是 durable session boundary 本身
+默认 `Local` 映射常见为本地 transcript 与 restore store；
+默认 `Cloud` 映射常见为远端 event log 与 restore store。
 
-如果本地宿主希望提供更简单的 API，
-例如 `emit_event()` 或直接读取完整 transcript，
-也应把它们视为 `append_events()` / `get_events()` 的 convenience wrapper，
-而不是新的 session 语义。
+两者都必须满足：
 
-## 默认实现
+- transcript 是 durable truth source
+- resume 是 restore-and-rebind
+- compact 后仍可追溯 durable history
+- harness 重启不应导致 session continuity 丢失
 
-当前代码库中的默认 session 实现由这些部分组成：
+## 子页
 
-  identity
-  runtime state
-  transcript + sidechain storage
-  restore
-  short-term session memory
-  durable memory recall linkage
-  agent-scoped durable memory
-
-默认落点上：
-
-- 主 transcript 用 append-only JSONL 持久化
-- subagent 使用 sidechain transcript
-- session memory 使用 session 级 continuity summary
-- durable memory 通过 recall/linkage 接入，而不承担 restore 责任
-- harness 可以重启，但 session 关联的 short-term memory 不得丢失
-
-
-## 要解决的问题
-
-- 如何让会话在 harness 崩溃后仍可恢复
-- 如何把当前 prompt window、raw transcript、working state、session memory 区分开
-- 如何在长会话中保留 continuity，而不依赖全量重放 transcript
-- 如何把 compact boundary、resume snapshot 与 short-term memory 的关系稳定下来
-- 如何把 memory consolidation 与 session restore 解耦但保持联动
-- 如何把跨会话 durable memory 接进来，但不与 session restore 混淆
-- 如何兼容 sidechain transcript、subagent transcript、remote session 和 task state
-- 如何让本地 session 与远端 session 共享同一语义边界
-
-## 核心边界
-
-- `Session`
-  管 durable state、restore、memory linkage
-- `Harness`
-  读取 session 切片并构造当前 model input
-- `ContextProvider`
-  把 durable memory / project memory 注入当前 turn
-- file-backed instruction markdown loading（例如 `AGENTS.md` / `rules`）属于 `Harness.ContextEngineering`，不属于 `Session.memory` 或 transcript，详细规则见 [../harness/context-engineering/instruction-markdown/README.md](../harness/context-engineering/instruction-markdown/README.md)
-- `ContextGovernance`
-  决定 compact，不等于 session 自身
-- `SessionLifecycleState`
-  对外暴露 `idle / running / requires_action` 语义，不等于 transcript 或 UI state
-- `Harness`
-  对 session 持有的是 active lease，不是 durable owner
-
-### `compact boundary` 与恢复的关系
-
-`compact boundary` 进入 transcript 后，`Session` 仍必须保持以下恢复语义：
-
-- transcript 仍然是恢复真源
-- short-term memory 只能作为 compact 后 continuity 的辅助对象，不能取代 transcript
-- `ResumeSnapshot` 必须明确指出当前恢复是基于哪个 checkpoint / compact boundary 构建的
-- 若 short-term memory 尚未稳定，`wake()` 应显式返回等待、超时或使用最近稳定摘要的语义，而不能静默漂移
-
-换句话说：
-
-- compact 后允许不再重放全部历史消息
-- 但不允许失去对 compact 前 durable history 的可追溯性
-
-### `Harness Lease` 与恢复的关系
-
-`Session` 与 `Harness` 的 `1:1` 关系应理解为单活 lease，而不是永久绑定。
-
-要求：
-
-- 同一 session 任一时刻只能有一个 active harness 推进
-- harness 崩溃、重启或迁移后，可通过 `wake / resume` 恢复同一个 session
-- resume 是 lease 交接，而不是复制出第二个可写 session
-- short-term memory 必须跟随 session 恢复，而不是跟随 harness 进程丢失
-
-session 域内的 short-term continuity 详细模型见 [short-term-memory/short-term-memory-model.md](short-term-memory/short-term-memory-model.md)，durable memory 总模型见 [durable-memory/durable-memory-architecture.md](durable-memory/durable-memory-architecture.md)，default durable runtime 见 [durable-memory/auto-memory/README.md](durable-memory/auto-memory/README.md)，长期记忆召回见 [durable-memory/durable-memory-recall-pipeline.md](durable-memory/durable-memory-recall-pipeline.md)，scope 语义见 [durable-memory/durable-memory-scopes-and-overlays.md](durable-memory/durable-memory-scopes-and-overlays.md)，instruction markdown loading 见 [../harness/context-engineering/instruction-markdown/README.md](../harness/context-engineering/instruction-markdown/README.md)。
-
-## 子代理与 remote session
-
-session 体系必须兼容：
-
-- sidechain transcript
-- subagent transcript
-- teammate transcript
-- remote agent session / task link
-
-要求：
-
-- 子对象必须可追溯到父 session
-- 子对象可以独立落盘
-- restore 时必须恢复引用关系
-- 必须区分 durable sidechain 与 ephemeral fork
-
-这些 branch 引用中的多 agent 角色与消息边界，见 [../harness/multi-agent/README.md](../harness/multi-agent/README.md)。
-
-推荐最小对象：
-
-```text
-BranchRef
-  - ref_id
-  - parent_session_id
-  - branch_id
-  - kind: sidechain | subagent | teammate | remote_session | ephemeral_fork
-  - transcript_ref?
-  - created_at
-  - metadata?
-```
-
-其中：
-
-- `ephemeral_fork`
-  可以不要求 durable transcript
-- 其余 branch / sidechain 类型
-  恢复时必须能重新建立父子关系与 transcript 引用
-
-## 目录内文档
-
+- [transcript.md](transcript.md)
 - [event-log-schema.md](event-log-schema.md)
+- [resume-and-restore.md](resume-and-restore.md)
+- [working-state.md](working-state.md)
 - [lifecycle-state.md](lifecycle-state.md)
+- [sidechain-and-subagent-transcripts.md](sidechain-and-subagent-transcripts.md)
 - [short-term-memory/README.md](short-term-memory/README.md)
-- [short-term-memory/short-term-memory-model.md](short-term-memory/short-term-memory-model.md)
-- [short-term-memory/continuity-summary.md](short-term-memory/continuity-summary.md)
-- [short-term-memory/coverage-boundary-and-stability.md](short-term-memory/coverage-boundary-and-stability.md)
-- [durable-memory/README.md](durable-memory/README.md)
-- [durable-memory/durable-memory-architecture.md](durable-memory/durable-memory-architecture.md)
-- [durable-memory/durable-memory-recall-pipeline.md](durable-memory/durable-memory-recall-pipeline.md)
-- [durable-memory/durable-memory-scopes-and-overlays.md](durable-memory/durable-memory-scopes-and-overlays.md)
-- [durable-memory/durable-memory-write-and-consolidation.md](durable-memory/durable-memory-write-and-consolidation.md)
-- [durable-memory/dream-consolidation.md](durable-memory/dream-consolidation.md)
-- [durable-memory/auto-memory/README.md](durable-memory/auto-memory/README.md)
-- [durable-memory/memory-types/README.md](durable-memory/memory-types/README.md)
+- [../durable-memory/README.md](../durable-memory/README.md)
 
 ## 规范结论
 
-- `Session` 是 durable state boundary，不是 message array
-- `Session` 模块主要负责 transcript、restore、working state 和 session memory linkage
-- short-term memory 与 durable memory 的详细规范应下沉到独立子目录，而不是挤在总览页里
-- session 语义不应因为 Local、Cloud 的落盘位置不同而漂移
-- session 应作为 harness / sandbox 可替换后的恢复真源
-- `append_events()` 与 `session_checkpoint` 应优先于进程内 transcript 变异
-- direct-call session API 如存在，也必须严格由 event log 语义推导
-- short-term memory、durable memory linkage、memory consolidation 与 branch transcript 应优先作为标准扩展定义
-- session 是 chat 级 durable thread，不是 agent 本体
-- session short-term memory 是 session 独占状态，不得因为 harness 重启而丢失
+- `Session` 是 agent runtime 的 durable state boundary，不是 query loop 本身
+- `Transcript`、`Short-Term Memory`、`WorkingState`、`ResumeSnapshot`、`SessionLifecycleState`、`SidechainTranscript` 必须作为不同层次建模
+- runtime 可以追加、恢复和消费 session state，但 ownership 仍在 `Session`
+- durable memory 不应再作为 `Session` 的内嵌子目录或独占子域对待

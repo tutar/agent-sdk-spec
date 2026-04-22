@@ -19,7 +19,7 @@
 | `ModelProviderAdapter` | 吸收模型厂商/API 差异的统一适配层 | `Harness` | `Tools`, `Session` | 是模型差异的唯一主吸收层 |
 | `ContextGovernance` | context budget、compact、overflow recovery 的治理层 | `Harness` | `Session` | 不等于 transcript 或 memory store |
 | `AgentProfile` | harness 内部的长期运行形态描述对象 | `Harness` | `Gateway`, `Task`, `Session` | 描述 host/runtime 形态，不等于 deployment hosting profile |
-| `AssistantAgentProfile` | long-lived assistant-mode host profile | `Harness` | `MultiAgent`, `Gateway`, `Task`, `Session.memory` | 组合使用多个子域能力，但不拥有它们 |
+| `AssistantAgentProfile` | long-lived assistant-mode host profile | `Harness` | `MultiAgent`, `Gateway`, `Task`, `DurableMemory` | 组合使用多个子域能力，但不拥有它们 |
 | `TaskManager` | 本地 task-driven runtime 的任务生命周期与恢复接口 | `Harness` | `Session`, `Orchestration` | task 不是 transcript |
 | `BackgroundAgent` | 长于单 turn 生命周期的后台 agent | `Harness` | `Orchestration` | local 默认由 harness 管理生命周期 |
 | `VerifierTask` | 评估/校验型运行时单元 | `Harness` | `Tools` | capability surface 仍可由 tools 暴露 |
@@ -41,9 +41,13 @@
 | `Transcript` | append-only 会话历史 | `Session` | `Harness`, `Tools` | transcript 不是 memory |
 | `SessionCheckpoint` | append/read/resume 之间的标准衔接对象 | `Session` | `Gateway`, `Harness` | 对外暴露 durable 进度位置 |
 | `ResumeSnapshot` | resume 时恢复 working state 的结构化快照 | `Session` | `Harness` | 供 runtime 重建当前可继续状态 |
+| `WorkingState` | continuation 所需的结构化运行上下文 | `Session` | `Gateway`, `Harness` | 不等于 transcript，也不等于 lifecycle state |
+| `SessionLifecycleState` | session 的 observer-facing 运行状态 | `Session` | `UI`, `Gateway`, `Harness.ProcessState` | 最小集合通常为 `idle / running / requires_action` |
+| `SidechainTranscript` | session 附属 branch / subagent 历史层 | `Session` | `DurableMemory`, `Task` | 属于 branch tracing，不是 memory store |
+| `BranchRef` | 指向 child / sidechain transcript 的 durable 引用 | `Session` | `Gateway` | restore 时应可追溯 |
 | `ShortTermSessionMemory` | 当前 session continuity object | `Session` | `Harness`, `Orchestration` | 用于 compact / resume / away summary |
-| `Durable Memory` | 可跨 turn / 跨 session recall 的长期沉淀 | `Session` via `session.memory` | `Harness` | 不承担 restore 责任 |
-| `Scoped Durable Memory` | 有 user/project/agent/local 等作用域的 durable memory | `Session` via `session.memory` | `Gateway` | 是 durable memory 的作用域层 |
+| `Durable Memory` | 可跨 turn / 跨 session recall 的长期沉淀 | shared package; read-side orchestrated by `Harness.AgentRuntime`, write-side fed by `Session` inputs | `Gateway` | 不承担 restore 责任 |
+| `Scoped Durable Memory` | 有 user/project/agent/local 等作用域的 durable memory | `DurableMemory` | `Gateway` | 是 durable memory 的作用域层 |
 
 ## Tools Terms
 
@@ -115,6 +119,15 @@
 
 - `Transcript` vs `ShortTermSessionMemory`
   transcript 是原始 durable history；short-term memory 是 continuity summary。
+
+- `WorkingState` vs `SessionLifecycleState`
+  前者是 continuation context；后者是 observer-facing projection。
+
+- `Transcript` vs `WorkingState`
+  前者记录已经发生的 durable history；后者描述如何继续当前运行。
+
+- `SidechainTranscript` vs `Durable Memory`
+  前者属于 session branch tracing；后者属于 cross-session durable knowledge。
 
 - `ShortTermSessionMemory` vs `Durable Memory`
   前者服务当前 session continuity；后者服务跨 turn / 跨 session recall。

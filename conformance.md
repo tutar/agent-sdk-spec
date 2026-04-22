@@ -22,8 +22,9 @@
 - permission mode / rule / approval / headless degradation 语义
 - context governance 与 prompt cache strategy 的触发与恢复语义
 - context planes、attachment ordering、startup context lifecycle、provider/assembly boundary、context editing 分层退化与恢复语义
-- session event log / checkpoint / resume / short-term continuity 语义
-- durable memory architecture / recall / consolidation / branch tracing 语义
+- session transcript / checkpoint / resume / short-term continuity 语义
+- session working state、observer-facing lifecycle state 与 sidechain transcript 的分层语义
+- durable memory overview / recall / consolidation / branch tracing 语义
 - auto-memory 的 resident index、bounded recall 与 write-path layering 语义
 - auto-memory 的 entrypoint index、topic payload、header manifest 与 payload-selection layering 语义
 - durable memory taxonomy 中 `user / feedback / project / reference` 的类型边界、scope 与 staleness 语义
@@ -89,10 +90,12 @@
 
 - append-only transcript 或语义等价 durable event log
 - `SessionCheckpoint` / `ResumeSnapshot` 的 durable progress 含义
+- `WorkingState` 与 `SessionLifecycleState` 的边界可区分
 - `RequiresAction` 可恢复
 - harness 或 sandbox 替换后仍可基于 session 继续
 - `1 Chat = 1 Session`
 - `1 Session = 1 Short-Term Memory`
+- sidechain / subagent transcript 与主 transcript 的追溯关系稳定
 
 ### Tools
 
@@ -293,7 +296,7 @@
   - [conformance/cases/context-provider-vs-assembly-boundary.md](conformance/cases/context-provider-vs-assembly-boundary.md)
   - [conformance/cases/instruction-markdown-loading-precedence.md](conformance/cases/instruction-markdown-loading-precedence.md)
   - [conformance/cases/instruction-rules-and-include-expansion.md](conformance/cases/instruction-rules-and-include-expansion.md)
-- `Session.MemoryConsolidation`
+- `Session.MemoryConsolidation` / `DurableMemory`
   - [conformance/cases/agent-global-long-memory.md](conformance/cases/agent-global-long-memory.md)
   - [conformance/cases/durable-memory-index-and-bounded-recall.md](conformance/cases/durable-memory-index-and-bounded-recall.md)
   - [conformance/cases/auto-memory-resident-index-and-bounded-recall.md](conformance/cases/auto-memory-resident-index-and-bounded-recall.md)

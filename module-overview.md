@@ -52,18 +52,24 @@
 它负责：
 
 - transcript / event log
-- working state restore
-- checkpoint / cursor / resume
-- session 内短期连续性记忆
-- `session.memory` 下的 durable memory linkage 与 recall/consolidation 接口
+- short-term memory
+- working state
+- resume / restore
+- lifecycle / progress state
+- sidechain / subagent transcript
+- durable-memory linkage 与 write-side participation
 
 ### 核心对象
 
 - `SessionStore`
+- `Transcript`
 - `SessionCheckpoint`
 - `ResumeSnapshot`
+- `WorkingState`
+- `SessionLifecycleState`
+- `SidechainTranscript`
 - `ShortTermSessionMemory`
-- `session.memory`
+- `DurableMemoryLinkage`
 
 ### 不属于该模块
 
@@ -169,6 +175,7 @@
 
 - `Gateway` 属于 `Harness` 域，不是第六个顶层模块。
 - `session.memory` 属于 `Session`，不是顶层 `memory` 模块。
+- `durable-memory/` 是 shared spec package，不是第六个顶层模块。
 - `command` 是 `Tools` 域内共享对象模型，不是第六个顶层模块。
 - host scheduler / periodic ticking 如需存在，通常应归在 host 或 orchestration 侧，而不是 `Gateway` 本体。
 - 当前产品关系模型默认是：`1 Agent = 1 Gateway = 1 Global Long-Term Memory`，而 `1 Chat = 1 Session = 1 Short-Term Memory`

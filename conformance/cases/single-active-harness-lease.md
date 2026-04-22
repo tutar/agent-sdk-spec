@@ -20,8 +20,10 @@
 - 任一时刻只有一个 harness 可推进该 session
 - resume 是 lease 交接，不是复制出第二个可写 session
 - short-term memory 跟随 session 恢复
+- transcript、working state、lifecycle state 仍属于同一 session durable boundary
 
 ## Failure Conditions
 
 - 两个 harness 同时推进同一个 session
 - harness 重启导致 session short-term memory 丢失
+- lease 切换后 working state 或 branch linkage 被重置成新 session

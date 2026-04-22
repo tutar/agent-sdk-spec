@@ -71,6 +71,9 @@
 
 - [cases/chat-session-binding.md](cases/chat-session-binding.md)
 - [cases/single-active-harness-lease.md](cases/single-active-harness-lease.md)
+- [cases/session-working-state-vs-lifecycle-state.md](cases/session-working-state-vs-lifecycle-state.md)
+- [cases/session-sidechain-transcript-linkage.md](cases/session-sidechain-transcript-linkage.md)
+- [cases/session-transcript-vs-short-term-memory-boundary.md](cases/session-transcript-vs-short-term-memory-boundary.md)
 - [cases/agent-global-long-memory.md](cases/agent-global-long-memory.md)
 - [cases/durable-memory-index-and-bounded-recall.md](cases/durable-memory-index-and-bounded-recall.md)
 - [cases/auto-memory-resident-index-and-bounded-recall.md](cases/auto-memory-resident-index-and-bounded-recall.md)
@@ -252,6 +255,9 @@ golden 只保留当前正文仍有明确稳定对象或稳定事件输出的场�
 
 - `chat-session-binding`
 - `single-active-harness-lease`
+- `session-working-state-vs-lifecycle-state`
+- `session-sidechain-transcript-linkage`
+- `session-transcript-vs-short-term-memory-boundary`
 - `agent-global-long-memory`
 - `durable-memory-index-and-bounded-recall`
 - `auto-memory-resident-index-and-bounded-recall`

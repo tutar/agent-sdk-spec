@@ -17,7 +17,7 @@
 - 定义 `MultiAgent` 机制本体
 - 定义 `Gateway` channel adapter 协议
 - 定义 `Task` lifecycle
-- 定义 `Session.memory` 的对象模型
+- 定义 durable memory 的对象模型
 
 ## 核心结论
 
@@ -113,7 +113,7 @@ assistant agent 可采用 append-first durable memory operating mode：
 - 新记忆先写入 append-only capture stream
 - 稍后再由 consolidation 流程蒸馏成 durable index / topic records
 
-这与普通“直接维护长期记忆索引”的模式不同，但不改变 `Session.memory` 对 durable memory 的所有权。
+这与普通“直接维护长期记忆索引”的模式不同，但不改变 durable memory 的 shared-package 所有权边界。
 
 ### 6. scheduled maintenance
 
@@ -124,10 +124,10 @@ assistant agent 可支持一类宿主级 background maintenance：
 - dream-style consolidation
 - 其他定期维护任务
 
-这些任务属于 profile 的常见 operating mode，但并不改变 `Task` 或 `Session.memory` 的子域归属。
+这些任务属于 profile 的常见 operating mode，但并不改变 `Task` 或 durable memory 的子域归属。
 
 其中，dream-style background work 的 consolidation 语义、调度门槛、锁与结果对象仍归
-[../../session/durable-memory/dream-consolidation.md](../../session/durable-memory/dream-consolidation.md)。
+[../../durable-memory/operations/auto-dream.md](../../durable-memory/operations/auto-dream.md)。
 `AssistantAgentProfile` 只定义：
 
 - 为什么长期运行宿主会偏好 dream-style maintenance
@@ -194,19 +194,19 @@ assistant agent 可以改变：
 
 这些仍归 [../context-engineering/README.md](../context-engineering/README.md)。
 
-### 与 `session.memory`
+### 与 `durable-memory`
 
 assistant agent 可以采用：
 
 - append-first capture
 - consolidate-later durable memory organization
 
-但 durable memory 的 recall、scope、consolidation 对象模型仍归 `Session.memory`。
+但 durable memory 的 recall、scope、consolidation 对象模型仍归 `durable-memory` shared package。
 
 assistant-style durable memory operating mode 的上层 consolidation 语义见：
 
-- [../../session/durable-memory/durable-memory-write-and-consolidation.md](../../session/durable-memory/durable-memory-write-and-consolidation.md)
-- [../../session/durable-memory/dream-consolidation.md](../../session/durable-memory/dream-consolidation.md)
+- [../../durable-memory/operations/extract-memories.md](../../durable-memory/operations/extract-memories.md)
+- [../../durable-memory/operations/auto-dream.md](../../durable-memory/operations/auto-dream.md)
 
 ## Default Local Mapping
 

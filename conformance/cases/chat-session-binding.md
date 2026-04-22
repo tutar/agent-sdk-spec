@@ -20,8 +20,10 @@
 - 同一 chat 始终绑定同一个 session
 - supplement input 不会创建第二个 session
 - 一个 chat 不会同时绑定多个 session
+- 同一 chat 对应的 short-term memory 也应保持唯一，不得被拆成多个 continuity objects
 
 ## Failure Conditions
 
 - 同一 chat 被错误分裂成多个 session
 - supplement input 被当成新 chat 或新 session
+- 同一 chat 在不显式切换 session 的情况下丢失原 working-state / continuity 绑定

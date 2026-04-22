@@ -6,8 +6,8 @@
 
 ## Preconditions
 
-- session / memory subsystem 支持 durable memory taxonomy 或语义等价分类
-- durable memory subsystem 支持至少 `user / feedback / project / reference` 四类中的语义等价边界
+- durable-memory package 支持 durable memory taxonomy 或语义等价分类
+- durable-memory package 支持至少 `user / feedback / project / reference` 四类中的语义等价边界
 
 ## Ingress
 

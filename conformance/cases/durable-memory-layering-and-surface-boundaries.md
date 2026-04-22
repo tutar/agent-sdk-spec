@@ -6,7 +6,7 @@
 
 ## Preconditions
 
-- session / durable-memory subsystem 支持跨 session durable knowledge
+- durable-memory package 支持跨 session durable knowledge
 - 实现支持 durable recall、durable write/consolidation、payload taxonomy、scope 或语义等价机制
 ## Ingress
 

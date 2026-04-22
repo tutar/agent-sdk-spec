@@ -94,5 +94,5 @@ instruction markdown source 进入的是 context plane，而不是 transcript pl
   include expansion 是 loading 的子机制
 - 与 [conditional-instruction-rules.md](conditional-instruction-rules.md)
   conditional rules 定义 `paths` / target-path matching
-- 与 [../../../session/durable-memory/README.md](../../../session/durable-memory/README.md)
+- 与 [../../../durable-memory/README.md](../../../durable-memory/README.md)
   durable memory 是 store-backed durable knowledge；instruction markdown loading 不属于 durable memory

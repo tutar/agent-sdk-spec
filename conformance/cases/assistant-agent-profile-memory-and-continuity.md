@@ -2,7 +2,7 @@
 
 ## 目标
 
-验证 `AssistantAgentProfile` 可以采用 append-first durable memory accumulation，并保持 viewer / reattach continuity，而不改变 `Session.memory`、`Gateway`、`Task` 的 ownership boundary。
+验证 `AssistantAgentProfile` 可以采用 append-first durable memory accumulation，并保持 viewer / reattach continuity，而不改变 `durable-memory`、`Gateway`、`Task` 的 ownership boundary。
 
 ## Preconditions
 
@@ -22,7 +22,7 @@
 - assistant agent 可以采用 append-first durable memory capture
 - durable memory 的 consolidation 可以延后，不要求每次新信号都立即重写长期记忆索引
 - viewer / reattach continuity 必须与这种 memory accumulation 方式兼容
-- assistant profile 不得把 `Session.memory`、`Gateway`、`Task` 的 ownership 吞并进 profile 自身
+- assistant profile 不得把 `durable-memory`、`Gateway`、`Task` 的 ownership 吞并进 profile 自身
 
 ## Expected Persistent Effects
 
@@ -38,4 +38,4 @@
 
 - assistant profile 强制把 durable memory 退化成“每次即时重写索引”的唯一模式
 - assistant profile 的 continuity 依赖错误改写 transcript 或 durable memory ownership
-- profile 语义与 `Session.memory`、`Gateway`、`Task` 的边界混淆
+- profile 语义与 `durable-memory`、`Gateway`、`Task` 的边界混淆

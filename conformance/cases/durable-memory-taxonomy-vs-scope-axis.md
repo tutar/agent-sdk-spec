@@ -6,7 +6,7 @@
 
 ## Preconditions
 
-- session / durable-memory subsystem 支持 durable payload taxonomy
+- durable-memory package 支持 durable payload taxonomy
 - 实现支持 scope、overlay 或语义等价的 binding 模型
 
 ## Ingress
